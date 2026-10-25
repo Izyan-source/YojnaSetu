@@ -108,9 +108,11 @@ function Header({ health, currentPath }) {
       <nav className={`main-nav ${menuOpen ? 'nav-open' : ''}`} aria-label="Main navigation">
         <a href="/" aria-current={currentPath === '/' ? 'page' : undefined} onClick={closeMenu}>Home</a>
         <a href="/explore" aria-current={currentPath === '/explore' ? 'page' : undefined} onClick={closeMenu}>Explore Schemes</a>
-        <a href="/#how-it-works" onClick={closeMenu}>How It Works</a>
+        <a href="/eligibility" aria-current={currentPath === '/eligibility' ? 'page' : undefined} onClick={closeMenu}>Check Eligibility</a>
+        <a href="/documents" aria-current={currentPath === '/documents' ? 'page' : undefined} onClick={closeMenu}>Document Assistant</a>
+        <a href="/application" aria-current={currentPath === '/application' ? 'page' : undefined} onClick={closeMenu}>My Application</a>
         <HealthStatus health={health} />
-        <ButtonLink href="/eligibility" className="nav-cta" onClick={closeMenu}>Check Eligibility <Icon name="arrow" size={16} /></ButtonLink>
+        <ButtonLink href="/explore" className="nav-cta" onClick={closeMenu}>Explore schemes <Icon name="arrow" size={16} /></ButtonLink>
       </nav>
     </div>
   </header>
@@ -231,7 +233,7 @@ const documentFieldLabels = {
   issuing_authority: 'Issuing authority', certificate_date: 'Certificate or issue date', certificate_valid_until: 'Certificate valid-until date', certificate_number: 'Certificate/reference number',
 }
 
-function DocumentIntelligence({ schemes }) {
+function DocumentIntelligence({ schemes, navigate, onDocumentsChange }) {
   const [analysis, setAnalysis] = useState(null)
   const [values, setValues] = useState({})
   const [file, setFile] = useState(null)
@@ -245,6 +247,7 @@ function DocumentIntelligence({ schemes }) {
   const [documents, setDocuments] = useState(() => {
     try { return JSON.parse(sessionStorage.getItem('yojnasetu-document-analyses') || '[]') } catch { return [] }
   })
+  useEffect(() => { onDocumentsChange?.(documents) }, [documents, onDocumentsChange])
   const selectedScheme = schemes.find((scheme) => scheme.scheme_id === schemeId)
 
   async function analyze(selectedFile) {
@@ -307,7 +310,7 @@ function DocumentIntelligence({ schemes }) {
       mapping_confirmed: Boolean(selectedRequirement),
       quality_warnings: analysis?.warnings || [],
     }))
-    window.location.assign('/eligibility')
+    navigate('/eligibility')
   }
 
   return <section className="document-section section-wrap" id="document-intelligence">
@@ -346,8 +349,8 @@ function DocumentIntelligence({ schemes }) {
 function EligibilityPrompt() {
   return <section className="eligibility-section section-wrap" id="eligibility">
     <div className="eligibility-card">
-      <div><p className="eyebrow">A CLEARER FIRST STEP</p><h2>Know where to begin.</h2><p>Personalised eligibility guidance is coming soon. For now, explore the illustrative examples and use official scheme sources to confirm details.</p></div>
-      <ButtonLink href="/explore" variant="secondary">Browse examples <Icon name="arrow" size={16} /></ButtonLink>
+      <div><p className="eyebrow">A CLEARER FIRST STEP</p><h2>Know where to begin.</h2><p>Compare the details you provide with the limited conditions currently encoded for a scheme. Results are informational and link back to source material.</p></div>
+      <ButtonLink href="/eligibility" variant="secondary">Check eligibility <Icon name="arrow" size={16} /></ButtonLink>
     </div>
   </section>
 }
@@ -357,7 +360,7 @@ function Footer({ health }) {
     <div className="footer-main section-wrap">
       <div className="footer-brand-col"><Brand /><p>Helping people find a clearer path to public support.</p></div>
       <div className="footer-links"><span className="footer-heading">EXPLORE</span><a href="/">Home</a><a href="/explore">Explore schemes</a><a href="/#how-it-works">How it works</a></div>
-      <div className="footer-links"><span className="footer-heading">YOUR NEXT STEP</span><a href="/eligibility">Check eligibility</a><a href="/#features">What we’re building</a><HealthStatus health={health} /></div>
+      <div className="footer-links"><span className="footer-heading">YOUR NEXT STEP</span><a href="/eligibility">Check eligibility</a><a href="/documents">Document assistant</a><a href="/application">My application</a><HealthStatus health={health} /></div>
     </div>
     <div className="footer-bottom section-wrap"><span>© {new Date().getFullYear()} YojnaSetu</span><p>YojnaSetu is an independent guidance platform and is not affiliated with or endorsed by any government body. Eligibility guidance does not guarantee government approval. Always verify scheme details with the official source.</p></div>
   </footer>
@@ -386,6 +389,7 @@ function SchemeDetails({ scheme, loading, error, onClose, onRetry }) {
       </dl>
       <p className="scheme-disclaimer">Source check confirms that the linked source is official; it does not mean this product's summary or assessment is an approval. Confirm current conditions with the official source.</p>
       <a className="button button-secondary official-source-link" href={scheme.official_source_url} target="_blank" rel="noreferrer">Open official source <Icon name="arrow" size={16} /></a>
+      <ButtonLink href={`/eligibility?scheme_id=${encodeURIComponent(scheme.scheme_id)}`}>Check this scheme <Icon name="arrow" size={16} /></ButtonLink>
       <button type="button" className="button button-primary" onClick={onClose}>Close details</button>
       </>}
     </section>
@@ -395,13 +399,19 @@ function SchemeDetails({ scheme, loading, error, onClose, onRetry }) {
 function ExplorePage({ schemeState }) {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('All categories')
+  const [geography, setGeography] = useState('All locations')
+  const [department, setDepartment] = useState('All departments')
   const [detailState, setDetailState] = useState({ open: false, loading: false, scheme: null, schemeId: '', error: '' })
   const normalizedQuery = query.trim().toLowerCase()
   const categoryOptions = ['All categories', ...new Set(schemeState.schemes.map((scheme) => scheme.category))]
+  const geographyOptions = ['All locations', ...new Set(schemeState.schemes.map((scheme) => scheme.applicability).filter(Boolean))]
+  const departmentOptions = ['All departments', ...new Set(schemeState.schemes.map((scheme) => scheme.department).filter(Boolean))]
   const filteredSchemes = schemeState.schemes.filter((scheme) => {
     const matchesCategory = category === 'All categories' || scheme.category === category
+    const matchesGeography = geography === 'All locations' || scheme.applicability === geography
+    const matchesDepartment = department === 'All departments' || scheme.department === department
     const searchable = `${scheme.name} ${scheme.category} ${scheme.department} ${scheme.applicability} ${scheme.description}`.toLowerCase()
-    return matchesCategory && searchable.includes(normalizedQuery)
+    return matchesCategory && matchesGeography && matchesDepartment && searchable.includes(normalizedQuery)
   })
 
   async function loadSchemeDetails(schemeId) {
@@ -436,6 +446,10 @@ function ExplorePage({ schemeState }) {
         <div className="category-filters" role="group" aria-label="Filter schemes by category">
           {categoryOptions.map((item) => <button key={item} type="button" className={`filter-chip ${category === item ? 'filter-active' : ''}`} aria-pressed={category === item} onClick={() => setCategory(item)}>{item}</button>)}
         </div>
+        <div className="explore-extra-filters">
+          <label>Geography <select value={geography} onChange={(event) => setGeography(event.target.value)}>{geographyOptions.map((item) => <option key={item}>{item}</option>)}</select></label>
+          <label>Department <select value={department} onChange={(event) => setDepartment(event.target.value)}>{departmentOptions.map((item) => <option key={item}>{item}</option>)}</select></label>
+        </div>
         <div className="example-notice"><span className="label-dot" /> <strong>Source checked ≠ eligibility verified</strong><span>Only official source links are listed. Encoded rules cover a limited subset; unknown criteria stay undetermined.</span></div>
         <h2 className="visually-hidden" id="browse-heading">Scheme examples</h2>
         {schemeState.loading ? <p className="data-state" role="status">Loading scheme information…</p> : schemeState.error ? <div className="empty-results" role="alert"><h3>Scheme information is unavailable</h3><p>{schemeState.error}</p><button type="button" className="text-link" onClick={schemeState.reload}>Try again</button></div> : filteredSchemes.length ? <div className="browse-grid">
@@ -448,7 +462,7 @@ function ExplorePage({ schemeState }) {
             <p className="scheme-description">{scheme.description}</p>
             <button type="button" className="details-link" onClick={() => loadSchemeDetails(scheme.scheme_id)}>View Details <Icon name="arrow" size={16} /></button>
           </article>)}
-        </div> : <div className="empty-results"><span className="empty-icon"><Icon name="search" size={23} /></span><h3>No schemes found</h3><p>Try a different search term or choose another category.</p><button className="text-link" type="button" onClick={() => { setQuery(''); setCategory('All categories') }}>Clear filters</button></div>}
+        </div> : <div className="empty-results"><span className="empty-icon"><Icon name="search" size={23} /></span><h3>No schemes found</h3><p>Try a different search term or choose another filter.</p><button className="text-link" type="button" onClick={() => { setQuery(''); setCategory('All categories'); setGeography('All locations'); setDepartment('All departments') }}>Clear filters</button></div>}
       </section>
     </main>
     {detailState.open && <SchemeDetails {...detailState} onClose={() => setDetailState({ open: false, loading: false, scheme: null, schemeId: '', error: '' })} onRetry={() => loadSchemeDetails(detailState.schemeId)} />}
@@ -597,7 +611,7 @@ function EligibilityResults({ results, documentReadiness, schemes }) {
 
 const initialForm = { state: '', age: '', income: '', education: '', occupation: '', category: '' }
 
-function EligibilityPage({ schemes }) {
+function EligibilityPage({ schemes, navigate }) {
   const [step, setStep] = useState(1)
   const [form, setForm] = useState(() => {
     try {
@@ -620,7 +634,7 @@ function EligibilityPage({ schemes }) {
     } catch { return {} }
   })
   const [selectedSchemeId, setSelectedSchemeId] = useState(() => {
-    try { return JSON.parse(sessionStorage.getItem('yojnasetu-document-readiness') || '{}').scheme_id || '' } catch { return '' }
+    try { return new URLSearchParams(window.location.search).get('scheme_id') || JSON.parse(sessionStorage.getItem('yojnasetu-document-readiness') || '{}').scheme_id || '' } catch { return '' }
   })
   const [documentReadiness, setDocumentReadiness] = useState(() => {
     try { return JSON.parse(sessionStorage.getItem('yojnasetu-document-readiness') || 'null') } catch { return null }
@@ -694,6 +708,8 @@ function EligibilityPage({ schemes }) {
       }
       const data = await response.json()
       setResults(data.results ?? [])
+      sessionStorage.setItem('yojnasetu-selected-scheme', selectedSchemeId)
+      sessionStorage.setItem('yojnasetu-confirmed-profile', JSON.stringify(profile))
       setDocumentReadiness(JSON.parse(sessionStorage.getItem('yojnasetu-document-readiness') || 'null'))
       setComplete(true)
     } catch (error) {
@@ -743,7 +759,7 @@ function EligibilityPage({ schemes }) {
           documents={documentAnalyses}
           documentReadiness={documentReadiness}
         />
-        <ButtonLink href="/explore" variant="secondary">Explore schemes <Icon name="arrow" size={16} /></ButtonLink>
+        <div className="form-result-actions"><ButtonLink href="/documents" variant="secondary">Continue to Document Assistant <Icon name="arrow" size={16} /></ButtonLink><ButtonLink href="/application">Open My Application <Icon name="arrow" size={16} /></ButtonLink><button className="button button-secondary" type="button" onClick={() => { setComplete(false); setStep(1); setResults(null) }}>Edit answers</button></div>
       </div> : <>
         {step === 1 && <div className="form-step" aria-labelledby="step-one-title">
           <div className="form-step-heading"><span>STEP 1</span><h3 id="step-one-title">Where are you in your journey?</h3><p>Share any details you know. Missing answers remain unknown in the rule check.</p></div>
@@ -793,6 +809,43 @@ function EligibilityPage({ schemes }) {
   </main>
 }
 
+function DocumentAssistantPage({ schemes, navigate }) {
+  const [documents, setDocuments] = useState(() => {
+    try { return JSON.parse(sessionStorage.getItem('yojnasetu-document-analyses') || '[]') } catch { return [] }
+  })
+  const [profile] = useState(() => {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem('yojnasetu-confirmed-profile') || sessionStorage.getItem('yojnasetu-manual-profile') || '{}')
+      return { ...saved, annual_family_income_inr: saved.annual_family_income_inr ?? saved.income }
+    } catch { return {} }
+  })
+  return <main className="page-content">
+    <section className="page-intro section-wrap"><p className="eyebrow"><span className="eyebrow-line" /> REVIEW AND PREPARE</p><h1>Document<br /><span>Assistant.</span></h1><p>Review extracted details, compare information across your documents, and ask questions using available scheme documents. You stay in control of every correction.</p></section>
+    <div className="assistant-tabs section-wrap" aria-label="Document assistant sections"><a href="#upload-review">Upload and review</a><a href="#consistency-review">Consistency check</a><a href="#scheme-questions">Scheme questions</a></div>
+    <div id="upload-review"><DocumentIntelligence schemes={schemes} navigate={navigate} onDocumentsChange={setDocuments} /></div>
+    <section className="consistency-page-section section-wrap" id="consistency-review"><div className="section-heading"><div><p className="eyebrow">CROSS-DOCUMENT REVIEW</p><h2>Check details<br /><span>before you apply.</span></h2></div><p>Potential differences are surfaced for manual review. They do not change an eligibility outcome or imply document authenticity.</p></div><ConsistencyChecker initialProfile={profile} documents={documents} /></section>
+    <div id="scheme-questions"><AskSection schemes={schemes} /></div>
+    <div className="assistant-next-step section-wrap"><p>Ready to bring your information together?</p><ButtonLink href="/application">Open My Application <Icon name="arrow" size={16} /></ButtonLink></div>
+  </main>
+}
+
+function ApplicationPage({ schemes }) {
+  const [context] = useState(() => {
+    try {
+      const profile = JSON.parse(sessionStorage.getItem('yojnasetu-confirmed-profile') || sessionStorage.getItem('yojnasetu-manual-profile') || '{}')
+      const selectedSchemeId = sessionStorage.getItem('yojnasetu-selected-scheme') || JSON.parse(sessionStorage.getItem('yojnasetu-document-readiness') || '{}').scheme_id || ''
+      const profileSources = JSON.parse(sessionStorage.getItem('yojnasetu-profile-source') || '{}')
+      const documents = JSON.parse(sessionStorage.getItem('yojnasetu-document-analyses') || '[]')
+      const documentReadiness = JSON.parse(sessionStorage.getItem('yojnasetu-document-readiness') || 'null')
+      return { profile, selectedSchemeId, profileSources, documents, documentReadiness }
+    } catch { return { profile: {}, selectedSchemeId: '', profileSources: {}, documents: [], documentReadiness: null } }
+  })
+  const scheme = schemes.find((item) => item.scheme_id === context.selectedSchemeId)
+  if (!scheme) return <main className="page-content"><section className="page-intro section-wrap"><p className="eyebrow">MY APPLICATION</p><h1>Your preflight,<br /><span>when you’re ready.</span></h1><p>Start with an eligibility check to select a scheme and confirm the profile details for your report. Your information remains in this browser session.</p><ButtonLink href="/eligibility">Check Eligibility <Icon name="arrow" size={16} /></ButtonLink></section></main>
+  const initialProfile = { applicant_name: '', date_of_birth: '', age: '', address: '', state: '', annual_family_income_inr: '', education_level: '', occupation: '', category: '', certificate_type: '', issuing_authority: '', certificate_date: '', certificate_valid_until: '', certificate_number: '', ...context.profile }
+  return <main className="page-content"><section className="page-intro section-wrap"><p className="eyebrow"><span className="eyebrow-line" /> MY APPLICATION</p><h1>Application<br /><span>preflight.</span></h1><p>Bring together your current eligibility check, reviewed document information, consistency findings, and available source evidence. Regenerate after making corrections.</p></section><div className="section-wrap"><PreflightReport scheme={scheme} initialProfile={initialProfile} profileSources={context.profileSources} documents={context.documents} documentReadiness={context.documentReadiness} /></div></main>
+}
+
 export default function App() {
   const [health, setHealth] = useState({ state: 'checking' })
   const [schemeState, setSchemeState] = useState({ loading: true, error: '', schemes: [] })
@@ -819,7 +872,7 @@ export default function App() {
   }, [schemeReload])
 
   useEffect(() => {
-    document.title = route === '/explore' ? 'Explore Schemes | YojnaSetu' : route === '/eligibility' ? 'Eligibility Assessment | YojnaSetu' : 'YojnaSetu'
+    document.title = ({ '/explore': 'Explore Schemes | YojnaSetu', '/eligibility': 'Eligibility Assessment | YojnaSetu', '/documents': 'Document Assistant | YojnaSetu', '/application': 'My Application | YojnaSetu' })[route] || 'YojnaSetu'
     const hash = window.location.hash
     if (hash) window.setTimeout(() => document.querySelector(hash)?.scrollIntoView(), 0)
     else window.scrollTo(0, 0)
@@ -842,7 +895,7 @@ export default function App() {
     const anchor = event.target.closest('a[href]')
     if (!anchor) return
     const targetUrl = new URL(anchor.href, window.location.href)
-    if (targetUrl.origin !== window.location.origin || !['/', '/explore', '/eligibility'].includes(targetUrl.pathname.replace(/\/$/, '') || '/')) return
+    if (targetUrl.origin !== window.location.origin || !['/', '/explore', '/eligibility', '/documents', '/application'].includes(targetUrl.pathname.replace(/\/$/, '') || '/')) return
     event.preventDefault()
     window.history.pushState({}, '', `${targetUrl.pathname}${targetUrl.search}${targetUrl.hash}`)
     const nextRoute = targetUrl.pathname.replace(/\/$/, '') || '/'
@@ -853,9 +906,15 @@ export default function App() {
     }
   }
 
+  function navigate(path) {
+    window.history.pushState({}, '', path)
+    setRoute(path)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return <div className="app-root" onClick={handleNavigation}>
     <Header health={health} currentPath={route} />
-    {route === '/explore' ? <ExplorePage schemeState={{ ...schemeState, reload: () => setSchemeReload((value) => value + 1) }} /> : route === '/eligibility' ? <EligibilityPage schemes={schemeState.schemes} /> : <main><Hero /><HowItWorks /><Schemes schemeState={schemeState} /><Features /><AskSection schemes={schemeState.schemes} /><DocumentIntelligence schemes={schemeState.schemes} /><EligibilityPrompt /></main>}
+    {route === '/explore' ? <ExplorePage schemeState={{ ...schemeState, reload: () => setSchemeReload((value) => value + 1) }} /> : route === '/eligibility' ? <EligibilityPage schemes={schemeState.schemes} navigate={navigate} /> : route === '/documents' ? <DocumentAssistantPage schemes={schemeState.schemes} navigate={navigate} /> : route === '/application' ? <ApplicationPage schemes={schemeState.schemes} /> : <main><Hero /><HowItWorks /><Schemes schemeState={schemeState} /><Features /><EligibilityPrompt /></main>}
     <Footer health={health} />
   </div>
 }
