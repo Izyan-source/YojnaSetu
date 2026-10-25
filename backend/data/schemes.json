@@ -1,0 +1,118 @@
+[
+  {
+    "scheme_id": "atal-pension-yojana",
+    "name": "Atal Pension Yojana (APY)",
+    "department": "Pension Fund Regulatory and Development Authority (PFRDA)",
+    "applicability": "India-wide",
+    "category": "Financial Assistance",
+    "description": "A voluntary pension scheme for eligible Indian citizens, administered by PFRDA.",
+    "official_source_url": "https://www.pfrda.org.in/hi/w/faqs/atal-pension-yojana",
+    "source_verification_status": "official_source_checked",
+    "source_checked_at": "2026-10-25",
+    "documents": [
+      { "title": "Frequently Asked Questions - Atal Pension Yojana", "url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf" }
+    ],
+    "eligibility_rules": [
+      { "rule_id": "apy_min_age", "label": "Minimum joining age is 18", "attribute": "age", "operator": "min", "value": 18, "mandatory": true },
+      { "rule_id": "apy_max_age", "label": "Maximum joining age is 40 (inclusive)", "attribute": "age", "operator": "max", "value": 40, "mandatory": true },
+      { "rule_id": "apy_citizenship", "label": "Applicant is an Indian citizen", "attribute": "indian_citizen", "operator": "equals", "value": true, "mandatory": true },
+      { "rule_id": "apy_bank_account", "label": "Applicant has a savings bank or post office savings bank account", "attribute": "has_savings_bank_account", "operator": "equals", "value": true, "mandatory": true },
+      { "rule_id": "apy_not_taxpayer", "label": "Applicant is not or has not been an income-tax payer on the application date", "attribute": "is_income_taxpayer", "operator": "equals", "value": false, "mandatory": true }
+    ],
+    "required_documents": ["Savings bank or post office savings bank account details", "Nominee details"],
+    "documents_status": "official_source_checked",
+    "documents_note": "PFRDA describes a savings account as mandatory and nominee details as mandatory. Aadhaar is described as desirable for identification, with details to be submitted later if not provided at enrolment; it is not listed here as a mandatory document."
+  },
+  {
+    "scheme_id": "pm-ujjwala-yojana",
+    "name": "Pradhan Mantri Ujjwala Yojana (PMUY)",
+    "department": "Ministry of Petroleum and Natural Gas",
+    "applicability": "India-wide; application is made through an LPG distributor or the official online process",
+    "category": "Household Energy",
+    "description": "Provides eligible adult women from poor households with a deposit-free LPG connection, subject to scheme conditions.",
+    "official_source_url": "https://pmuy.gov.in/faq.html",
+    "source_verification_status": "official_source_checked",
+    "source_checked_at": "2026-10-25",
+    "documents": [
+      { "title": "Ujjwala KYC Application", "url": "https://pmuy.gov.in/documents/Ujjwala-KYC.pdf" }
+    ],
+    "eligibility_rules": [
+      { "rule_id": "pmuy_min_age", "label": "Applicant is at least 18 years old", "attribute": "age", "operator": "min", "value": 18, "mandatory": true },
+      { "rule_id": "pmuy_woman_applicant", "label": "Applicant is a woman", "attribute": "gender", "operator": "equals", "value": "female", "mandatory": true },
+      { "rule_id": "pmuy_poor_household", "label": "Poor-household deprivation declaration is satisfied", "attribute": "poor_household_declaration", "operator": "equals", "value": true, "mandatory": true },
+      { "rule_id": "pmuy_no_existing_lpg", "label": "No LPG connection is registered to a household member listed in the family composition document", "attribute": "household_has_existing_lpg_connection", "operator": "equals", "value": false, "mandatory": true }
+    ],
+    "required_documents": ["Completed KYC/application form and recent photograph", "Applicant Aadhaar", "Aadhaar of adult family members in the family-composition document", "Proof of address when required", "Applicant bank-account details", "Ration card or other accepted family-composition document", "Signed poor-household deprivation declaration"],
+    "documents_status": "official_source_checked",
+    "documents_note": "The official FAQ lists additional alternatives and migrant-applicant documents; consult the source for the current applicable list."
+  },
+  {
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "name": "National Means-cum-Merit Scholarship Scheme (NMMSS)",
+    "department": "Department of School Education and Literacy, Ministry of Education",
+    "applicability": "India-wide with State/UT-specific quotas and selection tests",
+    "category": "Education",
+    "description": "A scholarship programme for selected students continuing from Class VIII into Class IX in eligible government, government-aided, or local-body schools.",
+    "official_source_url": "https://dsel.education.gov.in/sites/default/files/NMMSS_Guidelines_22.pdf",
+    "source_verification_status": "official_source_checked",
+    "source_checked_at": "2026-10-25",
+    "documents": [
+      { "title": "National Means-cum-Merit Scholarship Scheme Revised Guidelines", "url": "https://dsel.education.gov.in/sites/default/files/NMMSS_Guidelines_22.pdf" }
+    ],
+    "eligibility_rules": [
+      { "rule_id": "nmmss_parental_income", "label": "Annual parental income from all sources is no more than ₹350,000", "attribute": "parental_income_inr", "operator": "max", "value": 350000, "mandatory": true },
+      { "rule_id": "nmmss_student", "label": "Applicant is a student", "attribute": "occupation", "operator": "equals", "value": "Student", "mandatory": true },
+      { "rule_id": "nmmss_class_viii", "label": "Applicant is in the Class VIII selection stage", "attribute": "school_class", "operator": "equals", "value": 8, "mandatory": true },
+      { "rule_id": "nmmss_school_type", "label": "Applicant attends a government, government-aided, or local-body school", "attribute": "school_type", "operator": "in", "value": ["government", "government_aided", "local_body"], "mandatory": true },
+      { "rule_id": "nmmss_selection_test", "label": "Applicant meets the applicable State/UT selection-test requirement", "attribute": "passed_nmmss_selection_test", "operator": "equals", "value": true, "mandatory": true },
+      { "rule_id": "nmmss_class_vii_marks", "label": "Applicant meets the Class VII marks requirement, including any applicable relaxation", "attribute": "meets_nmmss_marks_requirement", "operator": "equals", "value": true, "mandatory": true }
+    ],
+    "required_documents": [],
+    "documents_status": "unknown",
+    "documents_note": "The checked scheme guidelines describe State/UT selection and school conditions but do not establish a single uniform applicant document checklist. Check the relevant State/UT selection notice. The selection-test and Class VII marks rules are included but remain UNKNOWN because this form does not collect those results."
+  },
+  {
+    "scheme_id": "pm-kisan-samman-nidhi",
+    "name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+    "department": "Department of Agriculture and Farmers Welfare, Ministry of Agriculture and Farmers Welfare",
+    "applicability": "India-wide; State/UT governments identify eligible farmer families using land records",
+    "category": "Agriculture",
+    "description": "Income support for eligible landholding farmer families with cultivable land, subject to exclusions in the scheme guidelines.",
+    "official_source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+    "source_verification_status": "official_source_checked",
+    "source_checked_at": "2026-10-25",
+    "documents": [
+      { "title": "PM-KISAN Operational Guidelines", "url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf" }
+    ],
+    "eligibility_rules": [
+      { "rule_id": "pmkisan_cultivable_land", "label": "Farmer family owns cultivable land as recorded by the relevant State/UT", "attribute": "family_owns_cultivable_land", "operator": "equals", "value": true, "mandatory": true },
+      { "rule_id": "pmkisan_qualifying_land_record", "label": "Landholding meets the scheme's applicable land-record date and succession requirements", "attribute": "has_qualifying_pm_kisan_land_record", "operator": "equals", "value": true, "mandatory": true },
+      { "rule_id": "pmkisan_no_exclusion", "label": "No listed PM-KISAN exclusion applies to the farmer family", "attribute": "pm_kisan_exclusion_applies", "operator": "equals", "value": false, "mandatory": true }
+    ],
+    "required_documents": ["Applicant/family identification information as required by the State/UT process", "Bank-account details", "Landholding details verified through the applicable State/UT land records"],
+    "documents_status": "official_source_checked",
+    "documents_note": "The operational guidelines and FAQ describe State/UT land-record identification and required beneficiary details. This is not a definitive list of documents an individual must upload or present; confirm with the official portal and State/UT process."
+  },
+  {
+    "scheme_id": "pm-vidyalaxmi",
+    "name": "Pradhan Mantri Vidyalaxmi (PM-Vidyalaxmi)",
+    "department": "Department of Higher Education, Ministry of Education",
+    "applicability": "India-wide for students admitted to eligible Quality Higher Educational Institutions (QHEIs) in India",
+    "category": "Education",
+    "description": "Provides a collateral-free, guarantor-free education-loan product for students with merit-based admission to eligible QHEIs in India.",
+    "official_source_url": "https://www.education.gov.in/sites/upload_files/mhrd/files/document-reports/PM_Vidyalaxmi_Scheme_Guidelines.pdf",
+    "source_verification_status": "official_source_checked",
+    "source_checked_at": "2026-10-25",
+    "documents": [
+      { "title": "PM-Vidyalaxmi Scheme Guidelines", "url": "https://www.education.gov.in/sites/upload_files/mhrd/files/document-reports/PM_Vidyalaxmi_Scheme_Guidelines.pdf" }
+    ],
+    "eligibility_rules": [
+      { "rule_id": "vidyalaxmi_qhei_admission", "label": "Applicant is admitted to an eligible QHEI in India", "attribute": "admitted_to_eligible_qhei", "operator": "equals", "value": true, "mandatory": true },
+      { "rule_id": "vidyalaxmi_merit_admission", "label": "Admission is through merit or an open competitive examination, not management quota", "attribute": "admission_by_merit", "operator": "equals", "value": true, "mandatory": true },
+      { "rule_id": "vidyalaxmi_degree_or_diploma", "label": "Applicant is enrolled in a degree or diploma programme", "attribute": "programme_type", "operator": "in", "value": ["degree", "diploma"], "mandatory": true }
+    ],
+    "required_documents": [],
+    "documents_status": "unknown",
+    "documents_note": "The checked scheme guidelines explain the loan and interest-subvention conditions but do not provide a complete universal applicant document checklist. Follow the PM-Vidyalaxmi portal and participating lender's current application instructions. Income-based interest subvention is a separate benefit and is not calculated by this initial engine."
+  }
+]
