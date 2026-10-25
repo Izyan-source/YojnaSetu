@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import PreflightReport from './PreflightReport.jsx'
 
 const schemePresentation = {
   Education: { tone: 'teal', icon: 'book' },
@@ -300,6 +301,7 @@ function DocumentIntelligence({ schemes }) {
     sessionStorage.setItem('yojnasetu-document-readiness', JSON.stringify({
       scheme_id: schemeId,
       file_name: file?.name || '',
+      local_id: analysis?.local_id || '',
       document_type: analysis?.extracted_fields?.certificate_type?.value || file?.name || 'Uploaded document',
       mapped_requirement: selectedRequirement,
       mapping_confirmed: Boolean(selectedRequirement),
@@ -730,11 +732,17 @@ function EligibilityPage({ schemes }) {
       {!complete && <div className="assessment-scheme-select"><FormField id="assessment-scheme" label="Scheme to assess" error={errors.scheme} hint="Only encoded conditions for the selected scheme are evaluated.">{(describedBy) => <select id="assessment-scheme" value={selectedSchemeId} onChange={(event) => { setSelectedSchemeId(event.target.value); setErrors((current) => ({ ...current, scheme: '' })) }} aria-invalid={Boolean(errors.scheme)} aria-describedby={describedBy}><option value="">Choose a scheme</option>{schemes.map((scheme) => <option key={scheme.scheme_id} value={scheme.scheme_id}>{scheme.name}</option>)}</select>}</FormField></div>}
 
       {complete ? <div className="form-results-state">
-        <EligibilityResults results={results ?? []} documentReadiness={documentReadiness} schemes={schemes} />
-        <ConsistencyChecker initialProfile={{
-          applicant_name: '', date_of_birth: '', age: form.age, address: '', state: form.state,
-          annual_family_income_inr: form.income, certificate_type: '', issuing_authority: '', certificate_date: '', certificate_valid_until: '', certificate_number: '',
-        }} documents={documentAnalyses} />
+        <PreflightReport
+          scheme={schemes.find((item) => item.scheme_id === selectedSchemeId)}
+          initialProfile={{
+            applicant_name: '', date_of_birth: '', age: form.age, address: '', state: form.state,
+            annual_family_income_inr: form.income, education_level: form.education, occupation: form.occupation, category: form.category,
+            certificate_type: '', issuing_authority: '', certificate_date: '', certificate_valid_until: '', certificate_number: '',
+          }}
+          profileSources={profileSources}
+          documents={documentAnalyses}
+          documentReadiness={documentReadiness}
+        />
         <ButtonLink href="/explore" variant="secondary">Explore schemes <Icon name="arrow" size={16} /></ButtonLink>
       </div> : <>
         {step === 1 && <div className="form-step" aria-labelledby="step-one-title">
