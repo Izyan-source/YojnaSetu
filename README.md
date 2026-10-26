@@ -97,6 +97,16 @@ Existing limits: the form collects general applicant fields only, so uncollected
 
 Build the frontend with `cd frontend && npm run build`.
 
+## Rule-derived eligibility explanations
+
+Eligibility results and the preflight report share a **Why this result?** section. It joins the unchanged engine's PASS, FAIL, UNKNOWN outcomes and reasons to the selected scheme's rule metadata. It describes supported comparisons (`min`, `max`, `equals`, `in`, `state_in`) without reevaluating the applicant or changing the result. A mandatory FAIL remains decisive even when other conditions are UNKNOWN.
+
+Explanations use a snapshot of the submitted profile, available field origins, original document extractions, and scheme metadata. Original OCR values and confidence are shown separately; they are never substituted for missing answers. Editing a report value removes its older document-confirmed origin, and an older report/consistency draft with no reliable provenance is labelled accordingly.
+
+Limits are explicit: missing or unsupported metadata cannot support hypothetical outcomes. Boolean rules describe only the encoded yes/no comparison, not unencoded score thresholds, exceptions, evidence requirements, or dates. Scheme-specific fields absent from the current forms remain UNKNOWN and link back to official guidance. Annual family income is not substituted for parental income. No new required documents, citations, or eligibility decisions are generated.
+
+Run `cd frontend && npm test` for explanation and rendering tests. These tests require the existing Python 3 installation to obtain actual results from the backend rule engine; no new packages are needed. Print uses the existing report disclosure-expansion handler and includes the explanation source URLs.
+
 ## Frontend design system
 
 The interface uses warm paper, forest ink, sage surfaces, and a restrained saffron accent. Shared palette, typography, spacing, radius, and shadow tokens live in `frontend/src/tokens.css`; component and responsive styles live in `frontend/src/style.css`. Display type uses locally available Iowan/Palatino/Georgia, paired with the existing system sans-serif stack, with no external font or image dependency.

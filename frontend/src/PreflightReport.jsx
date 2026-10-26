@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import { RuleBadge, RuleLegend, ReportStatusCard } from './ui.jsx'
+import { ReportStatusCard } from './ui.jsx'
+import WhyThisResult from './WhyThisResult.jsx'
+import { createExplanationContext, describeOrigin, profileOrigin } from './eligibilityExplanations.js'
 
 const fieldLabels = {
   applicant_name: 'Applicant name', date_of_birth: 'Date of birth', age: 'Age', address: 'Address', state: 'State',
@@ -30,6 +32,15 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
   const [editing, setEditing] = useState(true)
   const [profile, setProfile] = useState(() => {
     try { return { ...initialProfile, ...JSON.parse(sessionStorage.getItem('yojnasetu-preflight-profile') || '{}') } } catch { return initialProfile }
+  })
+  const [profileOrigins, setProfileOrigins] = useState(() => {
+    // A stored report/consistency draft has no reliable field-level provenance.
+    // Do not carry an old document-confirmed badge onto an overwritten value.
+    let savedDraft = {}
+    try { savedDraft = JSON.parse(sessionStorage.getItem('yojnasetu-preflight-profile') || '{}') } catch { /* Use the available assessment origins. */ }
+    return Object.fromEntries(Object.keys(profile).map((field) => [field,
+      Object.hasOwn(savedDraft || {}, field) ? 'report-reviewed' : profileOrigin(profileSources, field),
+    ]))
   })
   const [report, setReport] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -63,6 +74,7 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
       sessionStorage.setItem('yojnasetu-preflight-profile', JSON.stringify(updated))
       return updated
     })
+    setProfileOrigins((current) => ({ ...current, [field]: 'report-entered' }))
     setDirty(true)
   }
 
@@ -91,6 +103,7 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
     if (eligibilityProfile.age !== undefined) eligibilityProfile.age = Number(eligibilityProfile.age)
     if (eligibilityProfile.annual_family_income_inr !== undefined) eligibilityProfile.annual_family_income_inr = Number(eligibilityProfile.annual_family_income_inr)
 
+    const explanationContext = createExplanationContext({ profile: eligibilityProfile, profileSources: profileOrigins, documents, scheme })
     const consistencyProfile = Object.fromEntries(Object.entries(confirmed).filter(([key]) => key in fieldLabels && !['education_level', 'occupation', 'category'].includes(key)))
     const docs = documents.map(({ filename, extracted_fields }) => ({ filename, extracted_fields }))
     try {
@@ -112,7 +125,7 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
 
       const selectedResult = eligibility.results?.[0]
       if (!selectedResult) throw new Error('The eligibility service returned no result for this scheme.')
-      setReport({ eligibility: selectedResult, consistency, evidence, profile: confirmed, generatedAt: new Date().toLocaleString() })
+      setReport({ eligibility: selectedResult, consistency, evidence, profile: confirmed, explanationContext, generatedAt: new Date().toLocaleString() })
       setDirty(false)
       setEditing(false)
     } catch (requestError) {
@@ -154,9 +167,7 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
       <div className="preflight-profile-heading"><div><h3>Confirm the profile for this report</h3><p>Values below are sent to the existing eligibility and consistency services when you generate the report. Blank values remain unknown.</p></div><button className="button button-primary" type="submit" disabled={loading}>{loading ? 'Generating report…' : report ? 'Regenerate report' : 'Generate report'}</button></div>
       <a className="text-link no-print" href="/documents#upload-review">Review or add documents</a>
       <div className="preflight-fields">{Object.entries(fieldLabels).map(([key, label]) => {
-        const sourceKey = ({ annual_family_income_inr: 'income', education_level: 'education' })[key] || key
-        const origin = profileSources[sourceKey]
-        const originLabel = origin === 'document-confirmed' ? 'Previously reviewed document value' : origin === 'manually-entered' ? 'Entered in the assessment' : profile[key] ? 'Review and confirm this value' : 'Not provided'
+        const originLabel = String(profile[key] ?? '').trim() !== '' ? describeOrigin(profileOrigins[key]) : 'Not provided'
         return <label key={key}>{label}<input type="text" value={profile[key] ?? ''} placeholder="Not provided" disabled={loading} onChange={(event) => updateProfile(key, event.target.value)} /><small>{originLabel}</small></label>
       })}</div>
       {error && <p className="api-error" role="alert">{error}</p>}
@@ -165,7 +176,7 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
     </form>
 
     {report && dirty && !editing && <p className="preflight-stale no-print" role="status">Profile changes need a regenerated report before printing.</p>}
-    {report && <nav className="report-navigation no-print" aria-label="Report sections"><a href="#report-outcome">Eligibility</a><a href="#report-documents">Documents</a><a href="#report-consistency">Consistency</a><a href="#report-sources">Sources</a><a href="#report-next-steps">Next steps</a></nav>}
+    {report && <nav className="report-navigation no-print" aria-label="Report sections"><a href="#report-outcome">Eligibility</a><a href="#report-rules">Why this result?</a><a href="#report-documents">Documents</a><a href="#report-consistency">Consistency</a><a href="#report-sources">Sources</a><a href="#report-next-steps">Next steps</a></nav>}
     {report && <div className={`preflight-content ${dirty ? 'report-stale' : ''}`}>
       <div className="preflight-meta"><span>Generated {report.generatedAt}</span><span>{documents.length} OCR document{documents.length === 1 ? '' : 's'} considered</span></div>
       <section className="report-scheme-card">
@@ -184,14 +195,14 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
         <ReportStatusCard label="Document readiness" value={requirements.length ? `${availableDocuments.length} of ${requirements.length} marked` : 'Checklist unavailable'} detail={requirements.length ? 'Marked available by you; authenticity is not verified.' : 'Confirm requirements with the official source.'} href="#report-documents" tone={missingDocuments.length ? 'attention' : 'neutral'} />
         <ReportStatusCard label="Consistency review" value={`${attentionFindings.length} to review`} detail="Includes missing or unverifiable information." href="#report-consistency" tone={attentionFindings.length ? 'attention' : 'neutral'} />
       </div>
-      <section id="report-rules" tabIndex={-1} className="report-block">
-        <h3>Eligibility checklist</h3>
-        <RuleLegend />
-        <div className="preflight-rule-list">{ruleResults.map((rule) => <details className="preflight-rule" key={rule.rule_id}>
-          <summary><RuleBadge status={rule.status} /><strong>{rule.label}</strong><span className="expand-hint">Details</span></summary>
-          <div><p>{rule.explanation}</p>{report.eligibility.source_references?.[0]?.url ? <a href={report.eligibility.source_references[0].url} target="_blank" rel="noreferrer">Rule source: {report.eligibility.source_references[0].name}</a> : <small>No official source reference is available for this rule.</small>}</div>
-        </details>)}</div>
-      </section>
+      <WhyThisResult id="report-rules" result={report.eligibility} context={report.explanationContext} report onReviewProfile={() => {
+        setEditing(true)
+        window.requestAnimationFrame(() => {
+          const form = document.getElementById('report-profile-form')
+          form?.scrollIntoView({ block: 'start' })
+          form?.querySelector('input')?.focus({ preventScroll: true })
+        })
+      }} />
 
       <section id="report-documents" tabIndex={-1} className="report-block">
         <h3>Document checklist</h3>

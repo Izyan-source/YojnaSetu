@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import PreflightReport from './PreflightReport.jsx'
 import { decodeSegment, useNavigation } from './navigation.js'
-import { Icon, Brand, ButtonLink, PageIntro, SourceBadge, RuleBadge, RuleLegend } from './ui.jsx'
+import { Icon, Brand, ButtonLink, PageIntro, SourceBadge } from './ui.jsx'
 import HomePage from './HomePage.jsx'
+import WhyThisResult from './WhyThisResult.jsx'
+import { createExplanationContext } from './eligibilityExplanations.js'
 
 const states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Andaman and Nicobar Islands', 'Chandigarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Lakshadweep', 'Puducherry']
 const educationLevels = ['No formal schooling', 'Primary', 'Secondary', 'Higher secondary', 'Diploma / vocational', 'Undergraduate', 'Postgraduate or above']
@@ -460,7 +462,7 @@ function ConsistencyChecker({ initialProfile, documents }) {
   </section>
 }
 
-function EligibilityResults({ results, documentReadiness, schemes }) {
+function EligibilityResults({ results, documentReadiness, schemes, explanationContext, onReviewProfile }) {
   return <div className="eligibility-results">
     <div className="results-intro" role="status" aria-live="polite"><span className="complete-mark"><Icon name="check" size={24} /></span><div><h3>Initial rule check complete</h3><p>This is a deterministic comparison against the limited rules encoded for each scheme. It is not official approval or a guarantee.</p></div></div>
     {results.map((result) => {
@@ -472,12 +474,10 @@ function EligibilityResults({ results, documentReadiness, schemes }) {
       const available = confirmedDocument ? [confirmedDocument] : []
       const missing = result.document_readiness.required_documents.filter((item) => !available.includes(item))
       const uncertain = submittedDocument && (!confirmedDocument || !documentForThisScheme) ? [submittedDocument.document_type] : []
-      const unknownRules = result.rule_results.filter((rule) => rule.status === 'UNKNOWN')
       return <article className="result-card" key={result.scheme_id}>
       <div className="result-card-heading"><div><p className="scheme-category">SCHEME RESULT · {scheme?.category}</p><h4>{result.name}</h4></div><span className={`result-status result-${result.status.toLowerCase()}`}>{result.status === 'POTENTIALLY_ELIGIBLE' ? 'Potentially eligible' : result.status === 'NOT_ELIGIBLE' ? 'Not eligible' : 'Undetermined'}</span></div>
       <p className="result-summary">{result.summary}</p>
-      {unknownRules.length > 0 && <div className="next-steps"><strong>Information still needed</strong><p>These encoded conditions could not be assessed. Add the details if you have them, then run the check again.</p><ul>{unknownRules.map((rule) => <li key={rule.rule_id}>{rule.label}</li>)}</ul></div>}
-      <RuleLegend /><div className="rule-results"><h5>Eligibility conditions · independent of document readiness</h5>{result.rule_results.map((rule) => <div className={`rule-result rule-row-${rule.status.toLowerCase()}`} key={rule.rule_id}><RuleBadge status={rule.status} /><div><strong>{rule.label}</strong><p>{rule.explanation}</p>{source?.url ? <a className="rule-source-link" href={source.url} target="_blank" rel="noreferrer">Official scheme source <Icon name="arrow" size={12} /></a> : <small>Official source reference unavailable.</small>}</div></div>)}</div>
+      <WhyThisResult id={`why-${result.scheme_id}`} result={result} context={explanationContext} onReviewProfile={onReviewProfile} />
       <div className="document-readiness"><h5>Document readiness · separate from eligibility</h5>{result.document_readiness.required_documents.length > 0 ? <><p>Documents are marked available only when you selected that item after reviewing your upload. This is not authenticity verification.</p><ul className="readiness-list">{available.map((document) => <li className="readiness-available" key={`available-${document}`}>Available here: {document}</li>)}{missing.map((document) => <li className="readiness-missing" key={`missing-${document}`}>Not provided for this check: {document}</li>)}{uncertain.map((document) => <li className="readiness-uncertain" key={`uncertain-${document}`}>{documentForThisScheme ? 'Uploaded, but not matched to a requirement:' : 'Uploaded for a different scheme; not matched to this checklist:'} {document}</li>)}</ul><p>{result.document_readiness.note}</p></> : <p>{scheme?.documents_note || 'No document checklist is encoded for this scheme.'}</p>}{submittedDocument?.quality_warnings?.some((warning) => /expired|validity/i.test(warning)) && <p className="expiry-note">{submittedDocument.quality_warnings.filter((warning) => /expired|validity/i.test(warning)).join(' ')}</p>}</div>
       <div className="result-source">{source && <><span>Source reference · {source.verification_status.replaceAll('_', ' ')}</span><a href={source.url} target="_blank" rel="noreferrer">Open official source <Icon name="arrow" size={14} /></a></>}</div>
       <SchemeFollowup schemeId={result.scheme_id} />
@@ -519,6 +519,7 @@ function EligibilityPage({ schemes }) {
   const [errors, setErrors] = useState({})
   const [complete, setComplete] = useState(false)
   const [results, setResults] = useState(null)
+  const [explanationContext, setExplanationContext] = useState(null)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
 
@@ -576,6 +577,9 @@ function EligibilityPage({ schemes }) {
       ...(form.occupation ? { occupation: form.occupation } : {}),
       ...(form.category ? { category: form.category } : {}),
     }
+    let explanationDocuments = []
+    try { explanationDocuments = JSON.parse(sessionStorage.getItem('yojnasetu-document-analyses') || '[]') } catch { /* No retained extraction is available. */ }
+    const submittedContext = createExplanationContext({ profile, profileSources, documents: explanationDocuments, scheme: schemes.find((item) => item.scheme_id === selectedSchemeId) })
     try {
       const response = await fetch('/api/eligibility/check', {
         method: 'POST',
@@ -588,6 +592,7 @@ function EligibilityPage({ schemes }) {
       }
       const data = await response.json()
       setResults(data.results ?? [])
+      setExplanationContext(submittedContext)
       sessionStorage.setItem('yojnasetu-selected-scheme', selectedSchemeId)
       sessionStorage.setItem('yojnasetu-confirmed-profile', JSON.stringify(profile))
       sessionStorage.removeItem('yojnasetu-preflight-profile')
@@ -625,7 +630,7 @@ function EligibilityPage({ schemes }) {
       {!complete && <div className="assessment-scheme-select"><FormField id="assessment-scheme" label="Scheme to assess" error={errors.scheme} hint="Only encoded conditions for the selected scheme are evaluated.">{(describedBy) => <select id="assessment-scheme" disabled={submitting} value={selectedSchemeId} onChange={(event) => { setSelectedSchemeId(event.target.value); setErrors((current) => ({ ...current, scheme: '' })) }} aria-invalid={Boolean(errors.scheme)} aria-describedby={describedBy}><option value="">Choose a scheme</option>{schemes.map((scheme) => <option key={scheme.scheme_id} value={scheme.scheme_id}>{scheme.name}</option>)}</select>}</FormField></div>}
 
       {complete ? <div className="form-results-state">
-        <EligibilityResults results={results} documentReadiness={documentReadiness} schemes={schemes} />
+        <EligibilityResults results={results} documentReadiness={documentReadiness} schemes={schemes} explanationContext={explanationContext} onReviewProfile={() => { setComplete(false); setStep(1); setResults(null); setExplanationContext(null) }} />
         <div className="form-result-actions"><ButtonLink href="/documents" variant="secondary">Continue to Document Assistant <Icon name="arrow" size={16} /></ButtonLink><ButtonLink href="/application">Open My Application <Icon name="arrow" size={16} /></ButtonLink><button className="button button-secondary" type="button" onClick={() => { setComplete(false); setStep(1); setResults(null) }}>Edit answers</button></div>
       </div> : <>
         {step === 1 && <div className="form-step" aria-labelledby="step-one-title">
