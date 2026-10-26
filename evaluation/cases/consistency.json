@@ -1,0 +1,321 @@
+[
+  {
+    "id": "name-normalized",
+    "field": "applicant_name",
+    "profile": {
+      "applicant_name": "Synthetic Alpha"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "applicant_name": {
+            "value": " SYNTHETIC   ALPHA ",
+            "confidence": 0.9,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "CONSISTENT"
+  },
+  {
+    "id": "date-normalized",
+    "field": "date_of_birth",
+    "profile": {
+      "date_of_birth": "1998-04-12"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "date_of_birth": {
+            "value": "12/04/1998",
+            "confidence": 0.9,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "CONSISTENT"
+  },
+  {
+    "id": "income-normalized",
+    "field": "annual_family_income_inr",
+    "profile": {
+      "annual_family_income_inr": "240000"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "annual_family_income_inr": {
+            "value": "INR 2,40,000",
+            "confidence": 0.9,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "CONSISTENT"
+  },
+  {
+    "id": "id-normalized",
+    "field": "certificate_number",
+    "profile": {
+      "certificate_number": "SYN-ALPHA-001"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "certificate_number": {
+            "value": "SYN ALPHA / 001",
+            "confidence": 0.9,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "CONSISTENT"
+  },
+  {
+    "id": "state-conflict",
+    "field": "state",
+    "profile": {
+      "state": "Maharashtra"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "state": {
+            "value": "Gujarat",
+            "confidence": 0.9,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "POTENTIAL_MISMATCH"
+  },
+  {
+    "id": "income-conflict",
+    "field": "annual_family_income_inr",
+    "profile": {
+      "annual_family_income_inr": "240000"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "annual_family_income_inr": {
+            "value": "350000",
+            "confidence": 0.9,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "POTENTIAL_MISMATCH"
+  },
+  {
+    "id": "age-conflict",
+    "field": "age",
+    "profile": {
+      "age": "25"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "age": {
+            "value": "18",
+            "confidence": 0.9,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "POTENTIAL_MISMATCH"
+  },
+  {
+    "id": "two-document-conflict",
+    "field": "state",
+    "profile": {
+      "state": "Assam"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "state": {
+            "value": "Assam",
+            "confidence": 0.9,
+            "source_page": 1
+          }
+        }
+      },
+      {
+        "filename": "synthetic-1.pdf",
+        "extracted_fields": {
+          "state": {
+            "value": "Gujarat",
+            "confidence": 0.9,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "POTENTIAL_MISMATCH"
+  },
+  {
+    "id": "low-confidence-conflict",
+    "field": "age",
+    "profile": {
+      "age": "25"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "age": {
+            "value": "18",
+            "confidence": 0.4,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "UNABLE_TO_VERIFY"
+  },
+  {
+    "id": "missing-confidence",
+    "field": "age",
+    "profile": {
+      "age": "25"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "age": {
+            "value": "25",
+            "confidence": null,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "UNABLE_TO_VERIFY"
+  },
+  {
+    "id": "invalid-date",
+    "field": "date_of_birth",
+    "profile": {
+      "date_of_birth": "1998-04-12"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "date_of_birth": {
+            "value": "not-a-date",
+            "confidence": 0.9,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "UNABLE_TO_VERIFY"
+  },
+  {
+    "id": "confidence-boundary",
+    "field": "age",
+    "profile": {
+      "age": "25"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "age": {
+            "value": "25",
+            "confidence": 0.7,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "CONSISTENT"
+  },
+  {
+    "id": "below-confidence-boundary",
+    "field": "age",
+    "profile": {
+      "age": "25"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "age": {
+            "value": "25",
+            "confidence": 0.699,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "UNABLE_TO_VERIFY"
+  },
+  {
+    "id": "missing-document-value",
+    "field": "age",
+    "profile": {
+      "age": "25"
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "age": {
+            "value": null,
+            "confidence": null,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "MISSING_INFORMATION"
+  },
+  {
+    "id": "missing-profile",
+    "field": "state",
+    "profile": {
+      "state": null
+    },
+    "documents": [
+      {
+        "filename": "synthetic-0.pdf",
+        "extracted_fields": {
+          "state": {
+            "value": "Assam",
+            "confidence": 0.9,
+            "source_page": 1
+          }
+        }
+      }
+    ],
+    "expected_status": "MISSING_INFORMATION"
+  },
+  {
+    "id": "no-documents",
+    "field": "age",
+    "profile": {
+      "age": "25"
+    },
+    "documents": [],
+    "expected_status": "MISSING_INFORMATION"
+  }
+]

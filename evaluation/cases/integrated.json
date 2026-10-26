@@ -1,0 +1,62 @@
+[
+  {
+    "id": "missing-age-confirmed",
+    "document_id": "beta",
+    "profile": {
+      "indian_citizen": true,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "confirmed_fields": [
+      "age"
+    ],
+    "expected_profile_only": "UNDETERMINED",
+    "expected_integrated": "POTENTIALLY_ELIGIBLE",
+    "expected_age_consistency": "MISSING_INFORMATION",
+    "question_id": "apy-age"
+  },
+  {
+    "id": "fail-unconfirmed-conflict",
+    "document_id": "beta",
+    "profile": {
+      "age": 16,
+      "indian_citizen": true,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "confirmed_fields": [],
+    "expected_profile_only": "NOT_ELIGIBLE",
+    "expected_integrated": "NOT_ELIGIBLE",
+    "expected_age_consistency": "POTENTIAL_MISMATCH",
+    "question_id": "apy-age"
+  },
+  {
+    "id": "pass-unconfirmed-conflict",
+    "document_id": "alpha",
+    "profile": {
+      "age": 25,
+      "indian_citizen": true,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "confirmed_fields": [],
+    "expected_profile_only": "POTENTIALLY_ELIGIBLE",
+    "expected_integrated": "POTENTIALLY_ELIGIBLE",
+    "expected_age_consistency": "POTENTIAL_MISMATCH",
+    "question_id": "apy-age"
+  },
+  {
+    "id": "missing-age-no-extraction",
+    "document_id": "no-fields",
+    "profile": {
+      "indian_citizen": true,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "confirmed_fields": [],
+    "expected_profile_only": "UNDETERMINED",
+    "expected_integrated": "UNDETERMINED",
+    "expected_age_consistency": "MISSING_INFORMATION",
+    "question_id": "apy-age"
+  }
+]

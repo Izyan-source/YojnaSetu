@@ -1,0 +1,70 @@
+[
+  {
+    "id": "alpha",
+    "text": "SYNTHETIC RESEARCH WORKSHEET - NOT AN ID\nIncome Certificate\nApplicant name: Synthetic Applicant Alpha\nDate of birth: 12/04/1998\nState: Maharashtra\nAnnual family income: INR 240,000\nCertificate number: SYN-ALPHA-001\nIssued by: Research Fixture Office\nDate of issue: 01/01/2025\nValid up to: 31/12/2030\nAddress: 10 Test Road, Sample Town",
+    "expected_fields": {
+      "applicant_name": "Synthetic Applicant Alpha",
+      "date_of_birth": "1998-04-12",
+      "age": "28",
+      "state": "Maharashtra",
+      "annual_family_income_inr": "240000",
+      "certificate_type": "Income Certificate",
+      "issuing_authority": "Research Fixture Office",
+      "certificate_date": "2025-01-01",
+      "certificate_valid_until": "2030-12-31",
+      "certificate_number": "SYN-ALPHA-001",
+      "address": "10 Test Road, Sample Town"
+    }
+  },
+  {
+    "id": "beta",
+    "text": "SYNTHETIC RESEARCH WORKSHEET - NOT AN ID\nApplicant name: Synthetic Applicant Beta\nDOB: 01-01-2008\nState: Gujarat\nAnnual income: Rs. 0\nReference number: SYN-BETA-002",
+    "expected_fields": {
+      "applicant_name": "Synthetic Applicant Beta",
+      "date_of_birth": "2008-01-01",
+      "age": "18",
+      "state": "Gujarat",
+      "annual_family_income_inr": "0",
+      "certificate_type": null,
+      "issuing_authority": null,
+      "certificate_date": null,
+      "certificate_valid_until": null,
+      "certificate_number": "SYN-BETA-002",
+      "address": null
+    }
+  },
+  {
+    "id": "gamma",
+    "text": "SYNTHETIC RESEARCH WORKSHEET - NOT AN ID\nName of applicant: Synthetic Applicant Gamma\nBirth date: 2000-12-31\nState: Assam\nAnnual income: INR 350001\nIssue date: 2025-01-01",
+    "expected_fields": {
+      "applicant_name": "Synthetic Applicant Gamma",
+      "date_of_birth": "2000-12-31",
+      "age": "25",
+      "state": "Assam",
+      "annual_family_income_inr": "350001",
+      "certificate_type": null,
+      "issuing_authority": null,
+      "certificate_date": "2025-01-01",
+      "certificate_valid_until": null,
+      "certificate_number": null,
+      "address": null
+    }
+  },
+  {
+    "id": "no-fields",
+    "text": "SYNTHETIC RESEARCH WORKSHEET - NOT AN ID\nThis sheet deliberately contains no applicant information.\nAll personal fields are absent. It is only a synthetic evaluation sample.",
+    "expected_fields": {
+      "applicant_name": null,
+      "date_of_birth": null,
+      "age": null,
+      "state": null,
+      "annual_family_income_inr": null,
+      "certificate_type": null,
+      "issuing_authority": null,
+      "certificate_date": null,
+      "certificate_valid_until": null,
+      "certificate_number": null,
+      "address": null
+    }
+  }
+]

@@ -1,0 +1,822 @@
+[
+  {
+    "id": "atal-pension-yojana/valid",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {
+      "age": 25,
+      "indian_citizen": true,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "apy_min_age": "PASS",
+      "apy_max_age": "PASS",
+      "apy_citizenship": "PASS",
+      "apy_bank_account": "PASS",
+      "apy_not_taxpayer": "PASS"
+    },
+    "rationale": "Explicit valid scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "atal-pension-yojana/lower-bound",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {
+      "age": 18,
+      "indian_citizen": true,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "apy_min_age": "PASS",
+      "apy_max_age": "PASS",
+      "apy_citizenship": "PASS",
+      "apy_bank_account": "PASS",
+      "apy_not_taxpayer": "PASS"
+    },
+    "rationale": "Explicit lower-bound scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "atal-pension-yojana/upper-bound",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {
+      "age": 40,
+      "indian_citizen": true,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "apy_min_age": "PASS",
+      "apy_max_age": "PASS",
+      "apy_citizenship": "PASS",
+      "apy_bank_account": "PASS",
+      "apy_not_taxpayer": "PASS"
+    },
+    "rationale": "Explicit upper-bound scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "atal-pension-yojana/below-min",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {
+      "age": 17,
+      "indian_citizen": true,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "apy_min_age": "FAIL",
+      "apy_max_age": "PASS",
+      "apy_citizenship": "PASS",
+      "apy_bank_account": "PASS",
+      "apy_not_taxpayer": "PASS"
+    },
+    "rationale": "Explicit below-min scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "atal-pension-yojana/above-max",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {
+      "age": 41,
+      "indian_citizen": true,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "apy_min_age": "PASS",
+      "apy_max_age": "FAIL",
+      "apy_citizenship": "PASS",
+      "apy_bank_account": "PASS",
+      "apy_not_taxpayer": "PASS"
+    },
+    "rationale": "Explicit above-max scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "atal-pension-yojana/zero-age",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {
+      "age": 0,
+      "indian_citizen": true,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "apy_min_age": "FAIL",
+      "apy_max_age": "PASS",
+      "apy_citizenship": "PASS",
+      "apy_bank_account": "PASS",
+      "apy_not_taxpayer": "PASS"
+    },
+    "rationale": "Explicit zero-age scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "atal-pension-yojana/null-age",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {
+      "age": null,
+      "indian_citizen": true,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "expected_status": "UNDETERMINED",
+    "expected_rules": {
+      "apy_min_age": "UNKNOWN",
+      "apy_max_age": "UNKNOWN",
+      "apy_citizenship": "PASS",
+      "apy_bank_account": "PASS",
+      "apy_not_taxpayer": "PASS"
+    },
+    "rationale": "Explicit null-age scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "atal-pension-yojana/not-citizen",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {
+      "age": 25,
+      "indian_citizen": false,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "apy_min_age": "PASS",
+      "apy_max_age": "PASS",
+      "apy_citizenship": "FAIL",
+      "apy_bank_account": "PASS",
+      "apy_not_taxpayer": "PASS"
+    },
+    "rationale": "Explicit not-citizen scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "atal-pension-yojana/no-account",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {
+      "age": 25,
+      "indian_citizen": true,
+      "has_savings_bank_account": false,
+      "is_income_taxpayer": false
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "apy_min_age": "PASS",
+      "apy_max_age": "PASS",
+      "apy_citizenship": "PASS",
+      "apy_bank_account": "FAIL",
+      "apy_not_taxpayer": "PASS"
+    },
+    "rationale": "Explicit no-account scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "atal-pension-yojana/taxpayer",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {
+      "age": 25,
+      "indian_citizen": true,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": true
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "apy_min_age": "PASS",
+      "apy_max_age": "PASS",
+      "apy_citizenship": "PASS",
+      "apy_bank_account": "PASS",
+      "apy_not_taxpayer": "FAIL"
+    },
+    "rationale": "Explicit taxpayer scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "atal-pension-yojana/missing-citizen",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {
+      "age": 25,
+      "indian_citizen": null,
+      "has_savings_bank_account": true,
+      "is_income_taxpayer": false
+    },
+    "expected_status": "UNDETERMINED",
+    "expected_rules": {
+      "apy_min_age": "PASS",
+      "apy_max_age": "PASS",
+      "apy_citizenship": "UNKNOWN",
+      "apy_bank_account": "PASS",
+      "apy_not_taxpayer": "PASS"
+    },
+    "rationale": "Explicit missing-citizen scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "atal-pension-yojana/all-missing",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {},
+    "expected_status": "UNDETERMINED",
+    "expected_rules": {
+      "apy_min_age": "UNKNOWN",
+      "apy_max_age": "UNKNOWN",
+      "apy_citizenship": "UNKNOWN",
+      "apy_bank_account": "UNKNOWN",
+      "apy_not_taxpayer": "UNKNOWN"
+    },
+    "rationale": "Explicit all-missing scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-ujjwala-yojana/valid",
+    "scheme_id": "pm-ujjwala-yojana",
+    "profile": {
+      "age": 25,
+      "gender": "female",
+      "poor_household_declaration": true,
+      "household_has_existing_lpg_connection": false
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "pmuy_min_age": "PASS",
+      "pmuy_woman_applicant": "PASS",
+      "pmuy_poor_household": "PASS",
+      "pmuy_no_existing_lpg": "PASS"
+    },
+    "rationale": "Explicit valid scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-ujjwala-yojana/lower-bound",
+    "scheme_id": "pm-ujjwala-yojana",
+    "profile": {
+      "age": 18,
+      "gender": "female",
+      "poor_household_declaration": true,
+      "household_has_existing_lpg_connection": false
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "pmuy_min_age": "PASS",
+      "pmuy_woman_applicant": "PASS",
+      "pmuy_poor_household": "PASS",
+      "pmuy_no_existing_lpg": "PASS"
+    },
+    "rationale": "Explicit lower-bound scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-ujjwala-yojana/below-min",
+    "scheme_id": "pm-ujjwala-yojana",
+    "profile": {
+      "age": 17,
+      "gender": "female",
+      "poor_household_declaration": true,
+      "household_has_existing_lpg_connection": false
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "pmuy_min_age": "FAIL",
+      "pmuy_woman_applicant": "PASS",
+      "pmuy_poor_household": "PASS",
+      "pmuy_no_existing_lpg": "PASS"
+    },
+    "rationale": "Explicit below-min scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-ujjwala-yojana/gender-fail",
+    "scheme_id": "pm-ujjwala-yojana",
+    "profile": {
+      "age": 25,
+      "gender": "male",
+      "poor_household_declaration": true,
+      "household_has_existing_lpg_connection": false
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "pmuy_min_age": "PASS",
+      "pmuy_woman_applicant": "FAIL",
+      "pmuy_poor_household": "PASS",
+      "pmuy_no_existing_lpg": "PASS"
+    },
+    "rationale": "Explicit gender-fail scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-ujjwala-yojana/case-normalization",
+    "scheme_id": "pm-ujjwala-yojana",
+    "profile": {
+      "age": 25,
+      "gender": " FEMALE ",
+      "poor_household_declaration": true,
+      "household_has_existing_lpg_connection": false
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "pmuy_min_age": "PASS",
+      "pmuy_woman_applicant": "PASS",
+      "pmuy_poor_household": "PASS",
+      "pmuy_no_existing_lpg": "PASS"
+    },
+    "rationale": "Explicit case-normalization scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-ujjwala-yojana/declaration-fail",
+    "scheme_id": "pm-ujjwala-yojana",
+    "profile": {
+      "age": 25,
+      "gender": "female",
+      "poor_household_declaration": false,
+      "household_has_existing_lpg_connection": false
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "pmuy_min_age": "PASS",
+      "pmuy_woman_applicant": "PASS",
+      "pmuy_poor_household": "FAIL",
+      "pmuy_no_existing_lpg": "PASS"
+    },
+    "rationale": "Explicit declaration-fail scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-ujjwala-yojana/existing-lpg",
+    "scheme_id": "pm-ujjwala-yojana",
+    "profile": {
+      "age": 25,
+      "gender": "female",
+      "poor_household_declaration": true,
+      "household_has_existing_lpg_connection": true
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "pmuy_min_age": "PASS",
+      "pmuy_woman_applicant": "PASS",
+      "pmuy_poor_household": "PASS",
+      "pmuy_no_existing_lpg": "FAIL"
+    },
+    "rationale": "Explicit existing-lpg scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-ujjwala-yojana/all-missing",
+    "scheme_id": "pm-ujjwala-yojana",
+    "profile": {},
+    "expected_status": "UNDETERMINED",
+    "expected_rules": {
+      "pmuy_min_age": "UNKNOWN",
+      "pmuy_woman_applicant": "UNKNOWN",
+      "pmuy_poor_household": "UNKNOWN",
+      "pmuy_no_existing_lpg": "UNKNOWN"
+    },
+    "rationale": "Explicit all-missing scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "national-means-cum-merit-scholarship/income-boundary",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "profile": {
+      "parental_income_inr": 350000,
+      "occupation": "Student",
+      "school_class": 8,
+      "school_type": "government",
+      "passed_nmmss_selection_test": true,
+      "meets_nmmss_marks_requirement": true
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "nmmss_parental_income": "PASS",
+      "nmmss_student": "PASS",
+      "nmmss_class_viii": "PASS",
+      "nmmss_school_type": "PASS",
+      "nmmss_selection_test": "PASS",
+      "nmmss_class_vii_marks": "PASS"
+    },
+    "rationale": "Explicit income-boundary scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "national-means-cum-merit-scholarship/below-income",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "profile": {
+      "parental_income_inr": 349999,
+      "occupation": "Student",
+      "school_class": 8,
+      "school_type": "government",
+      "passed_nmmss_selection_test": true,
+      "meets_nmmss_marks_requirement": true
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "nmmss_parental_income": "PASS",
+      "nmmss_student": "PASS",
+      "nmmss_class_viii": "PASS",
+      "nmmss_school_type": "PASS",
+      "nmmss_selection_test": "PASS",
+      "nmmss_class_vii_marks": "PASS"
+    },
+    "rationale": "Explicit below-income scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "national-means-cum-merit-scholarship/above-income",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "profile": {
+      "parental_income_inr": 350001,
+      "occupation": "Student",
+      "school_class": 8,
+      "school_type": "government",
+      "passed_nmmss_selection_test": true,
+      "meets_nmmss_marks_requirement": true
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "nmmss_parental_income": "FAIL",
+      "nmmss_student": "PASS",
+      "nmmss_class_viii": "PASS",
+      "nmmss_school_type": "PASS",
+      "nmmss_selection_test": "PASS",
+      "nmmss_class_vii_marks": "PASS"
+    },
+    "rationale": "Explicit above-income scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "national-means-cum-merit-scholarship/zero-income",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "profile": {
+      "parental_income_inr": 0,
+      "occupation": "Student",
+      "school_class": 8,
+      "school_type": "government",
+      "passed_nmmss_selection_test": true,
+      "meets_nmmss_marks_requirement": true
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "nmmss_parental_income": "PASS",
+      "nmmss_student": "PASS",
+      "nmmss_class_viii": "PASS",
+      "nmmss_school_type": "PASS",
+      "nmmss_selection_test": "PASS",
+      "nmmss_class_vii_marks": "PASS"
+    },
+    "rationale": "Explicit zero-income scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "national-means-cum-merit-scholarship/family-not-parental",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "profile": {
+      "parental_income_inr": null,
+      "occupation": "Student",
+      "school_class": 8,
+      "school_type": "government",
+      "passed_nmmss_selection_test": true,
+      "meets_nmmss_marks_requirement": true,
+      "annual_family_income_inr": 100000
+    },
+    "expected_status": "UNDETERMINED",
+    "expected_rules": {
+      "nmmss_parental_income": "UNKNOWN",
+      "nmmss_student": "PASS",
+      "nmmss_class_viii": "PASS",
+      "nmmss_school_type": "PASS",
+      "nmmss_selection_test": "PASS",
+      "nmmss_class_vii_marks": "PASS"
+    },
+    "rationale": "Explicit family-not-parental scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "national-means-cum-merit-scholarship/not-student",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "profile": {
+      "parental_income_inr": 350000,
+      "occupation": "Employed",
+      "school_class": 8,
+      "school_type": "government",
+      "passed_nmmss_selection_test": true,
+      "meets_nmmss_marks_requirement": true
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "nmmss_parental_income": "PASS",
+      "nmmss_student": "FAIL",
+      "nmmss_class_viii": "PASS",
+      "nmmss_school_type": "PASS",
+      "nmmss_selection_test": "PASS",
+      "nmmss_class_vii_marks": "PASS"
+    },
+    "rationale": "Explicit not-student scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "national-means-cum-merit-scholarship/wrong-class",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "profile": {
+      "parental_income_inr": 350000,
+      "occupation": "Student",
+      "school_class": 9,
+      "school_type": "government",
+      "passed_nmmss_selection_test": true,
+      "meets_nmmss_marks_requirement": true
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "nmmss_parental_income": "PASS",
+      "nmmss_student": "PASS",
+      "nmmss_class_viii": "FAIL",
+      "nmmss_school_type": "PASS",
+      "nmmss_selection_test": "PASS",
+      "nmmss_class_vii_marks": "PASS"
+    },
+    "rationale": "Explicit wrong-class scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "national-means-cum-merit-scholarship/private-school",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "profile": {
+      "parental_income_inr": 350000,
+      "occupation": "Student",
+      "school_class": 8,
+      "school_type": "private",
+      "passed_nmmss_selection_test": true,
+      "meets_nmmss_marks_requirement": true
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "nmmss_parental_income": "PASS",
+      "nmmss_student": "PASS",
+      "nmmss_class_viii": "PASS",
+      "nmmss_school_type": "FAIL",
+      "nmmss_selection_test": "PASS",
+      "nmmss_class_vii_marks": "PASS"
+    },
+    "rationale": "Explicit private-school scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "national-means-cum-merit-scholarship/aided-school",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "profile": {
+      "parental_income_inr": 350000,
+      "occupation": "Student",
+      "school_class": 8,
+      "school_type": "government_aided",
+      "passed_nmmss_selection_test": true,
+      "meets_nmmss_marks_requirement": true
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "nmmss_parental_income": "PASS",
+      "nmmss_student": "PASS",
+      "nmmss_class_viii": "PASS",
+      "nmmss_school_type": "PASS",
+      "nmmss_selection_test": "PASS",
+      "nmmss_class_vii_marks": "PASS"
+    },
+    "rationale": "Explicit aided-school scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "national-means-cum-merit-scholarship/test-fail",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "profile": {
+      "parental_income_inr": 350000,
+      "occupation": "Student",
+      "school_class": 8,
+      "school_type": "government",
+      "passed_nmmss_selection_test": false,
+      "meets_nmmss_marks_requirement": true
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "nmmss_parental_income": "PASS",
+      "nmmss_student": "PASS",
+      "nmmss_class_viii": "PASS",
+      "nmmss_school_type": "PASS",
+      "nmmss_selection_test": "FAIL",
+      "nmmss_class_vii_marks": "PASS"
+    },
+    "rationale": "Explicit test-fail scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "national-means-cum-merit-scholarship/marks-fail",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "profile": {
+      "parental_income_inr": 350000,
+      "occupation": "Student",
+      "school_class": 8,
+      "school_type": "government",
+      "passed_nmmss_selection_test": true,
+      "meets_nmmss_marks_requirement": false
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "nmmss_parental_income": "PASS",
+      "nmmss_student": "PASS",
+      "nmmss_class_viii": "PASS",
+      "nmmss_school_type": "PASS",
+      "nmmss_selection_test": "PASS",
+      "nmmss_class_vii_marks": "FAIL"
+    },
+    "rationale": "Explicit marks-fail scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "national-means-cum-merit-scholarship/all-missing",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "profile": {},
+    "expected_status": "UNDETERMINED",
+    "expected_rules": {
+      "nmmss_parental_income": "UNKNOWN",
+      "nmmss_student": "UNKNOWN",
+      "nmmss_class_viii": "UNKNOWN",
+      "nmmss_school_type": "UNKNOWN",
+      "nmmss_selection_test": "UNKNOWN",
+      "nmmss_class_vii_marks": "UNKNOWN"
+    },
+    "rationale": "Explicit all-missing scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-kisan-samman-nidhi/valid",
+    "scheme_id": "pm-kisan-samman-nidhi",
+    "profile": {
+      "family_owns_cultivable_land": true,
+      "has_qualifying_pm_kisan_land_record": true,
+      "pm_kisan_exclusion_applies": false
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "pmkisan_cultivable_land": "PASS",
+      "pmkisan_qualifying_land_record": "PASS",
+      "pmkisan_no_exclusion": "PASS"
+    },
+    "rationale": "Explicit valid scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-kisan-samman-nidhi/no-land",
+    "scheme_id": "pm-kisan-samman-nidhi",
+    "profile": {
+      "family_owns_cultivable_land": false,
+      "has_qualifying_pm_kisan_land_record": true,
+      "pm_kisan_exclusion_applies": false
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "pmkisan_cultivable_land": "FAIL",
+      "pmkisan_qualifying_land_record": "PASS",
+      "pmkisan_no_exclusion": "PASS"
+    },
+    "rationale": "Explicit no-land scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-kisan-samman-nidhi/record-fail",
+    "scheme_id": "pm-kisan-samman-nidhi",
+    "profile": {
+      "family_owns_cultivable_land": true,
+      "has_qualifying_pm_kisan_land_record": false,
+      "pm_kisan_exclusion_applies": false
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "pmkisan_cultivable_land": "PASS",
+      "pmkisan_qualifying_land_record": "FAIL",
+      "pmkisan_no_exclusion": "PASS"
+    },
+    "rationale": "Explicit record-fail scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-kisan-samman-nidhi/excluded",
+    "scheme_id": "pm-kisan-samman-nidhi",
+    "profile": {
+      "family_owns_cultivable_land": true,
+      "has_qualifying_pm_kisan_land_record": true,
+      "pm_kisan_exclusion_applies": true
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "pmkisan_cultivable_land": "PASS",
+      "pmkisan_qualifying_land_record": "PASS",
+      "pmkisan_no_exclusion": "FAIL"
+    },
+    "rationale": "Explicit excluded scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-kisan-samman-nidhi/unconfirmed-record",
+    "scheme_id": "pm-kisan-samman-nidhi",
+    "profile": {
+      "family_owns_cultivable_land": true,
+      "has_qualifying_pm_kisan_land_record": null,
+      "pm_kisan_exclusion_applies": false
+    },
+    "expected_status": "UNDETERMINED",
+    "expected_rules": {
+      "pmkisan_cultivable_land": "PASS",
+      "pmkisan_qualifying_land_record": "UNKNOWN",
+      "pmkisan_no_exclusion": "PASS"
+    },
+    "rationale": "Explicit unconfirmed-record scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-kisan-samman-nidhi/all-missing",
+    "scheme_id": "pm-kisan-samman-nidhi",
+    "profile": {},
+    "expected_status": "UNDETERMINED",
+    "expected_rules": {
+      "pmkisan_cultivable_land": "UNKNOWN",
+      "pmkisan_qualifying_land_record": "UNKNOWN",
+      "pmkisan_no_exclusion": "UNKNOWN"
+    },
+    "rationale": "Explicit all-missing scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-vidyalaxmi/degree",
+    "scheme_id": "pm-vidyalaxmi",
+    "profile": {
+      "admitted_to_eligible_qhei": true,
+      "admission_by_merit": true,
+      "programme_type": "degree"
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "vidyalaxmi_qhei_admission": "PASS",
+      "vidyalaxmi_merit_admission": "PASS",
+      "vidyalaxmi_degree_or_diploma": "PASS"
+    },
+    "rationale": "Explicit degree scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-vidyalaxmi/diploma",
+    "scheme_id": "pm-vidyalaxmi",
+    "profile": {
+      "admitted_to_eligible_qhei": true,
+      "admission_by_merit": true,
+      "programme_type": "diploma"
+    },
+    "expected_status": "POTENTIALLY_ELIGIBLE",
+    "expected_rules": {
+      "vidyalaxmi_qhei_admission": "PASS",
+      "vidyalaxmi_merit_admission": "PASS",
+      "vidyalaxmi_degree_or_diploma": "PASS"
+    },
+    "rationale": "Explicit diploma scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-vidyalaxmi/ineligible-institution",
+    "scheme_id": "pm-vidyalaxmi",
+    "profile": {
+      "admitted_to_eligible_qhei": false,
+      "admission_by_merit": true,
+      "programme_type": "degree"
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "vidyalaxmi_qhei_admission": "FAIL",
+      "vidyalaxmi_merit_admission": "PASS",
+      "vidyalaxmi_degree_or_diploma": "PASS"
+    },
+    "rationale": "Explicit ineligible-institution scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-vidyalaxmi/non-merit",
+    "scheme_id": "pm-vidyalaxmi",
+    "profile": {
+      "admitted_to_eligible_qhei": true,
+      "admission_by_merit": false,
+      "programme_type": "degree"
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "vidyalaxmi_qhei_admission": "PASS",
+      "vidyalaxmi_merit_admission": "FAIL",
+      "vidyalaxmi_degree_or_diploma": "PASS"
+    },
+    "rationale": "Explicit non-merit scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-vidyalaxmi/wrong-programme",
+    "scheme_id": "pm-vidyalaxmi",
+    "profile": {
+      "admitted_to_eligible_qhei": true,
+      "admission_by_merit": true,
+      "programme_type": "certificate"
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "vidyalaxmi_qhei_admission": "PASS",
+      "vidyalaxmi_merit_admission": "PASS",
+      "vidyalaxmi_degree_or_diploma": "FAIL"
+    },
+    "rationale": "Explicit wrong-programme scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "pm-vidyalaxmi/all-missing",
+    "scheme_id": "pm-vidyalaxmi",
+    "profile": {},
+    "expected_status": "UNDETERMINED",
+    "expected_rules": {
+      "vidyalaxmi_qhei_admission": "UNKNOWN",
+      "vidyalaxmi_merit_admission": "UNKNOWN",
+      "vidyalaxmi_degree_or_diploma": "UNKNOWN"
+    },
+    "rationale": "Explicit all-missing scenario against the recorded rule conditions; no official approval claim."
+  },
+  {
+    "id": "apy-fail-plus-unknown",
+    "scheme_id": "atal-pension-yojana",
+    "profile": {
+      "age": 16
+    },
+    "expected_status": "NOT_ELIGIBLE",
+    "expected_rules": {
+      "apy_min_age": "FAIL",
+      "apy_max_age": "PASS",
+      "apy_citizenship": "UNKNOWN",
+      "apy_bank_account": "UNKNOWN",
+      "apy_not_taxpayer": "UNKNOWN"
+    },
+    "rationale": "Mandatory minimum-age failure dominates missing citizenship, account and taxpayer answers."
+  }
+]

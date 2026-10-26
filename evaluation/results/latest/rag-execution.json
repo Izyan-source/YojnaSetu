@@ -1,0 +1,529 @@
+{
+  "status": "completed",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "min_similarity": 0.38,
+  "rows": [
+    {
+      "id": "apy-age",
+      "response": {
+        "status": "ANSWERED",
+        "answer": "The available source text states:\n\nThe subscribers are required to contribute the prescribed contribution amount from the age of joining APY till age 60 to enjoy the triple benefits.\n\nAPY is open to all citizens of India who fulfil the following eligibility criteria: - (i) The age of an individual should be between 18 and 40 years.\n\nHowever, all the eligible family members of the subscribers falling under the age bracket of 18- 40 years can open their individual APY Account.",
+        "sources": [
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 1,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": ",000/- or 3,000/- or 4,000 or 5,000/- per month will start after attaining the age of 60 years, depending on the contributions made by the subscribers for their chosen pension amount. 3. Who can subscribe to APY? APY is open to all citizens of India who fulfil the following eligibility criteria: - (i) The age of an individual should be between 18 and 40 years. (ii) He / She should have a savings bank account/ post office savings bank account. (iii) From 1st October, 2022, any Indian citizen who is or has been an income-tax payer under the Income-tax Act, 1961, as on the date of application will not be eligible to open a new APY account. The prospective applicants may provide a mobile number to the bank during their enrolments under APY to receive periodic updates on their APY account as well as on the scheme. Aadhaar may also be provided at the time of enrolment as the APY is notified for the same. 4 What is the procedure for opening APY Account? Approach the bank branch/ post office",
+            "similarity": 0.6337
+          },
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 3,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": "there any provision of default nominee or blood relation? If the subscriber is unmarried they can nominate any other person as nominee but they have to provide spouse details after marriage. If married, the spouse will be the default nominee. The Aadhaar details of spouse and nominees may be provided. 15 How many APY accounts I can open? An individual can open only one APY account. Multiple APY accounts are not permitted . However, all the eligible family members of the subscribers falling under the age bracket of 18- 40 years can open their individual APY Account. 16 Can minor open APY account? No. A minor cannot open an APY account. 17 If I have completed 40 years, can I join Atal Pension Yojana? A person can join APY till his/ her 40th birthday. For example, if person \u2018X\u2019 becomes 40 years old on 1 st January 2023, then, he/she is eligible to join APY till 1 st January 2023 and becomes ineligible from 2nd January 2023 to join the scheme. 18. Whether NRI is eligible to open APY",
+            "similarity": 0.6069
+          },
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 1,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": "be provided at the time of enrolment as the APY is notified for the same. 4 What is the procedure for opening APY Account? Approach the bank branch/ post office where the individual\u2019s savings bank account is held or open a savings account in bank or post office if the individual doesn\u2019t have one. 5 Can an Income-tax payer open new APY account? No, from 1 st October 2022, any citizen who is or has been an income-tax payer (Income-tax Act,1961), shall not be eligible to open new APY account. 6 Any effect on existing APY subscribers or subscribers joining APY on or before 30 th September, 2022 who are income-tax payers? No. The subscribers, who have joined on or before 30th September, 2022, irrespective of their income tax payee status, are eligible to continue their Atal Pension Yojana account and make contributions for availing of benefits provided under the scheme.",
+            "similarity": 0.5136
+          },
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 2,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": "e demise of both the subscriber and the spouse, the nominee of the subscriber shall be entitled to receive the pension wealth, as accumulated till age 60 of the subscriber. The subscribers are required to contribute the prescribed contribution amount from the age of joining APY till age 60 to enjoy the triple benefits. 11. Whether Aadhaar Number is compulsory for joining the scheme?",
+            "similarity": 0.5117
+          }
+        ],
+        "notice": "Extractive answer based only on retrieved text. Confirm details in the cited official document."
+      },
+      "retrieved": [
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 1,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 1,
+          "text": ",000/- or 3,000/- or 4,000 or 5,000/- per month will start after attaining the age of 60 years, depending on the contributions made by the subscribers for their chosen pension amount. 3. Who can subscribe to APY? APY is open to all citizens of India who fulfil the following eligibility criteria: - (i) The age of an individual should be between 18 and 40 years. (ii) He / She should have a savings bank account/ post office savings bank account. (iii) From 1st October, 2022, any Indian citizen who is or has been an income-tax payer under the Income-tax Act, 1961, as on the date of application will not be eligible to open a new APY account. The prospective applicants may provide a mobile number to the bank during their enrolments under APY to receive periodic updates on their APY account as well as on the scheme. Aadhaar may also be provided at the time of enrolment as the APY is notified for the same. 4 What is the procedure for opening APY Account? Approach the bank branch/ post office",
+          "similarity": 0.633722658279569
+        },
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 3,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 1,
+          "text": "there any provision of default nominee or blood relation? If the subscriber is unmarried they can nominate any other person as nominee but they have to provide spouse details after marriage. If married, the spouse will be the default nominee. The Aadhaar details of spouse and nominees may be provided. 15 How many APY accounts I can open? An individual can open only one APY account. Multiple APY accounts are not permitted . However, all the eligible family members of the subscribers falling under the age bracket of 18- 40 years can open their individual APY Account. 16 Can minor open APY account? No. A minor cannot open an APY account. 17 If I have completed 40 years, can I join Atal Pension Yojana? A person can join APY till his/ her 40th birthday. For example, if person \u2018X\u2019 becomes 40 years old on 1 st January 2023, then, he/she is eligible to join APY till 1 st January 2023 and becomes ineligible from 2nd January 2023 to join the scheme. 18. Whether NRI is eligible to open APY",
+          "similarity": 0.6068806741765237
+        },
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 1,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 2,
+          "text": "be provided at the time of enrolment as the APY is notified for the same. 4 What is the procedure for opening APY Account? Approach the bank branch/ post office where the individual\u2019s savings bank account is held or open a savings account in bank or post office if the individual doesn\u2019t have one. 5 Can an Income-tax payer open new APY account? No, from 1 st October 2022, any citizen who is or has been an income-tax payer (Income-tax Act,1961), shall not be eligible to open new APY account. 6 Any effect on existing APY subscribers or subscribers joining APY on or before 30 th September, 2022 who are income-tax payers? No. The subscribers, who have joined on or before 30th September, 2022, irrespective of their income tax payee status, are eligible to continue their Atal Pension Yojana account and make contributions for availing of benefits provided under the scheme.",
+          "similarity": 0.5136107853457049
+        },
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 2,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 3,
+          "text": "e demise of both the subscriber and the spouse, the nominee of the subscriber shall be entitled to receive the pension wealth, as accumulated till age 60 of the subscriber. The subscribers are required to contribute the prescribed contribution amount from the age of joining APY till age 60 to enjoy the triple benefits. 11. Whether Aadhaar Number is compulsory for joining the scheme?",
+          "similarity": 0.5116774212878027
+        }
+      ]
+    },
+    {
+      "id": "apy-account",
+      "response": {
+        "status": "ANSWERED",
+        "answer": "The available source text states:\n\nThe prospective applicants may provide a mobile number to the bank during their enrolments under APY to receive periodic updates on their APY account as well as on the scheme.\n\nWho can subscribe to APY?\n\n(ii) He / She should have a savings bank account/ post office savings bank account.",
+        "sources": [
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 1,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": ",000/- or 3,000/- or 4,000 or 5,000/- per month will start after attaining the age of 60 years, depending on the contributions made by the subscribers for their chosen pension amount. 3. Who can subscribe to APY? APY is open to all citizens of India who fulfil the following eligibility criteria: - (i) The age of an individual should be between 18 and 40 years. (ii) He / She should have a savings bank account/ post office savings bank account. (iii) From 1st October, 2022, any Indian citizen who is or has been an income-tax payer under the Income-tax Act, 1961, as on the date of application will not be eligible to open a new APY account. The prospective applicants may provide a mobile number to the bank during their enrolments under APY to receive periodic updates on their APY account as well as on the scheme. Aadhaar may also be provided at the time of enrolment as the APY is notified for the same. 4 What is the procedure for opening APY Account? Approach the bank branch/ post office",
+            "similarity": 0.6954
+          },
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 5,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": "t. Ltd, LIC Pension Fund Ltd and UTI Retirement Solution Ltd. III SUBSCRIBER RELATED SERVICES UNDER APY 33. What are the new functionalities available to an APY subscriber? Whether these functionalities are available online? As per the evolving needs, Central Recordkeeping Agency (CRA) appointed by PFRDA has developed and made available the new functionalities categorized in the table below. PFRDA has also enabled digital utilities for these functionalities available online to facilitate subscribers to access their Account without visiting the bank/post office branch. These features are expected to benefit APY Subscribers and empower them to carry out account related activities as described below: S. N. Module Digital Utility Available online 1. Subscriber Registratio n Besides, the traditional method of onboarding wherein the individual used to deposit a physical account opening form to PoP-APY, a digital onboarding facility into APY has also been enabled: e-APY facility with",
+            "similarity": 0.6916
+          },
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 5,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": "ein the individual used to deposit a physical account opening form to PoP-APY, a digital onboarding facility into APY has also been enabled: e-APY facility with multiple options i s provided to prospective subscribers for enrolment in APY. This ensures wider reach and it is a user -friendly platform and makes enrolment under APY in a complete end to end digital interface without submission of physical form by the prospective subscri bers and without visiting a bank branch.",
+            "similarity": 0.6609
+          },
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 1,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": "be provided at the time of enrolment as the APY is notified for the same. 4 What is the procedure for opening APY Account? Approach the bank branch/ post office where the individual\u2019s savings bank account is held or open a savings account in bank or post office if the individual doesn\u2019t have one. 5 Can an Income-tax payer open new APY account? No, from 1 st October 2022, any citizen who is or has been an income-tax payer (Income-tax Act,1961), shall not be eligible to open new APY account. 6 Any effect on existing APY subscribers or subscribers joining APY on or before 30 th September, 2022 who are income-tax payers? No. The subscribers, who have joined on or before 30th September, 2022, irrespective of their income tax payee status, are eligible to continue their Atal Pension Yojana account and make contributions for availing of benefits provided under the scheme.",
+            "similarity": 0.6546
+          }
+        ],
+        "notice": "Extractive answer based only on retrieved text. Confirm details in the cited official document."
+      },
+      "retrieved": [
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 1,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 1,
+          "text": ",000/- or 3,000/- or 4,000 or 5,000/- per month will start after attaining the age of 60 years, depending on the contributions made by the subscribers for their chosen pension amount. 3. Who can subscribe to APY? APY is open to all citizens of India who fulfil the following eligibility criteria: - (i) The age of an individual should be between 18 and 40 years. (ii) He / She should have a savings bank account/ post office savings bank account. (iii) From 1st October, 2022, any Indian citizen who is or has been an income-tax payer under the Income-tax Act, 1961, as on the date of application will not be eligible to open a new APY account. The prospective applicants may provide a mobile number to the bank during their enrolments under APY to receive periodic updates on their APY account as well as on the scheme. Aadhaar may also be provided at the time of enrolment as the APY is notified for the same. 4 What is the procedure for opening APY Account? Approach the bank branch/ post office",
+          "similarity": 0.6954034330926022
+        },
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 5,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 2,
+          "text": "t. Ltd, LIC Pension Fund Ltd and UTI Retirement Solution Ltd. III SUBSCRIBER RELATED SERVICES UNDER APY 33. What are the new functionalities available to an APY subscriber? Whether these functionalities are available online? As per the evolving needs, Central Recordkeeping Agency (CRA) appointed by PFRDA has developed and made available the new functionalities categorized in the table below. PFRDA has also enabled digital utilities for these functionalities available online to facilitate subscribers to access their Account without visiting the bank/post office branch. These features are expected to benefit APY Subscribers and empower them to carry out account related activities as described below: S. N. Module Digital Utility Available online 1. Subscriber Registratio n Besides, the traditional method of onboarding wherein the individual used to deposit a physical account opening form to PoP-APY, a digital onboarding facility into APY has also been enabled: e-APY facility with",
+          "similarity": 0.6916075818438728
+        },
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 5,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 3,
+          "text": "ein the individual used to deposit a physical account opening form to PoP-APY, a digital onboarding facility into APY has also been enabled: e-APY facility with multiple options i s provided to prospective subscribers for enrolment in APY. This ensures wider reach and it is a user -friendly platform and makes enrolment under APY in a complete end to end digital interface without submission of physical form by the prospective subscri bers and without visiting a bank branch.",
+          "similarity": 0.6609371496760124
+        },
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 1,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 2,
+          "text": "be provided at the time of enrolment as the APY is notified for the same. 4 What is the procedure for opening APY Account? Approach the bank branch/ post office where the individual\u2019s savings bank account is held or open a savings account in bank or post office if the individual doesn\u2019t have one. 5 Can an Income-tax payer open new APY account? No, from 1 st October 2022, any citizen who is or has been an income-tax payer (Income-tax Act,1961), shall not be eligible to open new APY account. 6 Any effect on existing APY subscribers or subscribers joining APY on or before 30 th September, 2022 who are income-tax payers? No. The subscribers, who have joined on or before 30th September, 2022, irrespective of their income tax payee status, are eligible to continue their Atal Pension Yojana account and make contributions for availing of benefits provided under the scheme.",
+          "similarity": 0.6545818791962748
+        }
+      ]
+    },
+    {
+      "id": "apy-single-account",
+      "response": {
+        "status": "ANSWERED",
+        "answer": "The available source text states:\n\n15 How many APY accounts I can open?\n\nAn individual can open only one APY account.\n\nHowever, all the eligible family members of the subscribers falling under the age bracket of 18- 40 years can open their individual APY Account.",
+        "sources": [
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 1,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": ",000/- or 3,000/- or 4,000 or 5,000/- per month will start after attaining the age of 60 years, depending on the contributions made by the subscribers for their chosen pension amount. 3. Who can subscribe to APY? APY is open to all citizens of India who fulfil the following eligibility criteria: - (i) The age of an individual should be between 18 and 40 years. (ii) He / She should have a savings bank account/ post office savings bank account. (iii) From 1st October, 2022, any Indian citizen who is or has been an income-tax payer under the Income-tax Act, 1961, as on the date of application will not be eligible to open a new APY account. The prospective applicants may provide a mobile number to the bank during their enrolments under APY to receive periodic updates on their APY account as well as on the scheme. Aadhaar may also be provided at the time of enrolment as the APY is notified for the same. 4 What is the procedure for opening APY Account? Approach the bank branch/ post office",
+            "similarity": 0.6044
+          },
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 1,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": "be provided at the time of enrolment as the APY is notified for the same. 4 What is the procedure for opening APY Account? Approach the bank branch/ post office where the individual\u2019s savings bank account is held or open a savings account in bank or post office if the individual doesn\u2019t have one. 5 Can an Income-tax payer open new APY account? No, from 1 st October 2022, any citizen who is or has been an income-tax payer (Income-tax Act,1961), shall not be eligible to open new APY account. 6 Any effect on existing APY subscribers or subscribers joining APY on or before 30 th September, 2022 who are income-tax payers? No. The subscribers, who have joined on or before 30th September, 2022, irrespective of their income tax payee status, are eligible to continue their Atal Pension Yojana account and make contributions for availing of benefits provided under the scheme.",
+            "similarity": 0.5632
+          },
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 3,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": "there any provision of default nominee or blood relation? If the subscriber is unmarried they can nominate any other person as nominee but they have to provide spouse details after marriage. If married, the spouse will be the default nominee. The Aadhaar details of spouse and nominees may be provided. 15 How many APY accounts I can open? An individual can open only one APY account. Multiple APY accounts are not permitted . However, all the eligible family members of the subscribers falling under the age bracket of 18- 40 years can open their individual APY Account. 16 Can minor open APY account? No. A minor cannot open an APY account. 17 If I have completed 40 years, can I join Atal Pension Yojana? A person can join APY till his/ her 40th birthday. For example, if person \u2018X\u2019 becomes 40 years old on 1 st January 2023, then, he/she is eligible to join APY till 1 st January 2023 and becomes ineligible from 2nd January 2023 to join the scheme. 18. Whether NRI is eligible to open APY",
+            "similarity": 0.5482
+          },
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 4,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": "4 subscriber can maintain persistency by paying all the overdue contributions along with the interest. 21. If the subscriber is Tax payer, can he/ she open the APY account in his/ her spouse\u2019s name? Yes, if the APY subscriber is an income taxpayer, his/her spouse who is not an income taxpayer and satisfies other eligibility conditions can open their APY account. 22. When should an individual join APY? An individual should join APY as early as possible to get the benefit of time. By joining early, the overall contribution made by the subscriber is reduced keeping the returns same. 23. Are the PRAN numbers for APY & NPS same? No, the PRAN numbers for APY & NPS are different because PRAN is unique number which is allotted scheme wise. II ACCUMULATION PHASE UNDER APY 24. What amount one needs to contribute towards APY? The contribution amount shall depend on the age of the individual at the time of opening of APY account, frequency of contribution and the pension slab chosen. The age",
+            "similarity": 0.5402
+          }
+        ],
+        "notice": "Extractive answer based only on retrieved text. Confirm details in the cited official document."
+      },
+      "retrieved": [
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 1,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 1,
+          "text": ",000/- or 3,000/- or 4,000 or 5,000/- per month will start after attaining the age of 60 years, depending on the contributions made by the subscribers for their chosen pension amount. 3. Who can subscribe to APY? APY is open to all citizens of India who fulfil the following eligibility criteria: - (i) The age of an individual should be between 18 and 40 years. (ii) He / She should have a savings bank account/ post office savings bank account. (iii) From 1st October, 2022, any Indian citizen who is or has been an income-tax payer under the Income-tax Act, 1961, as on the date of application will not be eligible to open a new APY account. The prospective applicants may provide a mobile number to the bank during their enrolments under APY to receive periodic updates on their APY account as well as on the scheme. Aadhaar may also be provided at the time of enrolment as the APY is notified for the same. 4 What is the procedure for opening APY Account? Approach the bank branch/ post office",
+          "similarity": 0.6044305444539474
+        },
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 1,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 2,
+          "text": "be provided at the time of enrolment as the APY is notified for the same. 4 What is the procedure for opening APY Account? Approach the bank branch/ post office where the individual\u2019s savings bank account is held or open a savings account in bank or post office if the individual doesn\u2019t have one. 5 Can an Income-tax payer open new APY account? No, from 1 st October 2022, any citizen who is or has been an income-tax payer (Income-tax Act,1961), shall not be eligible to open new APY account. 6 Any effect on existing APY subscribers or subscribers joining APY on or before 30 th September, 2022 who are income-tax payers? No. The subscribers, who have joined on or before 30th September, 2022, irrespective of their income tax payee status, are eligible to continue their Atal Pension Yojana account and make contributions for availing of benefits provided under the scheme.",
+          "similarity": 0.563153975735542
+        },
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 3,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 1,
+          "text": "there any provision of default nominee or blood relation? If the subscriber is unmarried they can nominate any other person as nominee but they have to provide spouse details after marriage. If married, the spouse will be the default nominee. The Aadhaar details of spouse and nominees may be provided. 15 How many APY accounts I can open? An individual can open only one APY account. Multiple APY accounts are not permitted . However, all the eligible family members of the subscribers falling under the age bracket of 18- 40 years can open their individual APY Account. 16 Can minor open APY account? No. A minor cannot open an APY account. 17 If I have completed 40 years, can I join Atal Pension Yojana? A person can join APY till his/ her 40th birthday. For example, if person \u2018X\u2019 becomes 40 years old on 1 st January 2023, then, he/she is eligible to join APY till 1 st January 2023 and becomes ineligible from 2nd January 2023 to join the scheme. 18. Whether NRI is eligible to open APY",
+          "similarity": 0.548177803731779
+        },
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 4,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 0,
+          "text": "4 subscriber can maintain persistency by paying all the overdue contributions along with the interest. 21. If the subscriber is Tax payer, can he/ she open the APY account in his/ her spouse\u2019s name? Yes, if the APY subscriber is an income taxpayer, his/her spouse who is not an income taxpayer and satisfies other eligibility conditions can open their APY account. 22. When should an individual join APY? An individual should join APY as early as possible to get the benefit of time. By joining early, the overall contribution made by the subscriber is reduced keeping the returns same. 23. Are the PRAN numbers for APY & NPS same? No, the PRAN numbers for APY & NPS are different because PRAN is unique number which is allotted scheme wise. II ACCUMULATION PHASE UNDER APY 24. What amount one needs to contribute towards APY? The contribution amount shall depend on the age of the individual at the time of opening of APY account, frequency of contribution and the pension slab chosen. The age",
+          "similarity": 0.540156027823042
+        }
+      ]
+    },
+    {
+      "id": "pmuy-age",
+      "response": {
+        "status": "ANSWERED",
+        "answer": "The available source text states:\n\ng) That my date of birth is (LPG connection cannot be provided to a person under 18 years of age).\n\ne) In the event of any violation of Government Regulation related to the supply and distribution of LPG, IOC/BPC/HPC will be within its right to discontinue supply of LPG cylinders to me, forfeit of security deposit, withdrawal of Equipment including Hot Plate and levy of penal charges as per the policy and guidelines and may initiate legal action applicable under provisions.\n\nnt issued Caste and Domicile Certificate comprising photograph-POA22 State/Union Territory Governments/Administrations issued handicapped medical certificate or Disability ID Card-POA23 Government issued Marriage Certificate comprising address-POA24 Self-Declaration (for Migrants only)-POA25 a) Under Pradhan Mantri Ujjwala Yojna free LPG connections are provided by Oil Marketing Companies (OMCs) to the women belonging to the Below Poverty Line (BPL) households.",
+        "sources": [
+          {
+            "document_title": "Ujjwala KYC Application",
+            "page_number": 2,
+            "source_url": "https://pmuy.gov.in/documents/Ujjwala-KYC.pdf",
+            "scheme_id": "pm-ujjwala-yojana",
+            "excerpt": "with outside agencies for de-duplication/ authentication/ verification purposes. e) In the event of any violation of Government Regulation related to the supply and distribution of LPG, IOC/BPC/HPC will be within its right to discontinue supply of LPG cylinders to me, forfeit of security deposit, withdrawal of Equipment including Hot Plate and levy of penal charges as per the policy and guidelines and may initiate legal action applicable under provisions. f) That I am an Indian citizen and residing in India. g) That my date of birth is (LPG connection cannot be provided to a person under 18 years of age). h) That neither I, nor any other member of the household (household means a family consisting of all members reflecting in the family composition card living together in a dwelling unit having common kitchen),posses any LPG connection from PSU Oil Companies or Piped Natural Gas Connection for domestic use in our dwelling unit. (\u2018Households\u2019 having Piped Natural Gas connection are not",
+            "similarity": 0.5801
+          },
+          {
+            "document_title": "Ujjwala KYC Application",
+            "page_number": 1,
+            "source_url": "https://pmuy.gov.in/documents/Ujjwala-KYC.pdf",
+            "scheme_id": "pm-ujjwala-yojana",
+            "excerpt": "nt issued Caste and Domicile Certificate comprising photograph-POA22 State/Union Territory Governments/Administrations issued handicapped medical certificate or Disability ID Card-POA23 Government issued Marriage Certificate comprising address-POA24 Self-Declaration (for Migrants only)-POA25 a) Under Pradhan Mantri Ujjwala Yojna free LPG connections are provided by Oil Marketing Companies (OMCs) to the women belonging to the Below Poverty Line (BPL) households. b) The scheme provides cash assistance to cover the cost of Security Deposit of Cylinder, Pressure regulator, cost of DGCC, Suraksha hose and installation & administrative charges. Further, Beneficiary will also be given Hot Plate & First LPG Refill. c) On successful verification & confirmation of non existance of PDS LPG connection at your premises, LPG connection may be released to you subject to applicable terms & conditions. *List of POA Documents Details of Pradhan Mantri Ujjwala Yojna Paste your Photo here (IOC/ BPC/ HPC)",
+            "similarity": 0.4481
+          },
+          {
+            "document_title": "Ujjwala KYC Application",
+            "page_number": 2,
+            "source_url": "https://pmuy.gov.in/documents/Ujjwala-KYC.pdf",
+            "scheme_id": "pm-ujjwala-yojana",
+            "excerpt": "nnection from PSU Oil Companies or Piped Natural Gas Connection for domestic use in our dwelling unit. (\u2018Households\u2019 having Piped Natural Gas connection are not entitled for subsidized LPG). i) I confirm that the LPG connection issued to me will be used in my above mentioned address and for domestic cooking purpose only and I shall abide by all terms governing its use. j) That I shall not position any other LPG gas installations in the same kitchen. k) That as and when second cylinder is issued to me against this connection the same will also be used in the same kitchen and with the original installation. l) That whenever I change my residence from present address to another or my mobile no., I will inform M/s. (name of Distributor/RGGLV) in writing in advance for change of address/ Mobile no. in the records. m) That I am aware that the domestic subsidized LPG connection as shall be released by M/s. Indian Oil Corporation (IOCL)/Bharat Petroleum Corporation (BPCL)/Hindustan Petroleum",
+            "similarity": 0.4351
+          }
+        ],
+        "notice": "Extractive answer based only on retrieved text. Confirm details in the cited official document."
+      },
+      "retrieved": [
+        {
+          "document_title": "Ujjwala KYC Application",
+          "source_url": "https://pmuy.gov.in/documents/Ujjwala-KYC.pdf",
+          "page_number": 2,
+          "scheme_id": "pm-ujjwala-yojana",
+          "chunk_index": 1,
+          "text": "with outside agencies for de-duplication/ authentication/ verification purposes. e) In the event of any violation of Government Regulation related to the supply and distribution of LPG, IOC/BPC/HPC will be within its right to discontinue supply of LPG cylinders to me, forfeit of security deposit, withdrawal of Equipment including Hot Plate and levy of penal charges as per the policy and guidelines and may initiate legal action applicable under provisions. f) That I am an Indian citizen and residing in India. g) That my date of birth is (LPG connection cannot be provided to a person under 18 years of age). h) That neither I, nor any other member of the household (household means a family consisting of all members reflecting in the family composition card living together in a dwelling unit having common kitchen),posses any LPG connection from PSU Oil Companies or Piped Natural Gas Connection for domestic use in our dwelling unit. (\u2018Households\u2019 having Piped Natural Gas connection are not",
+          "similarity": 0.5801079372826882
+        },
+        {
+          "document_title": "Ujjwala KYC Application",
+          "source_url": "https://pmuy.gov.in/documents/Ujjwala-KYC.pdf",
+          "page_number": 1,
+          "scheme_id": "pm-ujjwala-yojana",
+          "chunk_index": 1,
+          "text": "nt issued Caste and Domicile Certificate comprising photograph-POA22 State/Union Territory Governments/Administrations issued handicapped medical certificate or Disability ID Card-POA23 Government issued Marriage Certificate comprising address-POA24 Self-Declaration (for Migrants only)-POA25 a) Under Pradhan Mantri Ujjwala Yojna free LPG connections are provided by Oil Marketing Companies (OMCs) to the women belonging to the Below Poverty Line (BPL) households. b) The scheme provides cash assistance to cover the cost of Security Deposit of Cylinder, Pressure regulator, cost of DGCC, Suraksha hose and installation & administrative charges. Further, Beneficiary will also be given Hot Plate & First LPG Refill. c) On successful verification & confirmation of non existance of PDS LPG connection at your premises, LPG connection may be released to you subject to applicable terms & conditions. *List of POA Documents Details of Pradhan Mantri Ujjwala Yojna Paste your Photo here (IOC/ BPC/ HPC)",
+          "similarity": 0.4481481697818381
+        },
+        {
+          "document_title": "Ujjwala KYC Application",
+          "source_url": "https://pmuy.gov.in/documents/Ujjwala-KYC.pdf",
+          "page_number": 2,
+          "scheme_id": "pm-ujjwala-yojana",
+          "chunk_index": 2,
+          "text": "nnection from PSU Oil Companies or Piped Natural Gas Connection for domestic use in our dwelling unit. (\u2018Households\u2019 having Piped Natural Gas connection are not entitled for subsidized LPG). i) I confirm that the LPG connection issued to me will be used in my above mentioned address and for domestic cooking purpose only and I shall abide by all terms governing its use. j) That I shall not position any other LPG gas installations in the same kitchen. k) That as and when second cylinder is issued to me against this connection the same will also be used in the same kitchen and with the original installation. l) That whenever I change my residence from present address to another or my mobile no., I will inform M/s. (name of Distributor/RGGLV) in writing in advance for change of address/ Mobile no. in the records. m) That I am aware that the domestic subsidized LPG connection as shall be released by M/s. Indian Oil Corporation (IOCL)/Bharat Petroleum Corporation (BPCL)/Hindustan Petroleum",
+          "similarity": 0.43512375116802315
+        }
+      ]
+    },
+    {
+      "id": "kisan-benefit",
+      "response": {
+        "status": "ANSWERED",
+        "answer": "The available source text states:\n\nUnder the Scheme an amount of Rs.6000/- per year is released by the Central Government online directly into the bank accounts of the eligible farmers under Direct Benefit Transfer mode, subject to certain exclusions.\n\nPM-Kisan Portal for implementation of the scheme (Beneficiary Details uploading by State) 9.1 Beneficiaries under the scheme are to be identified by the respective State and Union Territory.\n\nTo make integrated platform available in the country to assist in benefit transfer, a platform named PM-Kisan Portal available at URL (http://pmkisan.gov.in) has been be launched for uploading the farmers\u2019 details at a single web-portal in a uniform structure.",
+        "sources": [
+          {
+            "document_title": "PM-KISAN Operational Guidelines",
+            "page_number": 2,
+            "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+            "scheme_id": "pm-kisan-samman-nidhi",
+            "excerpt": "2 PRADHAN MANTRI KISAN SAMMAN NIDHI (PM-KISAN) SCHEME OPERATIONAL GUIDELINES 1. Scheme With a view to provide income support to all landholding farmers\u2019 families in the country, having cultivable land, the Central Government has implemented a Central Sector Scheme, namely, \u201cPradhan Mantri Kisan Samman Nidhi (PM-KISAN)\u201d. 2. Objective and Benefits The scheme aims to supplement the financial needs of all landholding farmers\u2019 families in procuring various inputs to ensure proper crop health and appropriate yields, commensurate with the anticipated farm income as well as for domestic needs. Under the Scheme an amount of Rs.6000/- per year is released by the Central Government online directly into the bank accounts of the eligible farmers under Direct Benefit Transfer mode, subject to certain exclusions. 3. Definition of farmer\u2019s family A landholder farmer\u2019s family is defined as \u201ca family comprising of husband, wife and minor children who owns cultivable land as per land records of the",
+            "similarity": 0.6801
+          },
+          {
+            "document_title": "PM-KISAN Operational Guidelines",
+            "page_number": 8,
+            "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+            "scheme_id": "pm-kisan-samman-nidhi",
+            "excerpt": "8 9. PM-Kisan Portal for implementation of the scheme (Beneficiary Details uploading by State) 9.1 Beneficiaries under the scheme are to be identified by the respective State and Union Territory. The details of farmers are being maintained by the States / UTs either in electronic form or in manual register. To make integrated platform available in the country to assist in benefit transfer, a platform named PM-Kisan Portal available at URL (http://pmkisan.gov.in) has been be launched for uploading the farmers\u2019 details at a single web-portal in a uniform structure. 9.2 The PM-Kisan Portal has been created with the following objectives - i) To provide verified and single source of truth on farmers\u2019 details at the portal. ii) Timely assistance to the farmers in farm operation iii) A unified e-platform for transferring of cash benefits into farmer\u2019s bank account through Public Financial Management System (PFMS) integration. iv) Location wise availability of benefited farmers\u2019 list. v) Ease",
+            "similarity": 0.6066
+          },
+          {
+            "document_title": "PM-KISAN Operational Guidelines",
+            "page_number": 1,
+            "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+            "scheme_id": "pm-kisan-samman-nidhi",
+            "excerpt": "1 PRADHAN MANTRI KISAN SAMMAN NIDHI SCHEME (PM-KISAN SCHEME) OPERATIONAL GUIDELINES (REVISED AS ON 29.03.2020) MINISTRY OF AGRICULTURE & FARMERS\u2019 WELFARE DEPARTMENT OF AGRICULTURE, COOPERATION & FARMERS\u2019 WELFARE (DAC&FW)",
+            "similarity": 0.603
+          },
+          {
+            "document_title": "PM-KISAN Operational Guidelines",
+            "page_number": 10,
+            "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+            "scheme_id": "pm-kisan-samman-nidhi",
+            "excerpt": "10 2. Farmers list as available on the portal shall be available at Block / Tehsil / Taluka level official\u2019s login. 3. Search facility will also be available to get details on Farmers by Name, Aadhaar Number or Mobile Number in case PM-KISAN Portal data is being used. Facility to add new farmers\u2019 details shall be available, if details are not found in the list. 4. The verified list shall be e-signed by the District level or block / tehsil / taluka level officials as the case may be. The exclusion categories specified in scheme guidelines also need to be taken care before e-signing the verified farmers list. 5. The States Nodal Officer shall submit a district wise e-Signed list of farmers to the Program Division of DAC&FW through PM-Kisan Portal. 10 Modalities for transfer of benefit 10.1 The financial benefit of Rs.6000/- per year is to be released to the eligible farmers in three installments of Rs.2000/- each every 4-month / trimester, i.e. April-July, August-November and",
+            "similarity": 0.5963
+          }
+        ],
+        "notice": "Extractive answer based only on retrieved text. Confirm details in the cited official document."
+      },
+      "retrieved": [
+        {
+          "document_title": "PM-KISAN Operational Guidelines",
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+          "page_number": 2,
+          "scheme_id": "pm-kisan-samman-nidhi",
+          "chunk_index": 0,
+          "text": "2 PRADHAN MANTRI KISAN SAMMAN NIDHI (PM-KISAN) SCHEME OPERATIONAL GUIDELINES 1. Scheme With a view to provide income support to all landholding farmers\u2019 families in the country, having cultivable land, the Central Government has implemented a Central Sector Scheme, namely, \u201cPradhan Mantri Kisan Samman Nidhi (PM-KISAN)\u201d. 2. Objective and Benefits The scheme aims to supplement the financial needs of all landholding farmers\u2019 families in procuring various inputs to ensure proper crop health and appropriate yields, commensurate with the anticipated farm income as well as for domestic needs. Under the Scheme an amount of Rs.6000/- per year is released by the Central Government online directly into the bank accounts of the eligible farmers under Direct Benefit Transfer mode, subject to certain exclusions. 3. Definition of farmer\u2019s family A landholder farmer\u2019s family is defined as \u201ca family comprising of husband, wife and minor children who owns cultivable land as per land records of the",
+          "similarity": 0.6801197368478761
+        },
+        {
+          "document_title": "PM-KISAN Operational Guidelines",
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+          "page_number": 8,
+          "scheme_id": "pm-kisan-samman-nidhi",
+          "chunk_index": 0,
+          "text": "8 9. PM-Kisan Portal for implementation of the scheme (Beneficiary Details uploading by State) 9.1 Beneficiaries under the scheme are to be identified by the respective State and Union Territory. The details of farmers are being maintained by the States / UTs either in electronic form or in manual register. To make integrated platform available in the country to assist in benefit transfer, a platform named PM-Kisan Portal available at URL (http://pmkisan.gov.in) has been be launched for uploading the farmers\u2019 details at a single web-portal in a uniform structure. 9.2 The PM-Kisan Portal has been created with the following objectives - i) To provide verified and single source of truth on farmers\u2019 details at the portal. ii) Timely assistance to the farmers in farm operation iii) A unified e-platform for transferring of cash benefits into farmer\u2019s bank account through Public Financial Management System (PFMS) integration. iv) Location wise availability of benefited farmers\u2019 list. v) Ease",
+          "similarity": 0.6065561413113505
+        },
+        {
+          "document_title": "PM-KISAN Operational Guidelines",
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+          "page_number": 1,
+          "scheme_id": "pm-kisan-samman-nidhi",
+          "chunk_index": 0,
+          "text": "1 PRADHAN MANTRI KISAN SAMMAN NIDHI SCHEME (PM-KISAN SCHEME) OPERATIONAL GUIDELINES (REVISED AS ON 29.03.2020) MINISTRY OF AGRICULTURE & FARMERS\u2019 WELFARE DEPARTMENT OF AGRICULTURE, COOPERATION & FARMERS\u2019 WELFARE (DAC&FW)",
+          "similarity": 0.602963740040274
+        },
+        {
+          "document_title": "PM-KISAN Operational Guidelines",
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+          "page_number": 10,
+          "scheme_id": "pm-kisan-samman-nidhi",
+          "chunk_index": 0,
+          "text": "10 2. Farmers list as available on the portal shall be available at Block / Tehsil / Taluka level official\u2019s login. 3. Search facility will also be available to get details on Farmers by Name, Aadhaar Number or Mobile Number in case PM-KISAN Portal data is being used. Facility to add new farmers\u2019 details shall be available, if details are not found in the list. 4. The verified list shall be e-signed by the District level or block / tehsil / taluka level officials as the case may be. The exclusion categories specified in scheme guidelines also need to be taken care before e-signing the verified farmers list. 5. The States Nodal Officer shall submit a district wise e-Signed list of farmers to the Program Division of DAC&FW through PM-Kisan Portal. 10 Modalities for transfer of benefit 10.1 The financial benefit of Rs.6000/- per year is to be released to the eligible farmers in three installments of Rs.2000/- each every 4-month / trimester, i.e. April-July, August-November and",
+          "similarity": 0.5963124358879709
+        }
+      ]
+    },
+    {
+      "id": "kisan-family",
+      "response": {
+        "status": "ANSWERED",
+        "answer": "The available source text states:\n\ns family A landholder farmer\u2019s family is defined as \u201ca family comprising of husband, wife and minor children who owns cultivable land as per land records of the concerned State/UT\u201d.\n\nDefinition of farmer\u2019s family A landholder farmer\u2019s family is defined as \u201ca family comprising of husband, wife and minor children who owns cultivable land as per land records of the\n\nf the Nagaland Jhum Land Act, 1970 and which is owned by the community/clan/village council/village chieftan, the identification of beneficiaries under PM-Kisan scheme, shall be on the basis of certification of land holding by the village council/chief/head of the village, duly verified by the administrative head of the circle/sub division and countersigned by the Deputy Commissioner of the District.",
+        "sources": [
+          {
+            "document_title": "PM-KISAN Operational Guidelines",
+            "page_number": 2,
+            "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+            "scheme_id": "pm-kisan-samman-nidhi",
+            "excerpt": "s family A landholder farmer\u2019s family is defined as \u201ca family comprising of husband, wife and minor children who owns cultivable land as per land records of the concerned State/UT\u201d. The existing land-ownership system will be used for identification of beneficiaries for calculation of benefit. 4 Exclusions 4.1 The following categories of beneficiaries of higher economic status shall not be eligible for benefit under the scheme: (a) All Institutional Land holders; and (b) Farmer families in which one or more of its members belong to following categories : i) Former and present holders of constitutional posts ii) Former and present Ministers / State Ministers and former / present Members of Lok Sabha / Rajya Sabha / State Legislative Assemblies / State Legislative Councils, former and present Mayors of Municipal Corporations, former and present Chairpersons of District Panchayats. iii) All serving or retired officers and employees of Central / State Government Ministries / Offices /",
+            "similarity": 0.7442
+          },
+          {
+            "document_title": "PM-KISAN Operational Guidelines",
+            "page_number": 2,
+            "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+            "scheme_id": "pm-kisan-samman-nidhi",
+            "excerpt": "2 PRADHAN MANTRI KISAN SAMMAN NIDHI (PM-KISAN) SCHEME OPERATIONAL GUIDELINES 1. Scheme With a view to provide income support to all landholding farmers\u2019 families in the country, having cultivable land, the Central Government has implemented a Central Sector Scheme, namely, \u201cPradhan Mantri Kisan Samman Nidhi (PM-KISAN)\u201d. 2. Objective and Benefits The scheme aims to supplement the financial needs of all landholding farmers\u2019 families in procuring various inputs to ensure proper crop health and appropriate yields, commensurate with the anticipated farm income as well as for domestic needs. Under the Scheme an amount of Rs.6000/- per year is released by the Central Government online directly into the bank accounts of the eligible farmers under Direct Benefit Transfer mode, subject to certain exclusions. 3. Definition of farmer\u2019s family A landholder farmer\u2019s family is defined as \u201ca family comprising of husband, wife and minor children who owns cultivable land as per land records of the",
+            "similarity": 0.7328
+          },
+          {
+            "document_title": "PM-KISAN Operational Guidelines",
+            "page_number": 9,
+            "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+            "scheme_id": "pm-kisan-samman-nidhi",
+            "excerpt": "9 9.4 There are 3 ways through which a State / UT can onboard on the PM Kisan Portal: (a) If a State / UT has village / district wise list of farmers, they may upload the same in a pre-defined format and with the help of local NIC State Unit. (b) Some existing data of farmers is already available on the PM-Kisan Portal which will be visible on selection of States / Districts / Village. States / UTs which do not have their own list may use this village-wise list of farmers as provided on the portal and edit the same to finalize the farmers\u2019 list. For this the correction window shall be available at PM-Kisan portal for authorized users of District and Block officials. (c) If States / UTs want to make fresh entry of a farmer, provision is there for registration of these farmers in a defined and standardized format. 9.5 Databases of Pradhan Mantri Fasal Bima Yojana (PMFBY), Soil Health Cards, Socio Economic and Caste Census (SECC) can also be utilized for this purpose. State/UT wise",
+            "similarity": 0.653
+          },
+          {
+            "document_title": "PM-KISAN Operational Guidelines",
+            "page_number": 5,
+            "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+            "scheme_id": "pm-kisan-samman-nidhi",
+            "excerpt": "f the Nagaland Jhum Land Act, 1970 and which is owned by the community/clan/village council/village chieftan, the identification of beneficiaries under PM-Kisan scheme, shall be on the basis of certification of land holding by the village council/chief/head of the village, duly verified by the administrative head of the circle/sub division and countersigned by the Deputy Commissioner of the District. Provided that the name of the beneficiary is included in the state of Nagaland\u2019s Agriculture Census of 2015-16. This proviso shall not be applicable in cases of succession and family partition.",
+            "similarity": 0.6451
+          }
+        ],
+        "notice": "Extractive answer based only on retrieved text. Confirm details in the cited official document."
+      },
+      "retrieved": [
+        {
+          "document_title": "PM-KISAN Operational Guidelines",
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+          "page_number": 2,
+          "scheme_id": "pm-kisan-samman-nidhi",
+          "chunk_index": 1,
+          "text": "s family A landholder farmer\u2019s family is defined as \u201ca family comprising of husband, wife and minor children who owns cultivable land as per land records of the concerned State/UT\u201d. The existing land-ownership system will be used for identification of beneficiaries for calculation of benefit. 4 Exclusions 4.1 The following categories of beneficiaries of higher economic status shall not be eligible for benefit under the scheme: (a) All Institutional Land holders; and (b) Farmer families in which one or more of its members belong to following categories : i) Former and present holders of constitutional posts ii) Former and present Ministers / State Ministers and former / present Members of Lok Sabha / Rajya Sabha / State Legislative Assemblies / State Legislative Councils, former and present Mayors of Municipal Corporations, former and present Chairpersons of District Panchayats. iii) All serving or retired officers and employees of Central / State Government Ministries / Offices /",
+          "similarity": 0.7441759891814497
+        },
+        {
+          "document_title": "PM-KISAN Operational Guidelines",
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+          "page_number": 2,
+          "scheme_id": "pm-kisan-samman-nidhi",
+          "chunk_index": 0,
+          "text": "2 PRADHAN MANTRI KISAN SAMMAN NIDHI (PM-KISAN) SCHEME OPERATIONAL GUIDELINES 1. Scheme With a view to provide income support to all landholding farmers\u2019 families in the country, having cultivable land, the Central Government has implemented a Central Sector Scheme, namely, \u201cPradhan Mantri Kisan Samman Nidhi (PM-KISAN)\u201d. 2. Objective and Benefits The scheme aims to supplement the financial needs of all landholding farmers\u2019 families in procuring various inputs to ensure proper crop health and appropriate yields, commensurate with the anticipated farm income as well as for domestic needs. Under the Scheme an amount of Rs.6000/- per year is released by the Central Government online directly into the bank accounts of the eligible farmers under Direct Benefit Transfer mode, subject to certain exclusions. 3. Definition of farmer\u2019s family A landholder farmer\u2019s family is defined as \u201ca family comprising of husband, wife and minor children who owns cultivable land as per land records of the",
+          "similarity": 0.7327674478514485
+        },
+        {
+          "document_title": "PM-KISAN Operational Guidelines",
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+          "page_number": 9,
+          "scheme_id": "pm-kisan-samman-nidhi",
+          "chunk_index": 0,
+          "text": "9 9.4 There are 3 ways through which a State / UT can onboard on the PM Kisan Portal: (a) If a State / UT has village / district wise list of farmers, they may upload the same in a pre-defined format and with the help of local NIC State Unit. (b) Some existing data of farmers is already available on the PM-Kisan Portal which will be visible on selection of States / Districts / Village. States / UTs which do not have their own list may use this village-wise list of farmers as provided on the portal and edit the same to finalize the farmers\u2019 list. For this the correction window shall be available at PM-Kisan portal for authorized users of District and Block officials. (c) If States / UTs want to make fresh entry of a farmer, provision is there for registration of these farmers in a defined and standardized format. 9.5 Databases of Pradhan Mantri Fasal Bima Yojana (PMFBY), Soil Health Cards, Socio Economic and Caste Census (SECC) can also be utilized for this purpose. State/UT wise",
+          "similarity": 0.6530201847096588
+        },
+        {
+          "document_title": "PM-KISAN Operational Guidelines",
+          "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+          "page_number": 5,
+          "scheme_id": "pm-kisan-samman-nidhi",
+          "chunk_index": 3,
+          "text": "f the Nagaland Jhum Land Act, 1970 and which is owned by the community/clan/village council/village chieftan, the identification of beneficiaries under PM-Kisan scheme, shall be on the basis of certification of land holding by the village council/chief/head of the village, duly verified by the administrative head of the circle/sub division and countersigned by the Deputy Commissioner of the District. Provided that the name of the beneficiary is included in the state of Nagaland\u2019s Agriculture Census of 2015-16. This proviso shall not be applicable in cases of succession and family partition.",
+          "similarity": 0.6451371569560557
+        }
+      ]
+    },
+    {
+      "id": "personal-status",
+      "response": {
+        "status": "ANSWERED",
+        "answer": "The available source text states:\n\nein the individual used to deposit a physical account opening form to PoP-APY, a digital onboarding facility into APY has also been enabled: e-APY facility with multiple options i s provided to prospective subscribers for enrolment in APY.\n\nThis ensures wider reach and it is a user -friendly platform and makes enrolment under APY in a complete end to end digital interface without submission of physical form by the prospective subscri bers and without visiting a bank branch.",
+        "sources": [
+          {
+            "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+            "page_number": 5,
+            "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+            "scheme_id": "atal-pension-yojana",
+            "excerpt": "ein the individual used to deposit a physical account opening form to PoP-APY, a digital onboarding facility into APY has also been enabled: e-APY facility with multiple options i s provided to prospective subscribers for enrolment in APY. This ensures wider reach and it is a user -friendly platform and makes enrolment under APY in a complete end to end digital interface without submission of physical form by the prospective subscri bers and without visiting a bank branch.",
+            "similarity": 0.4131
+          }
+        ],
+        "notice": "Extractive answer based only on retrieved text. Confirm details in the cited official document."
+      },
+      "retrieved": [
+        {
+          "document_title": "Frequently Asked Questions - Atal Pension Yojana",
+          "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+          "page_number": 5,
+          "scheme_id": "atal-pension-yojana",
+          "chunk_index": 3,
+          "text": "ein the individual used to deposit a physical account opening form to PoP-APY, a digital onboarding facility into APY has also been enabled: e-APY facility with multiple options i s provided to prospective subscribers for enrolment in APY. This ensures wider reach and it is a user -friendly platform and makes enrolment under APY in a complete end to end digital interface without submission of physical form by the prospective subscri bers and without visiting a bank branch.",
+          "similarity": 0.41312821326866783
+        }
+      ]
+    },
+    {
+      "id": "bank-secret",
+      "response": {
+        "status": "INSUFFICIENT_EVIDENCE",
+        "answer": "I could not verify an answer from the available scheme documents. Please consult the official source links.",
+        "sources": [],
+        "notice": "Retrieved evidence was missing or below the configured relevance threshold."
+      },
+      "retrieved": []
+    },
+    {
+      "id": "missing-nmmss",
+      "response": {
+        "status": "INSUFFICIENT_EVIDENCE",
+        "answer": "I could not verify an answer from the available scheme documents. Please consult the official source links.",
+        "sources": [],
+        "notice": "Retrieved evidence was missing or below the configured relevance threshold."
+      },
+      "retrieved": []
+    },
+    {
+      "id": "missing-vidya",
+      "response": {
+        "status": "INSUFFICIENT_EVIDENCE",
+        "answer": "I could not verify an answer from the available scheme documents. Please consult the official source links.",
+        "sources": [],
+        "notice": "Retrieved evidence was missing or below the configured relevance threshold."
+      },
+      "retrieved": []
+    }
+  ]
+}

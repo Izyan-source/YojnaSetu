@@ -1,0 +1,132 @@
+[
+  {
+    "id": "apy-age",
+    "scheme_id": "atal-pension-yojana",
+    "question": "What is the minimum and maximum age for joining APY?",
+    "answerable": true,
+    "expected_answer": "The age of an individual should be between 18 and 40 years.",
+    "evidence": [
+      {
+        "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+        "page_number": 1,
+        "quote": "The age of an individual should be between 18 and 40 years.",
+        "chunk_sha256": "d015c51e81132efff178bd87d29c216fbcc85771158be24daa06f46e95accb02"
+      }
+    ]
+  },
+  {
+    "id": "apy-account",
+    "scheme_id": "atal-pension-yojana",
+    "question": "What type of bank account is needed to subscribe to APY?",
+    "answerable": true,
+    "expected_answer": "He / She should have a savings bank account/ post office savings bank account.",
+    "evidence": [
+      {
+        "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+        "page_number": 1,
+        "quote": "He / She should have a savings bank account/ post office savings bank account.",
+        "chunk_sha256": "d015c51e81132efff178bd87d29c216fbcc85771158be24daa06f46e95accb02"
+      }
+    ]
+  },
+  {
+    "id": "apy-single-account",
+    "scheme_id": "atal-pension-yojana",
+    "question": "How many APY accounts can one individual open?",
+    "answerable": true,
+    "expected_answer": "An individual can open only one APY account.",
+    "evidence": [
+      {
+        "source_url": "https://www.pfrda.org.in/documents/33652/676426/APY%2BFAQs.pdf",
+        "page_number": 3,
+        "quote": "An individual can open only one APY account.",
+        "chunk_sha256": "fac22f2506b41a210a9ec78dc8d5a2641c2acaf23e688f121e0e76661b3b86e9"
+      }
+    ]
+  },
+  {
+    "id": "pmuy-age",
+    "scheme_id": "pm-ujjwala-yojana",
+    "question": "Can an LPG connection be provided to a person under 18 years of age?",
+    "answerable": true,
+    "expected_answer": "LPG connection cannot be provided to a person under 18 years of age",
+    "evidence": [
+      {
+        "source_url": "https://pmuy.gov.in/documents/Ujjwala-KYC.pdf",
+        "page_number": 2,
+        "quote": "LPG connection cannot be provided to a person under 18 years of age",
+        "chunk_sha256": "a0c391da2297f6b029c3d40b6c825a55adf7c84090d77a09a04d9141ff0efa16"
+      }
+    ]
+  },
+  {
+    "id": "kisan-benefit",
+    "scheme_id": "pm-kisan-samman-nidhi",
+    "question": "What amount of annual benefit is provided under PM-KISAN?",
+    "answerable": true,
+    "expected_answer": "Under the Scheme an amount of Rs.6000/- per year is released by the Central Government online directly into the bank accounts of the eligible farmers under Direct Benefit Transfer mode, subject to certain exclusions.",
+    "evidence": [
+      {
+        "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+        "page_number": 2,
+        "quote": "Under the Scheme an amount of Rs.6000/- per year is released by the Central Government online directly into the bank accounts of the eligible farmers under Direct Benefit Transfer mode, subject to certain exclusions.",
+        "chunk_sha256": "a8e101d44a59bbb0b8cb11e20d8cce8b5f9710282337c9117c0ac02a64a1929b"
+      }
+    ]
+  },
+  {
+    "id": "kisan-family",
+    "scheme_id": "pm-kisan-samman-nidhi",
+    "question": "Who is included in a landholder farmer family under PM-KISAN?",
+    "answerable": true,
+    "expected_answer": "a family comprising of husband, wife and minor children who owns cultivable land as per land records of the concerned State/UT",
+    "evidence": [
+      {
+        "source_url": "https://pmkisan.gov.in/Documents/RevisedPM-KISANOperationalGuidelines%28English%29.pdf",
+        "page_number": 2,
+        "quote": "a family comprising of husband, wife and minor children who owns cultivable land as per land records of the concerned State/UT",
+        "chunk_sha256": "b069f906e497c9e59e90f8c8cd3f7482c00385f19a825c5900a009f11fc58593"
+      }
+    ]
+  },
+  {
+    "id": "personal-status",
+    "scheme_id": "atal-pension-yojana",
+    "question": "Has synthetic application SYN-EVAL-999 been approved for APY?",
+    "answerable": false,
+    "expected_answer": null,
+    "evidence": [],
+    "rationale": "Official guidelines contain no individual synthetic application records.",
+    "requires_empty_scheme_index": false
+  },
+  {
+    "id": "bank-secret",
+    "scheme_id": "pm-kisan-samman-nidhi",
+    "question": "What is the bank password of synthetic applicant Alpha?",
+    "answerable": false,
+    "expected_answer": null,
+    "evidence": [],
+    "rationale": "No personal credentials are present in official scheme guidelines.",
+    "requires_empty_scheme_index": false
+  },
+  {
+    "id": "missing-nmmss",
+    "scheme_id": "national-means-cum-merit-scholarship",
+    "question": "What annual parental income limit does the NMMSS indexed source specify?",
+    "answerable": false,
+    "expected_answer": null,
+    "evidence": [],
+    "rationale": "The current index contains no NMMSS chunks; no answer is labeled from scheme JSON.",
+    "requires_empty_scheme_index": true
+  },
+  {
+    "id": "missing-vidya",
+    "scheme_id": "pm-vidyalaxmi",
+    "question": "What admission route is required in the indexed PM-Vidyalaxmi source?",
+    "answerable": false,
+    "expected_answer": null,
+    "evidence": [],
+    "rationale": "The current index contains no PM-Vidyalaxmi chunks; no answer is labeled from scheme JSON.",
+    "requires_empty_scheme_index": true
+  }
+]
