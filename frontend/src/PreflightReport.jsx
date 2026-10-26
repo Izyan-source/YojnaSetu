@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const fieldLabels = {
   applicant_name: 'Applicant name', date_of_birth: 'Date of birth', age: 'Age', address: 'Address', state: 'State',
@@ -26,6 +26,7 @@ function includedProfile(profile) {
 }
 
 export default function PreflightReport({ scheme, initialProfile, profileSources, documents, documentReadiness }) {
+  const [editing, setEditing] = useState(true)
   const [profile, setProfile] = useState(() => {
     try { return { ...initialProfile, ...JSON.parse(sessionStorage.getItem('yojnasetu-preflight-profile') || '{}') } } catch { return initialProfile }
   })
@@ -34,6 +35,26 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
   const [error, setError] = useState('')
   const [dirty, setDirty] = useState(false)
   const [evidenceNotice, setEvidenceNotice] = useState('')
+
+  useEffect(() => {
+    if (report && !editing) document.getElementById('report-outcome')?.focus({ preventScroll: true })
+  }, [report, editing])
+
+  // Expand disclosure content for printing, then restore the on-screen layout.
+  useEffect(() => {
+    let closed = []
+    const beforePrint = () => {
+      closed = [...document.querySelectorAll('.preflight-content details:not([open])')]
+      closed.forEach((item) => { item.open = true })
+    }
+    const afterPrint = () => { closed.forEach((item) => { item.open = false }); closed = [] }
+    window.addEventListener('beforeprint', beforePrint)
+    window.addEventListener('afterprint', afterPrint)
+    return () => {
+      window.removeEventListener('beforeprint', beforePrint)
+      window.removeEventListener('afterprint', afterPrint)
+    }
+  }, [])
 
   function updateProfile(field, value) {
     setProfile((current) => {
@@ -54,24 +75,18 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
     setEvidenceNotice('')
     const confirmed = includedProfile(profile)
     if (confirmed.age !== undefined && (!/^\d+$/.test(String(confirmed.age)) || Number(confirmed.age) > 120)) {
+      setEditing(true)
       setError('Age must be a whole number from 0 to 120.')
       return
     }
     if (confirmed.annual_family_income_inr !== undefined && (!/^\d+$/.test(String(confirmed.annual_family_income_inr)) || Number(confirmed.annual_family_income_inr) > 1000000000)) {
+      setEditing(true)
       setError('Annual family income must be a whole amount from ₹0 to ₹1,000,000,000.')
       return
     }
     setDirty(true)
     setLoading(true)
-    const eligibilityProfile = { ...confirmed }
-    delete eligibilityProfile.applicant_name
-    delete eligibilityProfile.date_of_birth
-    delete eligibilityProfile.address
-    delete eligibilityProfile.certificate_type
-    delete eligibilityProfile.issuing_authority
-    delete eligibilityProfile.certificate_date
-    delete eligibilityProfile.certificate_valid_until
-    delete eligibilityProfile.certificate_number
+    const eligibilityProfile = Object.fromEntries(Object.entries(confirmed).filter(([key]) => ['state', 'age', 'annual_family_income_inr', 'education_level', 'occupation', 'category'].includes(key)))
     if (eligibilityProfile.age !== undefined) eligibilityProfile.age = Number(eligibilityProfile.age)
     if (eligibilityProfile.annual_family_income_inr !== undefined) eligibilityProfile.annual_family_income_inr = Number(eligibilityProfile.annual_family_income_inr)
 
@@ -98,7 +113,9 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
       if (!selectedResult) throw new Error('The eligibility service returned no result for this scheme.')
       setReport({ eligibility: selectedResult, consistency, evidence, profile: confirmed, generatedAt: new Date().toLocaleString() })
       setDirty(false)
+      setEditing(false)
     } catch (requestError) {
+      setEditing(true)
       setError(requestError.message || 'Could not generate the preflight report. Check that the backend is running.')
     } finally {
       setLoading(false)
@@ -111,7 +128,7 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
   const failedRules = ruleResults.filter((rule) => rule.status === 'FAIL')
   const attentionFindings = report?.consistency.findings.filter((finding) => finding.status !== 'CONSISTENT') ?? []
   const requirements = report?.eligibility.document_readiness.required_documents ?? []
-  const readinessMatches = documentReadiness?.scheme_id === scheme.scheme_id && documentReadiness.mapping_confirmed && requirements.includes(documentReadiness.mapped_requirement)
+  const readinessMatches = documentReadiness?.scheme_id === scheme?.scheme_id && documentReadiness?.mapping_confirmed && requirements.includes(documentReadiness.mapped_requirement)
   const availableDocuments = readinessMatches ? [documentReadiness.mapped_requirement] : []
   const missingDocuments = requirements.filter((item) => !availableDocuments.includes(item))
   const uncertainDocuments = documents.filter((document) => !readinessMatches || (documentReadiness?.local_id ? document.local_id !== documentReadiness.local_id : document.filename !== documentReadiness?.file_name))
@@ -131,20 +148,23 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
       {report && <button className="button button-secondary no-print" type="button" disabled={dirty} onClick={() => window.print()}>Print / Save as PDF</button>}
     </div>
 
-    <form className="preflight-profile no-print" onSubmit={generateReport}>
+    {report && <button className="button button-secondary no-print" type="button" aria-expanded={editing} aria-controls="report-profile-form" onClick={() => setEditing(!editing)}>{editing ? 'Hide profile editor' : 'Review or edit profile'}</button>}
+    <form id="report-profile-form" hidden={!editing} className="preflight-profile no-print" onSubmit={generateReport}>
       <div className="preflight-profile-heading"><div><h3>Confirm the profile for this report</h3><p>Values below are sent to the existing eligibility and consistency services when you generate the report. Blank values remain unknown.</p></div><button className="button button-primary" type="submit" disabled={loading}>{loading ? 'Generating report…' : report ? 'Regenerate report' : 'Generate report'}</button></div>
-      <a className="text-link no-print" href="/#document-intelligence">Review or add documents</a>
+      <a className="text-link no-print" href="/documents#upload-review">Review or add documents</a>
       <div className="preflight-fields">{Object.entries(fieldLabels).map(([key, label]) => {
         const sourceKey = ({ annual_family_income_inr: 'income', education_level: 'education' })[key] || key
         const origin = profileSources[sourceKey]
         const originLabel = origin === 'document-confirmed' ? 'Previously reviewed document value' : origin === 'manually-entered' ? 'Entered in the assessment' : profile[key] ? 'Review and confirm this value' : 'Not provided'
-        return <label key={key}>{label}<input type="text" value={profile[key] ?? ''} placeholder="Not provided" onChange={(event) => updateProfile(key, event.target.value)} /><small>{originLabel}</small></label>
+        return <label key={key}>{label}<input type="text" value={profile[key] ?? ''} placeholder="Not provided" disabled={loading} onChange={(event) => updateProfile(key, event.target.value)} /><small>{originLabel}</small></label>
       })}</div>
       {error && <p className="api-error" role="alert">{error}</p>}
       {loading && <p className="preflight-loading" role="status">Rechecking eligibility and consistency, then retrieving supporting scheme evidence…</p>}
       {report && dirty && <p className="preflight-stale" role="status">The profile changed after this report was generated. Regenerate to refresh its results.</p>}
     </form>
 
+    {report && dirty && !editing && <p className="preflight-stale no-print" role="status">Profile changes need a regenerated report before printing.</p>}
+    {report && <nav className="report-navigation no-print" aria-label="Report sections"><a href="#report-outcome">Eligibility</a><a href="#report-documents">Documents</a><a href="#report-consistency">Consistency</a><a href="#report-sources">Sources</a><a href="#report-next-steps">Next steps</a></nav>}
     {report && <div className={`preflight-content ${dirty ? 'report-stale' : ''}`}>
       <div className="preflight-meta"><span>Generated {report.generatedAt}</span><span>{documents.length} OCR document{documents.length === 1 ? '' : 's'} considered</span></div>
       <section className="report-scheme-card">
@@ -152,7 +172,7 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
         <div className="report-source-fact"><span>Dataset source status: {scheme.source_verification_status?.replaceAll('_', ' ') || 'not stated'}</span><a href={source} target="_blank" rel="noreferrer">Open scheme source</a></div>
       </section>
 
-      <section className="report-block report-outcome">
+      <section id="report-outcome" tabIndex={-1} className="report-block report-outcome">
         <div className="report-block-heading"><h3>Eligibility outcome</h3><span className={`result-status result-${report.eligibility.status.toLowerCase()}`}>{eligibilityStatus[report.eligibility.status] || 'Undetermined'}</span></div>
         <p>{report.eligibility.summary}</p>
         <p className="report-separation-note">This is the existing deterministic rule result. Document readiness and consistency findings do not alter it.</p>
@@ -166,13 +186,13 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
         </details>)}</div>
       </section>
 
-      <section className="report-block">
+      <section id="report-documents" tabIndex={-1} className="report-block">
         <h3>Document checklist</h3>
         {requirements.length ? <><p className="report-separation-note">Readiness is based only on the item you explicitly marked after reviewing an upload. It does not verify authenticity.</p><ul className="report-checklist">{availableDocuments.map((item) => <li className="readiness-available" key={`available-${item}`}><strong>Available for review</strong><span>{item}</span></li>)}{missingDocuments.map((item) => <li className="readiness-missing" key={`missing-${item}`}><strong>Missing / not provided here</strong><span>{item}</span></li>)}{uncertainDocuments.map((item) => <li className="readiness-uncertain" key={`uncertain-${item.local_id}`}><strong>Uncertain document mapping</strong><span>{item.filename} was not matched to a required item.</span></li>)}</ul><p>{report.eligibility.document_readiness.note}</p></> : <p>{scheme.documents_note || 'No document checklist is encoded for this scheme.'}</p>}
         {documentReadiness?.quality_warnings?.filter((warning) => /expired|validity/i.test(warning)).map((warning, index) => <p className="consistency-expiry" key={`expiry-warning-${index}`}>{warning}</p>)}
       </section>
 
-      <section className="report-block">
+      <section id="report-consistency" tabIndex={-1} className="report-block">
         <h3>Cross-document consistency</h3>
         <p className="report-separation-note">Potential mismatches are prompts for manual review; they do not establish falsification or intent.</p>
         {attentionFindings.length ? <div className="report-consistency-list">{attentionFindings.map((finding) => <details key={finding.field} className="report-consistency-item" open={finding.status === 'POTENTIAL_MISMATCH' || finding.status === 'UNABLE_TO_VERIFY'}>
@@ -182,7 +202,7 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
         {report.consistency.expiry_reviews?.map((item, index) => <div className="consistency-expiry" key={`expiry-${index}`}><strong>Explicit valid-until date needs review</strong><p>{item.source}: {item.valid_until}. {item.explanation}</p></div>)}
       </section>
 
-      <section className="report-block">
+      <section id="report-sources" tabIndex={-1} className="report-block">
         <h3>Information sources and assumptions</h3>
         <details className="report-source-details"><summary>User-confirmed profile values</summary><dl>{Object.entries(report.profile).map(([key, value]) => <div key={key}><dt>{fieldLabels[key] || key.replaceAll('_', ' ')}</dt><dd>{value}</dd></div>)}</dl><p>These values were supplied or confirmed in the report form.</p></details>
         {documents.map((document) => <details className="report-source-details" key={document.local_id || document.filename}><summary>OCR extraction · {document.filename} · original extraction</summary><p>Extracted text is unverified and may be incomplete. Confidence and page values are from the OCR analysis.</p><dl>{Object.entries(document.extracted_fields || {}).filter(([, field]) => field?.value != null).map(([key, field]) => <div key={key}><dt>{fieldLabels[key] || key.replaceAll('_', ' ')}</dt><dd>{String(field.value)}{field.source_page ? ` · page ${field.source_page}` : ''}{field.confidence != null ? ` · ${Math.round(field.confidence * 100)}% confidence` : ''}</dd></div>)}</dl></details>)}
@@ -192,7 +212,7 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
         <details className="report-source-details"><summary>Unresolved assumptions</summary><p>Unknown eligibility conditions remain unknown. OCR values are not treated as verified identity or authenticity. The report does not add requirements, deadlines, or eligibility rules beyond the selected scheme record and retrieved source excerpts.</p></details>
       </section>
 
-      <section className="report-block report-recommendations">
+      <section id="report-next-steps" tabIndex={-1} className="report-block report-recommendations">
         <h3>Next steps</h3>
         {recommendations.length ? <ol>{recommendations.map((recommendation) => <li key={recommendation}>{recommendation}</li>)}</ol> : <p>Review the official source for current application instructions and submit through the official channel if you decide to proceed.</p>}
       </section>

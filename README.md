@@ -1,6 +1,6 @@
 # YojnaSetu
 
-YojnaSetu is an AI-assisted government scheme discovery and application-readiness platform. This repository contains the initial project foundation: a React + Vite frontend and an independent FastAPI backend.
+YojnaSetu is an AI-assisted government scheme discovery and application-readiness platform. This repository contains the application: a React + Vite frontend and an independent FastAPI backend.
 
 ## Requirements
 
@@ -16,7 +16,7 @@ cd backend
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install -r requirements.txt
-uvicorn app.main:app --reload
+python3 -m uvicorn app.main:app --reload
 ```
 
 The API runs at <http://127.0.0.1:8000>. Its health endpoint is <http://127.0.0.1:8000/api/health>.
@@ -79,3 +79,20 @@ The frontend and backend run independently. Start both servers to see the live b
 ## Configuration
 
 Copy `.env.example` when adding local configuration. No API keys are required. PDF downloads and first-time model setup need internet access; the app can run without them, but `/api/ask` will return an explicit insufficient-evidence result until an index exists.
+
+## Frontend pages and session behavior
+
+- `/`: introduction, three-step workflow, feature highlights, and transparency.
+- `/explore`: scheme search and category, geography, and department filters.
+- `/explore/:scheme_id`: linked scheme details, official source, document requirements, and eligibility handoff.
+- `/eligibility?scheme_id=...`: applicant form, review, rule results and explanations, and next steps.
+- `/documents`: upload/OCR, extracted-field review, and readiness checklist. `/documents#consistency-review` opens consistency comparison; `/documents#scheme-questions` opens cited scheme Q&A. Section navigation preserves work while switching sections. Save review keeps reviewed extraction in this tab without leaving the page.
+- `/application`: consolidated preflight report, collapsible profile editor, section links, and Print / Save as PDF. Printing expands source and rule disclosures for the saved copy.
+
+Navigation uses the browser history API. Vite supports direct route refreshes; a production static host must serve `index.html` for frontend paths and forward `/api` separately.
+
+Applicant drafts and extracted document data use this tab's `sessionStorage`. They can survive a refresh but are not account records or durable storage. Original files are not saved. Reopen an analyzed document using Review, or remove it from this tab. Reports must be regenerated after returning to the page; save a PDF for a lasting copy.
+
+Existing limits: the form collects general applicant fields only, so uncollected scheme-specific rules stay unknown. Readiness tracks one explicitly mapped document requirement at a time, while consistency review supports up to ten uploads. RAG requires the local index described above; image/scanned-document OCR requires Tesseract.
+
+Build the frontend with `cd frontend && npm run build`.
