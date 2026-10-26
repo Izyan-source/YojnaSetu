@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { RuleBadge, RuleLegend, ReportStatusCard } from './ui.jsx'
 
 const fieldLabels = {
   applicant_name: 'Applicant name', date_of_birth: 'Date of birth', age: 'Age', address: 'Address', state: 'State',
@@ -178,10 +179,16 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
         <p className="report-separation-note">This is the existing deterministic rule result. Document readiness and consistency findings do not alter it.</p>
       </section>
 
-      <section className="report-block">
+      <div className="report-status-grid" aria-label="Readiness at a glance">
+        <ReportStatusCard label="Eligibility information" value={unknownRules.length ? `${unknownRules.length} unknown` : 'Conditions assessed'} detail={unknownRules.length ? 'Encoded conditions need more information.' : 'Read the individual rule explanations below.'} href="#report-rules" tone={unknownRules.length ? 'attention' : 'neutral'} />
+        <ReportStatusCard label="Document readiness" value={requirements.length ? `${availableDocuments.length} of ${requirements.length} marked` : 'Checklist unavailable'} detail={requirements.length ? 'Marked available by you; authenticity is not verified.' : 'Confirm requirements with the official source.'} href="#report-documents" tone={missingDocuments.length ? 'attention' : 'neutral'} />
+        <ReportStatusCard label="Consistency review" value={`${attentionFindings.length} to review`} detail="Includes missing or unverifiable information." href="#report-consistency" tone={attentionFindings.length ? 'attention' : 'neutral'} />
+      </div>
+      <section id="report-rules" tabIndex={-1} className="report-block">
         <h3>Eligibility checklist</h3>
+        <RuleLegend />
         <div className="preflight-rule-list">{ruleResults.map((rule) => <details className="preflight-rule" key={rule.rule_id}>
-          <summary><span className={`rule-status rule-${rule.status.toLowerCase()}`}>{rule.status}</span><strong>{rule.label}</strong><span className="expand-hint">Details</span></summary>
+          <summary><RuleBadge status={rule.status} /><strong>{rule.label}</strong><span className="expand-hint">Details</span></summary>
           <div><p>{rule.explanation}</p>{report.eligibility.source_references?.[0]?.url ? <a href={report.eligibility.source_references[0].url} target="_blank" rel="noreferrer">Rule source: {report.eligibility.source_references[0].name}</a> : <small>No official source reference is available for this rule.</small>}</div>
         </details>)}</div>
       </section>
@@ -206,8 +213,8 @@ export default function PreflightReport({ scheme, initialProfile, profileSources
         <h3>Information sources and assumptions</h3>
         <details className="report-source-details"><summary>User-confirmed profile values</summary><dl>{Object.entries(report.profile).map(([key, value]) => <div key={key}><dt>{fieldLabels[key] || key.replaceAll('_', ' ')}</dt><dd>{value}</dd></div>)}</dl><p>These values were supplied or confirmed in the report form.</p></details>
         {documents.map((document) => <details className="report-source-details" key={document.local_id || document.filename}><summary>OCR extraction · {document.filename} · original extraction</summary><p>Extracted text is unverified and may be incomplete. Confidence and page values are from the OCR analysis.</p><dl>{Object.entries(document.extracted_fields || {}).filter(([, field]) => field?.value != null).map(([key, field]) => <div key={key}><dt>{fieldLabels[key] || key.replaceAll('_', ' ')}</dt><dd>{String(field.value)}{field.source_page ? ` · page ${field.source_page}` : ''}{field.confidence != null ? ` · ${Math.round(field.confidence * 100)}% confidence` : ''}</dd></div>)}</dl></details>)}
-        <details className="report-source-details"><summary>Retrieved evidence from indexed scheme documents</summary>
-          {report.evidence?.status === 'ANSWERED' ? <><p>{report.evidence.answer}</p><p className="report-separation-note">Extractive response from retrieved text; use the linked document to confirm the current terms.</p><ul className="report-citations">{report.evidence.sources?.map((citation, index) => <li key={`${citation.source_url}-${citation.page_number}-${index}`}><a href={citation.source_url} target="_blank" rel="noreferrer">{citation.document_title}{citation.page_number ? ` · page ${citation.page_number}` : ''}</a><blockquote>{citation.excerpt}</blockquote></li>)}</ul></> : <p>{report.evidence?.answer || evidenceNotice || 'No retrieved document evidence is available. No citation has been inferred.'}</p>}
+        <details className="report-source-details report-evidence" open><summary>Retrieved evidence from indexed scheme documents</summary>
+          {report.evidence?.status === 'ANSWERED' ? <><p>{report.evidence.answer}</p><p className="report-separation-note">Extractive response from retrieved text; use the linked document to confirm the current terms.</p><ul className="report-citations">{report.evidence.sources?.map((citation, index) => <li key={`${citation.source_url}-${citation.page_number}-${index}`}><span className="citation-label">SOURCE {String(index + 1).padStart(2, '0')}</span><a href={citation.source_url} target="_blank" rel="noreferrer">{citation.document_title}{citation.page_number ? ` · page ${citation.page_number}` : ''}</a><blockquote>{citation.excerpt}</blockquote></li>)}</ul></> : <p>{report.evidence?.answer || evidenceNotice || 'No retrieved document evidence is available. No citation has been inferred.'}</p>}
         </details>
         <details className="report-source-details"><summary>Unresolved assumptions</summary><p>Unknown eligibility conditions remain unknown. OCR values are not treated as verified identity or authenticity. The report does not add requirements, deadlines, or eligibility rules beyond the selected scheme record and retrieved source excerpts.</p></details>
       </section>

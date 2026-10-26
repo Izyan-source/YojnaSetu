@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import PreflightReport from './PreflightReport.jsx'
 import { decodeSegment, useNavigation } from './navigation.js'
-import { Icon, Brand, ButtonLink, PageIntro, SourceBadge } from './ui.jsx'
+import { Icon, Brand, ButtonLink, PageIntro, SourceBadge, RuleBadge, RuleLegend } from './ui.jsx'
 import HomePage from './HomePage.jsx'
 
 const states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Andaman and Nicobar Islands', 'Chandigarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Lakshadweep', 'Puducherry']
@@ -85,7 +85,7 @@ function AskSection({ schemes }) {
   }
 
   return <section className="ask-section section-wrap" id="ask">
-    <div className="ask-heading"><p className="eyebrow">ASK ABOUT A SCHEME</p><h2>Questions, grounded in<br /><span>available documents.</span></h2><p>Answers use retrieved text from the local scheme document index. If the documents do not support an answer, YojnaSetu will say so.</p></div>
+    <div className="ask-heading"><p className="eyebrow">03 / SCHEME Q&A</p><h2>Answers with<br /><em>their sources.</em></h2><p>Answers use retrieved text from the local scheme document index. If the documents do not support an answer, YojnaSetu will say so.</p></div>
     <form className="ask-form" onSubmit={askQuestion}>
       <label htmlFor="ask-question">Your question</label>
       <textarea id="ask-question" value={question} onChange={(event) => setQuestion(event.target.value)} maxLength={1200} rows={3} placeholder="For example: What does the APY document say about the joining age?" required />
@@ -97,7 +97,7 @@ function AskSection({ schemes }) {
       </div>
       {error && <p className="api-error" role="alert">{error}</p>}
       {loading && <p className="ask-loading" role="status">Searching available scheme documents…</p>}
-      {result && <div className="ask-result" aria-live="polite"><span className={`result-status ${result.status === 'ANSWERED' ? 'result-potentially_eligible' : 'result-undetermined'}`}>{result.status === 'ANSWERED' ? 'Document-based response' : 'Could not verify from available documents'}</span><p className="ask-answer">{result.answer}</p>{result.notice && <p className="ask-notice">{result.notice}</p>}{result.sources?.length > 0 && <div className="ask-sources"><h3>Supporting sources</h3>{result.sources.map((source, index) => <article className="ask-source" key={`${source.source_url}-${source.page_number}-${index}`}><div><a href={source.source_url} target="_blank" rel="noreferrer">{source.document_title}{source.page_number ? ` · page ${source.page_number}` : ''} <Icon name="arrow" size={14} /></a><p>{source.excerpt}</p></div></article>)}</div>}</div>}
+      {result && <div className="ask-result" aria-live="polite"><span className={`result-status ${result.status === 'ANSWERED' ? 'result-potentially_eligible' : 'result-undetermined'}`}>{result.status === 'ANSWERED' ? 'Document-based response' : 'Could not verify from available documents'}</span><p className="ask-answer">{result.answer}</p>{result.notice && <p className="ask-notice">{result.notice}</p>}{result.sources?.length > 0 && <div className="ask-sources"><h3>Supporting sources</h3>{result.sources.map((source, index) => <article className="ask-source" key={`${source.source_url}-${source.page_number}-${index}`}><div><span className="citation-label">SOURCE {String(index + 1).padStart(2, '0')}</span><a href={source.source_url} target="_blank" rel="noreferrer">{source.document_title}{source.page_number ? ` · page ${source.page_number}` : ''} <Icon name="arrow" size={14} /></a><p>{source.excerpt}</p></div></article>)}</div>}</div>}
     </form>
   </section>
 }
@@ -194,20 +194,22 @@ function DocumentIntelligence({ schemes, navigate, onDocumentsChange }) {
   }
 
   return <section className="document-section section-wrap" id="document-intelligence">
-    <div className="document-intro"><p className="eyebrow">DOCUMENT INTELLIGENCE</p><h2>Make document details<br /><span>easier to review.</span></h2><p>Extract text locally from a PDF or image, review what was detected, and correct it before choosing whether to prefill an assessment.</p><p className="document-privacy">Files are processed for this request and are not saved as application records. Text extraction does not authenticate documents.</p></div>
+    <div className="document-intro"><p className="eyebrow">01 / UPLOAD & REVIEW</p><h2>Start with<br /><em>your documents.</em></h2><p>Extract text locally from a PDF or image, review what was detected, and correct it before choosing whether to prefill an assessment.</p><p className="document-privacy">Files are processed for this request and are not saved as application records. Text extraction does not authenticate documents.</p></div>
     <div className="document-panel">
+      <div className="document-upload-card"><h3>Upload a document</h3><p className="panel-help">Choose a file to extract its text, then review the detected values.</p>
       <label className={`document-dropzone ${dragging ? 'dropzone-active' : ''}`} onDragOver={(event) => { event.preventDefault(); setDragging(true) }} onDragLeave={() => setDragging(false)} onDrop={(event) => { event.preventDefault(); setDragging(false); analyze(event.dataTransfer.files?.[0]) }}>
         <input type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg" disabled={busy || documents.length >= 10} onChange={(event) => analyze(event.target.files?.[0])} />
         <span className="document-upload-mark"><Icon name="file" size={24} /></span><strong>{busy ? 'Analyzing document…' : documents.length >= 10 ? 'Document limit reached' : 'Drop a document here or browse files'}</strong><small>PDF, PNG, JPG or JPEG · up to 10 MB · 20 PDF pages · maximum 10 documents</small>
         {file && <span className="document-file-name">{file.name}</span>}
-      </label>
-      <label className="document-scheme-select" htmlFor="document-scheme">Scheme for document readiness
+      </label></div>
+      <div className="readiness-panel"><label className="document-scheme-select" htmlFor="document-scheme">Scheme for document readiness
         <select id="document-scheme" disabled={busy} value={schemeId} onChange={(event) => { setSchemeId(event.target.value); setSelectedRequirement('') }}><option value="">Choose a scheme</option>{schemes.map((scheme) => <option key={scheme.scheme_id} value={scheme.scheme_id}>{scheme.name}</option>)}</select>
       </label>
       {selectedScheme && <div className="document-readiness"><h3>Document readiness</h3><p>Review an upload and select the requirement it supports before continuing. The current report tracks one confirmed document mapping at a time; other uploads remain available for consistency review.</p>{selectedScheme.required_documents.length ? <ul>{selectedScheme.required_documents.map((item) => <li key={item}>{item}</li>)}</ul> : <p>{selectedScheme.documents_note || 'No document checklist is encoded for this scheme.'}</p>}</div>}
+      </div>
       {busy && <p className="ask-loading" role="status">Extracting text and checking document readability…</p>}
       {error && <p className="api-error" role="alert">{error}</p>}
-      {documents.length > 0 && <div className="retained-documents"><strong>Documents in this tab ({documents.length}/10)</strong><ul>{documents.map((document) => <li key={document.local_id}><span>{document.filename}</span><button type="button" disabled={busy} onClick={() => { setSavedReview(false); setAnalysis(document); setValues(document.reviewed_values || Object.fromEntries(Object.entries(document.extracted_fields).map(([key, field]) => [key, field.value ?? '']))); setSelectedFields({}); setEditedFields({}); setSelectedRequirement('') }}>Review</button><button type="button" disabled={busy} onClick={() => {
+      {documents.length > 0 && <div className="retained-documents"><h3>Uploaded documents <span className="file-count">{documents.length}/10</span></h3><ul>{documents.map((document) => <li className={analysis?.local_id === document.local_id ? 'file-selected' : ''} key={document.local_id}><Icon name="file" size={18} /><span className="file-info"><strong>{document.filename}</strong><small>{document.page_count} page{document.page_count === 1 ? '' : 's'} · {document.reviewed_values ? 'Review saved' : 'Review needed'}</small></span><button type="button" disabled={busy} aria-label={`Review ${document.filename}`} onClick={() => { setSavedReview(false); setAnalysis(document); setValues(document.reviewed_values || Object.fromEntries(Object.entries(document.extracted_fields).map(([key, field]) => [key, field.value ?? '']))); setSelectedFields({}); setEditedFields({}); setSelectedRequirement('') }}>Review</button><button type="button" disabled={busy} aria-label={`Remove ${document.filename}`} onClick={() => {
         const updated = documents.filter((item) => item.local_id !== document.local_id)
         sessionStorage.setItem('yojnasetu-document-analyses', JSON.stringify(updated)); setDocuments(updated)
         const readiness = JSON.parse(sessionStorage.getItem('yojnasetu-document-readiness') || 'null')
@@ -215,22 +217,22 @@ function DocumentIntelligence({ schemes, navigate, onDocumentsChange }) {
         if (analysis?.local_id === document.local_id) setAnalysis(null)
       }}>Remove</button></li>)}</ul></div>}
       {analysis && <div className="document-results" aria-live="polite">
-        <div className="document-result-heading"><div><span className="small-label">EXTRACTION COMPLETE</span><h3>Review detected details</h3></div><span>{analysis.page_count} page{analysis.page_count === 1 ? '' : 's'} · {analysis.extraction_methods.join(', ') || 'No readable text'}</span></div>
+        <div className="document-result-heading"><div><span className="small-label">EXTRACTION COMPLETE</span><h3>Review detected details</h3><p className="review-filename">{analysis.filename}</p></div><span>{analysis.page_count} page{analysis.page_count === 1 ? '' : 's'} · {analysis.extraction_methods.join(', ') || 'No readable text'}</span></div>
         <p className="document-authenticity">{analysis.authenticity_notice}</p>
         <div className="extracted-fields">{Object.entries(documentFieldLabels).map(([key, label]) => {
           const field = analysis.extracted_fields[key]
           const hasValue = String(values[key] ?? '').trim() !== ''
           const uncertain = !hasValue || (!editedFields[key] && field?.confidence != null && field.confidence < 0.7)
           const fieldState = !hasValue ? 'missing' : selectedFields[key] ? 'user-confirmed' : editedFields[key] ? 'user-corrected' : uncertain ? 'uncertain' : 'extracted'
-          return <div className={`extracted-field ${uncertain ? 'extracted-uncertain' : ''}`} data-field-state={fieldState} key={key}><label htmlFor={`ocr-${key}`}>{label}<span className="field-origin">{fieldState.replaceAll('-', ' ')}</span></label><input id={`ocr-${key}`} type="text" value={values[key] ?? ''} placeholder="Not detected" onChange={(event) => { setSavedReview(false); setSelectedFields((current) => ({ ...current, [key]: false })); setValues((current) => ({ ...current, [key]: event.target.value })); setEditedFields((current) => ({ ...current, [key]: true })) }} />{field?.confidence != null && <small>{Math.round(field.confidence * 100)}% extraction confidence{field.source_page ? ` · page ${field.source_page}` : ''}</small>}<label className="confirm-field"><input type="checkbox" checked={Boolean(selectedFields[key])} disabled={!hasValue} onChange={(event) => setSelectedFields((current) => ({ ...current, [key]: event.target.checked }))} /> {['age', 'state', 'annual_family_income_inr'].includes(key) ? 'Use reviewed value in eligibility form' : 'Reviewed value'}</label></div>
+          return <div className={`extracted-field ${uncertain ? 'extracted-uncertain' : ''}`} data-field-state={fieldState} key={key}><label htmlFor={`ocr-${key}`}>{label}<span className="field-origin">{fieldState.replaceAll('-', ' ')}</span></label><input id={`ocr-${key}`} aria-describedby={`ocr-note-${key}`} type="text" value={values[key] ?? ''} placeholder="Not detected" onChange={(event) => { setSavedReview(false); setSelectedFields((current) => ({ ...current, [key]: false })); setValues((current) => ({ ...current, [key]: event.target.value })); setEditedFields((current) => ({ ...current, [key]: true })) }} /><small id={`ocr-note-${key}`}>{field?.confidence != null ? `${Math.round(field.confidence * 100)}% extraction confidence${field.source_page ? ` · page ${field.source_page}` : ''}` : 'No extraction confidence available'}</small><label className="confirm-field"><input type="checkbox" checked={Boolean(selectedFields[key])} disabled={!hasValue} onChange={(event) => setSelectedFields((current) => ({ ...current, [key]: event.target.checked }))} /> {['age', 'state', 'annual_family_income_inr'].includes(key) ? 'Use reviewed value in eligibility form' : 'Reviewed value'}</label></div>
         })}</div>
         {selectedScheme && selectedScheme.required_documents?.length > 0 && <label className="document-scheme-select" htmlFor="document-requirement">If appropriate, mark this upload as one required item after reviewing it
           <select id="document-requirement" value={selectedRequirement} onChange={(event) => setSelectedRequirement(event.target.value)}><option value="">Do not mark a requirement available</option>{selectedScheme.required_documents.map((document) => <option value={document} key={document}>{document}</option>)}</select>
         </label>}
         {analysis.warnings.length > 0 && <div className="document-warnings" role="status"><strong>Review these notes</strong><ul>{analysis.warnings.map((warning, index) => <li key={index}>{warning}</li>)}</ul></div>}
-        {savedReview && <p role="status">Review saved in this tab. Regenerate your preflight report to include these changes.</p>}
-        <button className="button button-secondary" type="button" onClick={() => useInAssessment(false)}>Save review</button>
-        <button className="button button-primary" type="button" onClick={() => useInAssessment(true)}>Continue to eligibility <Icon name="arrow" size={16} /></button>
+        {savedReview && <p className="review-saved" role="status">Review saved in this tab. Regenerate your preflight report to include these changes.</p>}
+        <div className="document-review-actions"><button className="button button-secondary" type="button" onClick={() => useInAssessment(false)}>Save review</button>
+        <button className="button button-primary" type="button" onClick={() => useInAssessment(true)}>Continue to eligibility <Icon name="arrow" size={16} /></button></div>
       </div>}
     </div>
   </section>
@@ -250,7 +252,7 @@ function Footer({ health }) {
 function SchemeDetails({ scheme, loading, error, onRetry }) {
   return <main className="page-content"><div className="section-wrap scheme-detail-page">
     <ButtonLink href="/explore" variant="secondary">← All schemes</ButtonLink>
-    <section aria-labelledby="scheme-dialog-title">
+    <section className="scheme-detail-content" aria-labelledby="scheme-dialog-title">
       {loading ? <div className="detail-loading" role="status">Loading scheme details…</div> : error ? <div className="detail-loading" role="alert"><h2 id="scheme-dialog-title">Scheme details unavailable</h2><p>{error}</p><button type="button" className="text-link" onClick={onRetry}>Try again</button></div> : <>
       <span className={`illustrative-badge source-badge source-${scheme.source_verification_status}`}>{scheme.source_verification_status === 'official_source_checked' ? 'Official source checked' : 'Source not verified'}</span>
       <p className="scheme-category">{scheme.category}</p>
@@ -263,13 +265,13 @@ function SchemeDetails({ scheme, loading, error, onRetry }) {
         <div><dt>Document readiness</dt><dd>{scheme.documents_status === 'unknown' ? scheme.documents_note : `${scheme.required_documents.length} document types listed; requirements are not assessed against your profile.`}</dd></div>
       </dl>
       <p className="scheme-disclaimer">Source check confirms that the linked source is official; it does not mean this product's summary or assessment is an approval. Confirm current conditions with the official source.</p>
-      <a className="button button-secondary official-source-link" href={scheme.official_source_url} target="_blank" rel="noreferrer">Open official source <Icon name="arrow" size={16} /></a>
-      <ButtonLink href={`/eligibility?scheme_id=${encodeURIComponent(scheme.scheme_id)}`}>Check this scheme <Icon name="arrow" size={16} /></ButtonLink>
-      <section className="detail-section"><p className="eyebrow">01 / ELIGIBILITY</p><h2>Conditions to understand</h2><p>These are the conditions represented in this record. They are not an assessment of your eligibility.</p><ul className="detail-criteria">{scheme.eligibility_rules.map((rule) => <li key={rule.rule_id}><Icon name="source" size={16} /><span>{rule.label}</span></li>)}</ul></section>
+      <div className="detail-actions"><a className="button button-secondary official-source-link" href={scheme.official_source_url} target="_blank" rel="noreferrer">Open official source <Icon name="arrow" size={16} /></a>
+      <ButtonLink href={`/eligibility?scheme_id=${encodeURIComponent(scheme.scheme_id)}`}>Check this scheme <Icon name="arrow" size={16} /></ButtonLink></div>
+      <div className="detail-sections"><section className="detail-section"><p className="eyebrow">01 / ELIGIBILITY</p><h2>Conditions to understand</h2><p>These are the conditions represented in this record. They are not an assessment of your eligibility.</p><ul className="detail-criteria">{scheme.eligibility_rules.map((rule) => <li key={rule.rule_id}><Icon name="source" size={16} /><span>{rule.label}</span></li>)}</ul></section>
       <section className="detail-section"><p className="eyebrow">02 / PREPARATION</p><h2>Documents to prepare</h2>
       {scheme.required_documents.length ? <ul>{scheme.required_documents.map((item) => <li key={item}>{item}</li>)}</ul> : <p>{scheme.documents_note}</p>}
       {scheme.required_documents.length > 0 && <p>{scheme.documents_note}</p>}</section>
-      <section className="detail-section"><p className="eyebrow">03 / SOURCE MATERIAL</p><h2>Go to the source</h2><p>{scheme.source_checked_at ? `Source check recorded in the dataset: ${scheme.source_checked_at}. ` : ''}Confirm current terms with the provider before applying.</p><a className="text-link" href={scheme.official_source_url} target="_blank" rel="noreferrer">Official scheme page <Icon name="arrow" size={16} /></a>{scheme.documents?.map((document) => <a className="source-document-link" key={document.url} href={document.url} target="_blank" rel="noreferrer"><Icon name="file" size={18} />{document.title}<Icon name="arrow" size={16} /></a>)}</section>
+      <section className="detail-section"><p className="eyebrow">03 / SOURCE MATERIAL</p><h2>Go to the source</h2><p>{scheme.source_checked_at ? `Source check recorded in the dataset: ${scheme.source_checked_at}. ` : ''}Confirm current terms with the provider before applying.</p><a className="text-link" href={scheme.official_source_url} target="_blank" rel="noreferrer">Official scheme page <Icon name="arrow" size={16} /></a>{scheme.documents?.map((document) => <a className="source-document-link" key={document.url} href={document.url} target="_blank" rel="noreferrer"><Icon name="file" size={18} />{document.title}<Icon name="arrow" size={16} /></a>)}</section></div>
       </>}
     </section>
   </div></main>
@@ -282,6 +284,8 @@ function ExplorePage({ schemeState, schemeId }) {
   const [department, setDepartment] = useState('All departments')
   const [detailState, setDetailState] = useState({ loading: true, scheme: null, error: '' })
   const [detailReload, setDetailReload] = useState(0)
+  const hasFilters = Boolean(query || category !== 'All categories' || geography !== 'All locations' || department !== 'All departments')
+  function clearFilters() { setQuery(''); setCategory('All categories'); setGeography('All locations'); setDepartment('All departments') }
   const normalizedQuery = query.trim().toLowerCase()
   const categoryOptions = ['All categories', ...new Set(schemeState.schemes.map((scheme) => scheme.category))]
   const geographyOptions = ['All locations', ...new Set(schemeState.schemes.map((scheme) => scheme.applicability).filter(Boolean))]
@@ -309,14 +313,15 @@ function ExplorePage({ schemeState, schemeId }) {
     <main className="page-content">
       <PageIntro eyebrow="THE SCHEME DIRECTORY" title={<>Find support.<br /><em>Understand your options.</em></>}><p>Explore public schemes, read the conditions, and follow the official source. A good application starts with clear information.</p></PageIntro>
       <section className="explore-content section-wrap" aria-labelledby="browse-heading">
+        <div className="browse-filter-panel">
         <div className="explore-toolbar">
-          <label className="search-field">
+          <div className="search-field">
             <Icon name="search" size={19} />
-            <span className="visually-hidden">Search by scheme name or keyword</span>
-            <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search schemes or keywords" />
+            <label className="visually-hidden" htmlFor="scheme-search">Search by scheme name or keyword</label>
+            <input id="scheme-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search schemes or keywords" />
             {query && <button type="button" className="clear-search" onClick={() => setQuery('')} aria-label="Clear search">×</button>}
-          </label>
-          <p className="result-count" aria-live="polite">{filteredSchemes.length} {filteredSchemes.length === 1 ? 'scheme' : 'schemes'}</p>
+          </div>
+          <p className="result-count" aria-live="polite">{schemeState.loading ? 'Loading directory…' : `${filteredSchemes.length} ${filteredSchemes.length === 1 ? 'scheme' : 'schemes'}`}</p>
         </div>
         <div className="category-filters" role="group" aria-label="Filter schemes by category">
           {categoryOptions.map((item) => <button key={item} type="button" className={`filter-chip ${category === item ? 'filter-active' : ''}`} aria-pressed={category === item} onClick={() => setCategory(item)}>{item}</button>)}
@@ -325,15 +330,19 @@ function ExplorePage({ schemeState, schemeId }) {
           <label>Geography <select value={geography} onChange={(event) => setGeography(event.target.value)}>{geographyOptions.map((item) => <option key={item}>{item}</option>)}</select></label>
           <label>Department <select value={department} onChange={(event) => setDepartment(event.target.value)}>{departmentOptions.map((item) => <option key={item}>{item}</option>)}</select></label>
         </div>
+        {hasFilters && <button className="text-link clear-filters" type="button" onClick={clearFilters}>Clear all filters <Icon name="close" size={14} /></button>}
+        </div>
         <div className="example-notice"><span className="label-dot" /> <strong>Source checked ≠ eligibility verified</strong><span>Only official source links are listed. Encoded rules cover a limited subset; unknown criteria stay undetermined.</span></div>
         <h2 className="visually-hidden" id="browse-heading">Scheme records</h2>
         {schemeState.loading ? <p className="data-state" role="status">Loading scheme information…</p> : schemeState.error ? <div className="empty-results" role="alert"><h3>Scheme information is unavailable</h3><p>{schemeState.error}</p><button type="button" className="text-link" onClick={schemeState.reload}>Try again</button></div> : filteredSchemes.length ? <div className="browse-grid">
-          {filteredSchemes.map((scheme, index) => <article className="browse-card" key={scheme.scheme_id}>
-            <div className="browse-index"><span>{String(index + 1).padStart(2, '0')}</span><p className="scheme-category">{scheme.category}</p></div>
-            <div className="browse-main"><h3><a href={`/explore/${encodeURIComponent(scheme.scheme_id)}`}>{scheme.name}</a></h3><p className="scheme-description">{scheme.description}</p><p className="browse-department">{scheme.department}</p></div>
-            <div className="browse-facts"><SourceBadge scheme={scheme} /><span>{scheme.applicability}</span><span>{scheme.eligibility_rules.length} encoded conditions · some criteria may remain unknown</span><a className="details-link" href={`/explore/${encodeURIComponent(scheme.scheme_id)}`}>Read scheme <Icon name="arrow" size={16} /></a></div>
+          {filteredSchemes.map((scheme) => <article className="browse-card" key={scheme.scheme_id}>
+            <div className="browse-card-top"><p className="scheme-category">{scheme.category}</p><SourceBadge scheme={scheme} /></div>
+            <div className="browse-main"><h3><a href={`/explore/${encodeURIComponent(scheme.scheme_id)}`}>{scheme.name}</a></h3><p className="scheme-description">{scheme.description}</p></div>
+            <dl className="scheme-card-facts"><div><dt>Available in</dt><dd><Icon name="pin" size={14} />{scheme.applicability}</dd></div><div><dt>Rule coverage</dt><dd>{scheme.eligibility_rules.length} encoded conditions</dd></div></dl>
+            <p className="browse-department">{scheme.department}</p>
+            <div className="scheme-card-actions"><ButtonLink href={`/explore/${encodeURIComponent(scheme.scheme_id)}`}>View scheme <Icon name="arrow" size={16} /></ButtonLink><a className="text-link" href={scheme.official_source_url} target="_blank" rel="noreferrer">Official source <Icon name="arrow" size={14} /></a></div>
           </article>)}
-        </div> : <div className="empty-results"><span className="empty-icon"><Icon name="search" size={23} /></span><h3>No schemes found</h3><p>Try a different search term or choose another filter.</p><button className="text-link" type="button" onClick={() => { setQuery(''); setCategory('All categories'); setGeography('All locations'); setDepartment('All departments') }}>Clear filters</button></div>}
+        </div> : <div className="empty-results"><span className="empty-icon"><Icon name="search" size={23} /></span><h3>No schemes found</h3><p>Try a different search term or choose another filter.</p><button className="text-link" type="button" onClick={clearFilters}>Clear filters</button></div>}
       </section>
     </main>
   </>
@@ -429,7 +438,8 @@ function ConsistencyChecker({ initialProfile, documents }) {
   }
 
   return <section className="consistency-panel" aria-labelledby="consistency-heading">
-    <div className="consistency-panel-heading"><p className="eyebrow">CROSS-DOCUMENT REVIEW</p><h3 id="consistency-heading">Check details across documents</h3><p>Review or correct the applicant profile below. Your edits only change this profile draft; original OCR values remain unchanged.</p></div>
+    <div className="consistency-panel-heading"><h3 id="consistency-heading">Reviewed applicant details</h3><p>Review or correct the applicant profile below. Your edits only change this profile draft; original OCR values remain unchanged.</p></div>
+    {!documents.length && <p className="consistency-notice">No uploaded documents in this tab. <a className="text-link" href="/documents#upload-review">Upload a document <Icon name="arrow" size={14} /></a></p>}
     {documents.length > 0 && <p className="retained-documents"><strong>{documents.length} OCR document{documents.length === 1 ? '' : 's'} included</strong>: {documents.map((document) => document.filename).join(', ')}</p>}
     <form onSubmit={runCheck}>
       <div className="consistency-profile-grid">{Object.entries(consistencyFieldLabels).map(([key, label]) => <label key={key}>{label}<input type="text" value={profile[key] ?? ''} placeholder="Not provided" onChange={(event) => { setProfile((current) => ({ ...current, [key]: event.target.value })); setResult(null) }} /></label>)}</div>
@@ -467,7 +477,7 @@ function EligibilityResults({ results, documentReadiness, schemes }) {
       <div className="result-card-heading"><div><p className="scheme-category">SCHEME RESULT · {scheme?.category}</p><h4>{result.name}</h4></div><span className={`result-status result-${result.status.toLowerCase()}`}>{result.status === 'POTENTIALLY_ELIGIBLE' ? 'Potentially eligible' : result.status === 'NOT_ELIGIBLE' ? 'Not eligible' : 'Undetermined'}</span></div>
       <p className="result-summary">{result.summary}</p>
       {unknownRules.length > 0 && <div className="next-steps"><strong>Information still needed</strong><p>These encoded conditions could not be assessed. Add the details if you have them, then run the check again.</p><ul>{unknownRules.map((rule) => <li key={rule.rule_id}>{rule.label}</li>)}</ul></div>}
-      <div className="rule-results"><h5>Eligibility conditions · independent of document readiness</h5>{result.rule_results.map((rule) => <div className="rule-result" key={rule.rule_id}><span className={`rule-status rule-${rule.status.toLowerCase()}`}>{rule.status}</span><div><strong>{rule.label}</strong><p>{rule.explanation}</p>{source?.url ? <a className="rule-source-link" href={source.url} target="_blank" rel="noreferrer">Official scheme source <Icon name="arrow" size={12} /></a> : <small>Official source reference unavailable.</small>}</div></div>)}</div>
+      <RuleLegend /><div className="rule-results"><h5>Eligibility conditions · independent of document readiness</h5>{result.rule_results.map((rule) => <div className={`rule-result rule-row-${rule.status.toLowerCase()}`} key={rule.rule_id}><RuleBadge status={rule.status} /><div><strong>{rule.label}</strong><p>{rule.explanation}</p>{source?.url ? <a className="rule-source-link" href={source.url} target="_blank" rel="noreferrer">Official scheme source <Icon name="arrow" size={12} /></a> : <small>Official source reference unavailable.</small>}</div></div>)}</div>
       <div className="document-readiness"><h5>Document readiness · separate from eligibility</h5>{result.document_readiness.required_documents.length > 0 ? <><p>Documents are marked available only when you selected that item after reviewing your upload. This is not authenticity verification.</p><ul className="readiness-list">{available.map((document) => <li className="readiness-available" key={`available-${document}`}>Available here: {document}</li>)}{missing.map((document) => <li className="readiness-missing" key={`missing-${document}`}>Not provided for this check: {document}</li>)}{uncertain.map((document) => <li className="readiness-uncertain" key={`uncertain-${document}`}>{documentForThisScheme ? 'Uploaded, but not matched to a requirement:' : 'Uploaded for a different scheme; not matched to this checklist:'} {document}</li>)}</ul><p>{result.document_readiness.note}</p></> : <p>{scheme?.documents_note || 'No document checklist is encoded for this scheme.'}</p>}{submittedDocument?.quality_warnings?.some((warning) => /expired|validity/i.test(warning)) && <p className="expiry-note">{submittedDocument.quality_warnings.filter((warning) => /expired|validity/i.test(warning)).join(' ')}</p>}</div>
       <div className="result-source">{source && <><span>Source reference · {source.verification_status.replaceAll('_', ' ')}</span><a href={source.url} target="_blank" rel="noreferrer">Open official source <Icon name="arrow" size={14} /></a></>}</div>
       <SchemeFollowup schemeId={result.scheme_id} />
@@ -537,6 +547,8 @@ function EligibilityPage({ schemes }) {
       if (form.income !== '' && (!Number.isInteger(Number(form.income)) || Number(form.income) < 0 || Number(form.income) > 1000000000)) nextErrors.income = 'Enter a whole amount from ₹0 to ₹1,000,000,000, or leave it blank.'
     }
     setErrors(nextErrors)
+    const firstInvalid = Object.keys(nextErrors)[0]
+    if (firstInvalid) window.requestAnimationFrame(() => document.getElementById(firstInvalid === 'scheme' ? 'assessment-scheme' : firstInvalid)?.focus())
     return Object.keys(nextErrors).length === 0
   }
 
@@ -599,15 +611,15 @@ function EligibilityPage({ schemes }) {
 
   return <main className="page-content eligibility-page">
     <PageIntro eyebrow="YOUR ELIGIBILITY CHECK" title={<>A few details.<br /><em>A clearer next step.</em></>}><p>Compare your situation with the scheme’s encoded conditions. You can leave unknown details blank; this check is guidance, not an official decision.</p></PageIntro>
-    <section className="assessment-card section-wrap" aria-labelledby="assessment-title">
+    <section className={`assessment-card section-wrap ${complete ? 'assessment-complete' : ''}`} aria-labelledby="assessment-title">
       <div className="assessment-heading">
-        <div><span className="small-label">ELIGIBILITY ASSESSMENT</span><h2 id="assessment-title">A few details, at your pace.</h2></div>
+        <div><span className="small-label">ELIGIBILITY ASSESSMENT</span><h2 id="assessment-title">{complete ? 'Your eligibility review' : 'A few details, at your pace.'}</h2></div>
         <span className="assessment-count">{complete ? 'Complete' : `STEP ${step} OF 3`}</span>
       </div>
       <ol className="assessment-progress" aria-label="Form progress">
-        <li aria-current={!complete && step === 1 ? 'step' : undefined} className={step >= 1 ? 'progress-current' : ''}><span>1</span><span>About you</span></li>
-        <li aria-current={!complete && step === 2 ? 'step' : undefined} className={step >= 2 ? 'progress-current' : ''}><span>2</span><span>Your background</span></li>
-        <li aria-current={!complete && step === 3 ? 'step' : undefined} className={step >= 3 || complete ? 'progress-current' : ''}><span>3</span><span>Review</span></li>
+        <li aria-current={!complete && step === 1 ? 'step' : undefined} className={step >= 1 ? 'progress-current' : ''}><span>{step > 1 || complete ? <Icon name="check" size={14} /> : '1'}</span><span>About you</span></li>
+        <li aria-current={!complete && step === 2 ? 'step' : undefined} className={step >= 2 ? 'progress-current' : ''}><span>{step > 2 || complete ? <Icon name="check" size={14} /> : '2'}</span><span>Your background</span></li>
+        <li aria-current={!complete && step === 3 ? 'step' : undefined} className={step >= 3 || complete ? 'progress-current' : ''}><span>{complete ? <Icon name="check" size={14} /> : '3'}</span><span>Review</span></li>
       </ol>
 
       {!complete && <div className="assessment-scheme-select"><FormField id="assessment-scheme" label="Scheme to assess" error={errors.scheme} hint="Only encoded conditions for the selected scheme are evaluated.">{(describedBy) => <select id="assessment-scheme" disabled={submitting} value={selectedSchemeId} onChange={(event) => { setSelectedSchemeId(event.target.value); setErrors((current) => ({ ...current, scheme: '' })) }} aria-invalid={Boolean(errors.scheme)} aria-describedby={describedBy}><option value="">Choose a scheme</option>{schemes.map((scheme) => <option key={scheme.scheme_id} value={scheme.scheme_id}>{scheme.name}</option>)}</select>}</FormField></div>}
@@ -676,11 +688,11 @@ function DocumentAssistantPage({ schemes, navigate, hash }) {
       return { ...saved, annual_family_income_inr: saved.annual_family_income_inr ?? saved.income }
     } catch { return {} }
   })
-  return <main className="page-content">
+  return <main className="page-content documents-page">
     <PageIntro eyebrow="THE DOCUMENT DESK" title={<>Prepare with<br /><em>more confidence.</em></>}><p>Read your documents, review the details, and resolve questions with source-backed answers. You decide which extracted values to use.</p></PageIntro>
-    <nav className="assistant-tabs section-wrap" aria-label="Document assistant sections">{sections.map(([id, label]) => <a key={id} href={`/documents#${id}`} aria-current={activeSection === id ? 'location' : undefined}>{label}</a>)}</nav>
+    <nav className="assistant-tabs section-wrap" aria-label="Document assistant sections">{sections.map(([id, label], index) => <a key={id} href={`/documents#${id}`} aria-current={activeSection === id ? 'location' : undefined}><span aria-hidden="true">0{index + 1}</span>{label}</a>)}</nav>
     <div id="upload-review" tabIndex={-1} hidden={activeSection !== 'upload-review'}><DocumentIntelligence schemes={schemes} navigate={navigate} onDocumentsChange={setDocuments} /></div>
-    <section className="consistency-page-section section-wrap" id="consistency-review" tabIndex={-1} hidden={activeSection !== 'consistency-review'}><div className="section-heading"><div><p className="eyebrow">CROSS-DOCUMENT REVIEW</p><h2>Check details<br /><span>before you apply.</span></h2></div><p>Potential differences are surfaced for manual review. They do not change an eligibility outcome or imply document authenticity.</p></div><ConsistencyChecker initialProfile={profile} documents={documents} /></section>
+    <section className="consistency-page-section section-wrap" id="consistency-review" tabIndex={-1} hidden={activeSection !== 'consistency-review'}><div className="section-heading"><div><p className="eyebrow">02 / CONSISTENCY</p><h2>Check the details.<br /><em>Resolve the differences.</em></h2></div><p>Potential differences are surfaced for manual review. They do not change an eligibility outcome or imply document authenticity.</p></div><ConsistencyChecker initialProfile={profile} documents={documents} /></section>
     <div id="scheme-questions" tabIndex={-1} hidden={activeSection !== 'scheme-questions'}><AskSection schemes={schemes} /></div>
     <div className="assistant-next-step section-wrap"><p>Ready to bring your information together?</p><ButtonLink href="/application">Open My Application <Icon name="arrow" size={16} /></ButtonLink></div>
   </main>
@@ -698,8 +710,7 @@ function ApplicationPage({ schemes, loading, error }) {
     } catch { return { profile: {}, selectedSchemeId: '', profileSources: {}, documents: [], documentReadiness: null } }
   })
   const scheme = schemes.find((item) => item.scheme_id === context.selectedSchemeId)
-  if (loading || error) return <main className="page-content"><section className="page-intro section-wrap"><p className="eyebrow">MY APPLICATION</p><h1>Application preflight</h1><p role="status">{loading ? 'Loading the selected scheme for your report…' : 'Your report needs scheme data. Use Retry connection above to load it.'}</p></section></main>
-  if (!scheme) return <main className="page-content"><section className="page-intro section-wrap"><p className="eyebrow">MY APPLICATION</p><h1>Your preflight,<br /><span>when you’re ready.</span></h1><p>Start with an eligibility check to select a scheme and confirm the profile details for your report. Profile and extracted text are stored only for this browser tab’s session; original files are not saved.</p><ButtonLink href="/eligibility">Check Eligibility <Icon name="arrow" size={16} /></ButtonLink></section></main>
+  if (loading || error || !scheme) return <main className="page-content"><PageIntro eyebrow="MY APPLICATION" title={<>Your application,<br /><em>in perspective.</em></>}><p>Bring your eligibility review, documents, and source references into one preflight report.</p></PageIntro><section className="application-empty section-wrap"><Icon name="file" size={28} /><h2>{loading ? 'Preparing your workspace…' : error ? 'Scheme information is unavailable' : 'Start with a scheme'}</h2><p role="status">{loading ? 'Loading the scheme details needed for your report.' : error ? 'Use Retry connection above to load scheme information. Your saved draft remains in this tab.' : 'Choose a scheme and review your applicant details. Your report will bring together the checks and documents available in this tab.'}</p>{!loading && !error && <ButtonLink href="/eligibility">Check eligibility <Icon name="arrow" size={16} /></ButtonLink>}</section></main>
   const initialProfile = { applicant_name: '', date_of_birth: '', age: '', address: '', state: '', occupation: '', category: '', certificate_type: '', issuing_authority: '', certificate_date: '', certificate_valid_until: '', certificate_number: '', ...context.profile, annual_family_income_inr: context.profile.annual_family_income_inr ?? context.profile.income ?? '', education_level: context.profile.education_level ?? context.profile.education ?? '' }
   return <main className="page-content"><PageIntro eyebrow="MY APPLICATION" title={<>Your application,<br /><em>in perspective.</em></>}><p>One working report for eligibility, document readiness, unresolved details, and the sources behind them. Review it before taking your next step.</p></PageIntro><div className="section-wrap report-page"><PreflightReport scheme={scheme} initialProfile={initialProfile} profileSources={context.profileSources} documents={context.documents} documentReadiness={context.documentReadiness} /></div></main>
 }

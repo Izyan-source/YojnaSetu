@@ -36,3 +36,22 @@ export function PageIntro({ eyebrow, title, children }) {
 export function SourceBadge({ scheme }) {
   return <span className={`source-badge source-${scheme.source_verification_status}`}>{scheme.source_verification_status === 'official_source_checked' ? 'Official source checked' : 'Source not verified'}</span>
 }
+
+export function RuleBadge({ status }) {
+  const icons = { PASS: 'check', FAIL: 'close', UNKNOWN: 'source' }
+  return <span className={`rule-status rule-${status.toLowerCase()}`}><Icon name={icons[status] || 'source'} size={14} />{status}</span>
+}
+
+export function RuleLegend() {
+  return <dl className="rule-legend" aria-label="How to read eligibility conditions">
+    <div><dt><RuleBadge status="PASS" /></dt><dd>Condition met</dd></div>
+    <div><dt><RuleBadge status="FAIL" /></dt><dd>Condition not met</dd></div>
+    <div><dt><RuleBadge status="UNKNOWN" /></dt><dd>More information needed</dd></div>
+  </dl>
+}
+
+export function ReportStatusCard({ label, value, detail, href, tone = 'neutral' }) {
+  return <a className={`report-status-card status-card-${tone}`} href={href}>
+    <span className="small-label">{label}</span><strong>{value}</strong><span>{detail}</span><Icon name="arrow" size={16} />
+  </a>
+}
