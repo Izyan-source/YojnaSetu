@@ -1,76 +1,13 @@
 import { useEffect, useState } from 'react'
 import PreflightReport from './PreflightReport.jsx'
 import { decodeSegment, useNavigation } from './navigation.js'
+import { Icon, Brand, ButtonLink, PageIntro, SourceBadge } from './ui.jsx'
+import HomePage from './HomePage.jsx'
 
-const schemePresentation = {
-  Education: { tone: 'teal', icon: 'book' },
-  Agriculture: { tone: 'sand', icon: 'work' },
-  Healthcare: { tone: 'blue', icon: 'shield' },
-  'Financial Assistance': { tone: 'blue', icon: 'folder' },
-  'Household Energy': { tone: 'sand', icon: 'shield' },
-}
 const states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Andaman and Nicobar Islands', 'Chandigarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Lakshadweep', 'Puducherry']
 const educationLevels = ['No formal schooling', 'Primary', 'Secondary', 'Higher secondary', 'Diploma / vocational', 'Undergraduate', 'Postgraduate or above']
 const occupations = ['Student', 'Employed', 'Self-employed', 'Agriculture', 'Seeking employment', 'Homemaker', 'Retired', 'Other']
 const socialCategories = ['Scheduled Caste (SC)', 'Scheduled Tribe (ST)', 'Other Backward Class (OBC)', 'General', 'Other category', 'Prefer not to say']
-
-const steps = [
-  { number: '01', icon: 'person', title: 'Tell us about yourself', text: 'Share a few details about your situation and what kind of support you are looking for.' },
-  { number: '02', icon: 'search', title: 'Discover relevant schemes', text: 'See scheme information that may be relevant, with eligibility details to review.' },
-  { number: '03', icon: 'file', title: 'Prepare your documents', text: 'Understand the documents commonly requested before you begin an application.' },
-]
-
-const features = [
-  { icon: 'check', title: 'Eligibility assessment', text: 'A guided way to understand common eligibility criteria and the details you may need to check.' },
-  { icon: 'folder', title: 'Document readiness', text: 'A practical checklist to help you prepare supporting documents before applying.' },
-  { icon: 'source', title: 'Answers with sources', text: 'Scheme information is designed to point you back to official sources for confirmation.' },
-]
-
-function Icon({ name, size = 22 }) {
-  const paths = {
-    arrow: <><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></>,
-    book: <><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21z" /><path d="M4 5.5v13A2.5 2.5 0 0 1 6.5 16H20" /><path d="M8 7h8" /></>,
-    work: <><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18m-11 0v2h4v-2" /></>,
-    shield: <><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11" /><path d="m9 12 2 2 4-4" /></>,
-    person: <><circle cx="12" cy="8" r="3.5" /><path d="M5 20a7 7 0 0 1 14 0" /></>,
-    search: <><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 4 4" /></>,
-    file: <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6M8 13h8m-8 4h8" /></>,
-    check: <><path d="M20 7 10 17l-5-5" /><path d="M21 12a9 9 0 1 1-5.3-8.2" /></>,
-    folder: <><path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><path d="M3 9h18" /></>,
-    source: <><circle cx="12" cy="12" r="9" /><path d="M12 11v5m0-8h.01" /></>,
-    menu: <><path d="M4 7h16M4 12h16M4 17h16" /></>,
-    close: <><path d="m6 6 12 12M18 6 6 18" /></>,
-    pin: <><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2.5" /></>,
-  }
-
-  return <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">{paths[name]}</svg>
-}
-
-function Brand({ href = '/' }) {
-  return <a className="brand" href={href} aria-label="YojnaSetu home">
-    <span className="brand-mark" aria-hidden="true">Y</span>
-    <span className="brand-name">YojnaSetu<span className="brand-period">.</span></span>
-  </a>
-}
-
-function ButtonLink({ href, children, variant = 'primary', className = '', onClick }) {
-  return <a className={`button button-${variant} ${className}`} href={href} onClick={onClick}>{children}</a>
-}
-
-function StepCard({ step }) {
-  return <article className="step-card">
-    <div className="step-card-top"><span className="step-number">{step.number}</span><span className="step-icon"><Icon name={step.icon} /></span></div>
-    <h3>{step.title}</h3>
-    <p>{step.text}</p>
-  </article>
-}
-
-function FeatureCard({ feature }) {
-  return <article className="feature-card">
-    <span className="feature-icon"><Icon name={feature.icon} size={21} /></span>
-    <div><h3>{feature.title}</h3><p>{feature.text}</p></div>
-  </article>
-}
 
 function HealthStatus({ health }) {
   const messages = {
@@ -113,54 +50,6 @@ function Header({ health, currentPath }) {
       </nav>
     </div>
   </header>
-}
-
-function Hero() {
-  return <section className="hero section-wrap" id="home">
-    <div className="hero-copy">
-      <p className="eyebrow"><span className="eyebrow-line" /> PUBLIC SUPPORT, MADE MORE ACCESSIBLE</p>
-      <h1>Government schemes,<br /><span>made easier to access.</span></h1>
-      <p className="hero-description">Finding the right support shouldn’t be complicated. Discover schemes that may fit your situation and get clearer on what to do next.</p>
-      <div className="hero-actions">
-        <ButtonLink href="/eligibility">Check eligibility <Icon name="arrow" size={17} /></ButtonLink>
-        <ButtonLink href="/explore" variant="secondary">Explore schemes</ButtonLink>
-      </div>
-      <p className="hero-note"><Icon name="source" size={15} /> Clear information. Your decisions stay yours.</p>
-    </div>
-    <div className="hero-visual" aria-label="Illustrative preview of the YojnaSetu journey">
-      <div className="visual-orbit orbit-one" /><div className="visual-orbit orbit-two" />
-      <div className="visual-kicker"><span className="visual-kicker-mark"><Icon name="pin" size={16} /></span><span>SUPPORT, WITH A CLEARER PATH</span></div>
-      <div className="journey-card">
-        <div className="journey-heading"><div><span className="small-label">YOUR NEXT STEPS</span><h2>A little guidance goes a long way.</h2></div><span className="journey-spark" aria-hidden="true">✳</span></div>
-        <div className="journey-row"><span className="journey-index">01</span><span className="journey-icon"><Icon name="person" size={19} /></span><span className="journey-copy"><strong>Share your situation</strong><small>Start with what matters to you</small></span><span className="journey-check">✓</span></div>
-        <div className="journey-row"><span className="journey-index">02</span><span className="journey-icon"><Icon name="search" size={19} /></span><span className="journey-copy"><strong>See possible matches</strong><small>Explore relevant support</small></span><span className="journey-arrow"><Icon name="arrow" size={15} /></span></div>
-        <div className="journey-row"><span className="journey-index">03</span><span className="journey-icon"><Icon name="file" size={19} /></span><span className="journey-copy"><strong>Get application-ready</strong><small>Know what to prepare</small></span><span className="journey-arrow"><Icon name="arrow" size={15} /></span></div>
-        <div className="illustrative-note"><span /> Illustrative preview · Guidance is not an application</div>
-      </div>
-      <div className="visual-caption">A more considered way to find your next step.</div>
-    </div>
-  </section>
-}
-
-function HowItWorks() {
-  return <section className="how-section" id="how-it-works">
-    <div className="section-wrap">
-      <div className="section-heading">
-        <div><p className="eyebrow">A SIMPLE PLACE TO BEGIN</p><h2>From questions to<br /><span>clear next steps.</span></h2></div>
-        <p>Public schemes can be hard to navigate. We’re shaping a simpler journey to help you understand where to look and what to prepare.</p>
-      </div>
-      <div className="steps-grid">{steps.map((step) => <StepCard key={step.number} step={step} />)}</div>
-    </div>
-  </section>
-}
-
-function Features() {
-  return <section className="features-section" id="features">
-    <div className="section-wrap features-layout">
-      <div className="features-copy"><p className="eyebrow">BUILT AROUND YOUR JOURNEY</p><h2>Useful guidance,<br /><span>at every step.</span></h2><p>From understanding possible eligibility to getting documents in order, YojnaSetu is designed to make the process feel more manageable.</p><ButtonLink href="/eligibility" variant="light">Start an assessment <Icon name="arrow" size={16} /></ButtonLink></div>
-      <div className="features-list">{features.map((feature) => <FeatureCard key={feature.title} feature={feature} />)}</div>
-    </div>
-  </section>
 }
 
 function AskSection({ schemes }) {
@@ -330,9 +219,10 @@ function DocumentIntelligence({ schemes, navigate, onDocumentsChange }) {
         <p className="document-authenticity">{analysis.authenticity_notice}</p>
         <div className="extracted-fields">{Object.entries(documentFieldLabels).map(([key, label]) => {
           const field = analysis.extracted_fields[key]
-          const uncertain = !values[key] || (!editedFields[key] && field?.confidence != null && field.confidence < 0.7)
-          const fieldState = !values[key] ? 'missing' : selectedFields[key] ? 'user-confirmed' : editedFields[key] ? 'user-corrected' : uncertain ? 'uncertain' : 'extracted'
-          return <label className={`extracted-field ${uncertain ? 'extracted-uncertain' : ''}`} key={key}><span>{label}<span className="field-origin"> · {fieldState}</span></span><input type="text" value={values[key] ?? ''} placeholder="Not detected" onChange={(event) => { setSavedReview(false); setValues((current) => ({ ...current, [key]: event.target.value })); setEditedFields((current) => ({ ...current, [key]: true })) }} />{field?.confidence != null && <small>{Math.round(field.confidence * 100)}% extraction confidence{field.source_page ? ` · page ${field.source_page}` : ''}</small>}<span className="confirm-field"><input type="checkbox" checked={Boolean(selectedFields[key])} disabled={!values[key]} onChange={(event) => setSelectedFields((current) => ({ ...current, [key]: event.target.checked }))} /> {['age', 'state', 'annual_family_income_inr'].includes(key) ? 'Use reviewed value in eligibility form' : 'Reviewed value'}</span></label>
+          const hasValue = String(values[key] ?? '').trim() !== ''
+          const uncertain = !hasValue || (!editedFields[key] && field?.confidence != null && field.confidence < 0.7)
+          const fieldState = !hasValue ? 'missing' : selectedFields[key] ? 'user-confirmed' : editedFields[key] ? 'user-corrected' : uncertain ? 'uncertain' : 'extracted'
+          return <div className={`extracted-field ${uncertain ? 'extracted-uncertain' : ''}`} data-field-state={fieldState} key={key}><label htmlFor={`ocr-${key}`}>{label}<span className="field-origin">{fieldState.replaceAll('-', ' ')}</span></label><input id={`ocr-${key}`} type="text" value={values[key] ?? ''} placeholder="Not detected" onChange={(event) => { setSavedReview(false); setSelectedFields((current) => ({ ...current, [key]: false })); setValues((current) => ({ ...current, [key]: event.target.value })); setEditedFields((current) => ({ ...current, [key]: true })) }} />{field?.confidence != null && <small>{Math.round(field.confidence * 100)}% extraction confidence{field.source_page ? ` · page ${field.source_page}` : ''}</small>}<label className="confirm-field"><input type="checkbox" checked={Boolean(selectedFields[key])} disabled={!hasValue} onChange={(event) => setSelectedFields((current) => ({ ...current, [key]: event.target.checked }))} /> {['age', 'state', 'annual_family_income_inr'].includes(key) ? 'Use reviewed value in eligibility form' : 'Reviewed value'}</label></div>
         })}</div>
         {selectedScheme && selectedScheme.required_documents?.length > 0 && <label className="document-scheme-select" htmlFor="document-requirement">If appropriate, mark this upload as one required item after reviewing it
           <select id="document-requirement" value={selectedRequirement} onChange={(event) => setSelectedRequirement(event.target.value)}><option value="">Do not mark a requirement available</option>{selectedScheme.required_documents.map((document) => <option value={document} key={document}>{document}</option>)}</select>
@@ -342,15 +232,6 @@ function DocumentIntelligence({ schemes, navigate, onDocumentsChange }) {
         <button className="button button-secondary" type="button" onClick={() => useInAssessment(false)}>Save review</button>
         <button className="button button-primary" type="button" onClick={() => useInAssessment(true)}>Continue to eligibility <Icon name="arrow" size={16} /></button>
       </div>}
-    </div>
-  </section>
-}
-
-function EligibilityPrompt() {
-  return <section className="eligibility-section section-wrap" id="eligibility">
-    <div className="eligibility-card">
-      <div><p className="eyebrow">A CLEARER FIRST STEP</p><h2>Know where to begin.</h2><p>Compare the details you provide with the limited conditions currently encoded for a scheme. Results are informational and link back to source material.</p></div>
-      <ButtonLink href="/eligibility" variant="secondary">Check eligibility <Icon name="arrow" size={16} /></ButtonLink>
     </div>
   </section>
 }
@@ -384,9 +265,11 @@ function SchemeDetails({ scheme, loading, error, onRetry }) {
       <p className="scheme-disclaimer">Source check confirms that the linked source is official; it does not mean this product's summary or assessment is an approval. Confirm current conditions with the official source.</p>
       <a className="button button-secondary official-source-link" href={scheme.official_source_url} target="_blank" rel="noreferrer">Open official source <Icon name="arrow" size={16} /></a>
       <ButtonLink href={`/eligibility?scheme_id=${encodeURIComponent(scheme.scheme_id)}`}>Check this scheme <Icon name="arrow" size={16} /></ButtonLink>
-      <h2>Documents to prepare</h2>
+      <section className="detail-section"><p className="eyebrow">01 / ELIGIBILITY</p><h2>Conditions to understand</h2><p>These are the conditions represented in this record. They are not an assessment of your eligibility.</p><ul className="detail-criteria">{scheme.eligibility_rules.map((rule) => <li key={rule.rule_id}><Icon name="source" size={16} /><span>{rule.label}</span></li>)}</ul></section>
+      <section className="detail-section"><p className="eyebrow">02 / PREPARATION</p><h2>Documents to prepare</h2>
       {scheme.required_documents.length ? <ul>{scheme.required_documents.map((item) => <li key={item}>{item}</li>)}</ul> : <p>{scheme.documents_note}</p>}
-      {scheme.required_documents.length > 0 && <p>{scheme.documents_note}</p>}
+      {scheme.required_documents.length > 0 && <p>{scheme.documents_note}</p>}</section>
+      <section className="detail-section"><p className="eyebrow">03 / SOURCE MATERIAL</p><h2>Go to the source</h2><p>{scheme.source_checked_at ? `Source check recorded in the dataset: ${scheme.source_checked_at}. ` : ''}Confirm current terms with the provider before applying.</p><a className="text-link" href={scheme.official_source_url} target="_blank" rel="noreferrer">Official scheme page <Icon name="arrow" size={16} /></a>{scheme.documents?.map((document) => <a className="source-document-link" key={document.url} href={document.url} target="_blank" rel="noreferrer"><Icon name="file" size={18} />{document.title}<Icon name="arrow" size={16} /></a>)}</section>
       </>}
     </section>
   </div></main>
@@ -424,11 +307,7 @@ function ExplorePage({ schemeState, schemeId }) {
   if (schemeId) return <SchemeDetails {...detailState} loading={detailState.loading || (!detailState.scheme && !detailState.error)} onRetry={() => setDetailReload((value) => value + 1)} />
   return <>
     <main className="page-content">
-      <section className="page-intro section-wrap">
-        <p className="eyebrow"><span className="eyebrow-line" /> EXPLORE PUBLIC SUPPORT</p>
-        <h1>Find schemes to<br /><span>learn more about.</span></h1>
-        <p>Browse scheme records by topic or search by name and keyword. Each listing links to its source and shows how much of its eligibility information is encoded.</p>
-      </section>
+      <PageIntro eyebrow="THE SCHEME DIRECTORY" title={<>Find support.<br /><em>Understand your options.</em></>}><p>Explore public schemes, read the conditions, and follow the official source. A good application starts with clear information.</p></PageIntro>
       <section className="explore-content section-wrap" aria-labelledby="browse-heading">
         <div className="explore-toolbar">
           <label className="search-field">
@@ -449,14 +328,10 @@ function ExplorePage({ schemeState, schemeId }) {
         <div className="example-notice"><span className="label-dot" /> <strong>Source checked ≠ eligibility verified</strong><span>Only official source links are listed. Encoded rules cover a limited subset; unknown criteria stay undetermined.</span></div>
         <h2 className="visually-hidden" id="browse-heading">Scheme records</h2>
         {schemeState.loading ? <p className="data-state" role="status">Loading scheme information…</p> : schemeState.error ? <div className="empty-results" role="alert"><h3>Scheme information is unavailable</h3><p>{schemeState.error}</p><button type="button" className="text-link" onClick={schemeState.reload}>Try again</button></div> : filteredSchemes.length ? <div className="browse-grid">
-          {filteredSchemes.map((scheme) => <article className="browse-card" key={scheme.scheme_id}>
-            <div className="browse-card-top"><span className={`scheme-icon scheme-icon-${schemePresentation[scheme.category]?.tone ?? 'teal'}`}><Icon name={schemePresentation[scheme.category]?.icon ?? 'folder'} size={21} /></span><span className={`illustrative-badge source-badge source-${scheme.source_verification_status}`}>{scheme.source_verification_status === 'official_source_checked' ? 'Official source checked' : 'Source unknown'}</span></div>
-            <p className="scheme-category">{scheme.category}</p>
-            <h3>{scheme.name}</h3>
-            <p className="browse-department"><span>Department</span>{scheme.department}</p>
-            <p className="browse-beneficiaries"><span>Geographical applicability</span>{scheme.applicability}</p>
-            <p className="scheme-description">{scheme.description}</p>
-            <a className="details-link" href={`/explore/${encodeURIComponent(scheme.scheme_id)}`}>View details <Icon name="arrow" size={16} /></a>
+          {filteredSchemes.map((scheme, index) => <article className="browse-card" key={scheme.scheme_id}>
+            <div className="browse-index"><span>{String(index + 1).padStart(2, '0')}</span><p className="scheme-category">{scheme.category}</p></div>
+            <div className="browse-main"><h3><a href={`/explore/${encodeURIComponent(scheme.scheme_id)}`}>{scheme.name}</a></h3><p className="scheme-description">{scheme.description}</p><p className="browse-department">{scheme.department}</p></div>
+            <div className="browse-facts"><SourceBadge scheme={scheme} /><span>{scheme.applicability}</span><span>{scheme.eligibility_rules.length} encoded conditions · some criteria may remain unknown</span><a className="details-link" href={`/explore/${encodeURIComponent(scheme.scheme_id)}`}>Read scheme <Icon name="arrow" size={16} /></a></div>
           </article>)}
         </div> : <div className="empty-results"><span className="empty-icon"><Icon name="search" size={23} /></span><h3>No schemes found</h3><p>Try a different search term or choose another filter.</p><button className="text-link" type="button" onClick={() => { setQuery(''); setCategory('All categories'); setGeography('All locations'); setDepartment('All departments') }}>Clear filters</button></div>}
       </section>
@@ -669,6 +544,10 @@ function EligibilityPage({ schemes }) {
     if (validateStep()) setStep(step + 1)
   }
 
+  useEffect(() => {
+    if (step > 1) document.getElementById(step === 2 ? 'step-two-title' : 'review-title')?.focus({ preventScroll: true })
+  }, [step])
+
   function changeStep(nextStep) {
     setErrors({})
     setStep(nextStep)
@@ -719,20 +598,16 @@ function EligibilityPage({ schemes }) {
   }
 
   return <main className="page-content eligibility-page">
-    <section className="form-intro section-wrap">
-      <p className="eyebrow"><span className="eyebrow-line" /> A PRIVATE FIRST STEP</p>
-      <h1>Let’s understand<br /><span>what may fit you.</span></h1>
-      <p>Share a few details to compare against encoded conditions. This form does not make an official eligibility determination or submit an application.</p>
-    </section>
+    <PageIntro eyebrow="YOUR ELIGIBILITY CHECK" title={<>A few details.<br /><em>A clearer next step.</em></>}><p>Compare your situation with the scheme’s encoded conditions. You can leave unknown details blank; this check is guidance, not an official decision.</p></PageIntro>
     <section className="assessment-card section-wrap" aria-labelledby="assessment-title">
       <div className="assessment-heading">
         <div><span className="small-label">ELIGIBILITY ASSESSMENT</span><h2 id="assessment-title">A few details, at your pace.</h2></div>
         <span className="assessment-count">{complete ? 'Complete' : `STEP ${step} OF 3`}</span>
       </div>
       <ol className="assessment-progress" aria-label="Form progress">
-        <li className={step >= 1 ? 'progress-current' : ''}><span>1</span><span>About you</span></li>
-        <li className={step >= 2 ? 'progress-current' : ''}><span>2</span><span>Your background</span></li>
-        <li className={step >= 3 || complete ? 'progress-current' : ''}><span>3</span><span>Review</span></li>
+        <li aria-current={!complete && step === 1 ? 'step' : undefined} className={step >= 1 ? 'progress-current' : ''}><span>1</span><span>About you</span></li>
+        <li aria-current={!complete && step === 2 ? 'step' : undefined} className={step >= 2 ? 'progress-current' : ''}><span>2</span><span>Your background</span></li>
+        <li aria-current={!complete && step === 3 ? 'step' : undefined} className={step >= 3 || complete ? 'progress-current' : ''}><span>3</span><span>Review</span></li>
       </ol>
 
       {!complete && <div className="assessment-scheme-select"><FormField id="assessment-scheme" label="Scheme to assess" error={errors.scheme} hint="Only encoded conditions for the selected scheme are evaluated.">{(describedBy) => <select id="assessment-scheme" disabled={submitting} value={selectedSchemeId} onChange={(event) => { setSelectedSchemeId(event.target.value); setErrors((current) => ({ ...current, scheme: '' })) }} aria-invalid={Boolean(errors.scheme)} aria-describedby={describedBy}><option value="">Choose a scheme</option>{schemes.map((scheme) => <option key={scheme.scheme_id} value={scheme.scheme_id}>{scheme.name}</option>)}</select>}</FormField></div>}
@@ -742,7 +617,7 @@ function EligibilityPage({ schemes }) {
         <div className="form-result-actions"><ButtonLink href="/documents" variant="secondary">Continue to Document Assistant <Icon name="arrow" size={16} /></ButtonLink><ButtonLink href="/application">Open My Application <Icon name="arrow" size={16} /></ButtonLink><button className="button button-secondary" type="button" onClick={() => { setComplete(false); setStep(1); setResults(null) }}>Edit answers</button></div>
       </div> : <>
         {step === 1 && <div className="form-step" aria-labelledby="step-one-title">
-          <div className="form-step-heading"><span>STEP 1</span><h3 id="step-one-title">Where are you in your journey?</h3><p>Share any details you know. Missing answers remain unknown in the rule check.</p></div>
+          <div className="form-step-heading"><span>STEP 1</span><h3 id="step-one-title" tabIndex={-1}>Where are you in your journey?</h3><p>Share any details you know. Missing answers remain unknown in the rule check.</p></div>
           <FormField id="state" label="State of residence (optional)" error={errors.state}>
             {(describedBy) => <select id="state" value={form.state} onChange={(event) => updateField('state', event.target.value)} aria-invalid={Boolean(errors.state)} aria-describedby={describedBy}>
               <option value="">Not provided</option>{states.map((state) => <option key={state} value={state}>{state}</option>)}
@@ -754,7 +629,7 @@ function EligibilityPage({ schemes }) {
         </div>}
 
         {step === 2 && <div className="form-step" aria-labelledby="step-two-title">
-          <div className="form-step-heading"><span>STEP 2</span><h3 id="step-two-title">Tell us a little about your background.</h3><p>Share what you know; blank values are not treated as failed conditions.</p></div>
+          <div className="form-step-heading"><span>STEP 2</span><h3 id="step-two-title" tabIndex={-1}>Tell us a little about your background.</h3><p>Share what you know; blank values are not treated as failed conditions.</p></div>
           <FormField id="income" label="Annual family income (INR, optional)" error={errors.income} hint="Enter a whole amount in Indian rupees, or leave blank if unknown.">
             {(describedBy) => <div className="input-with-prefix"><span>₹</span><input id="income" type="number" inputMode="numeric" min="0" max="1000000000" step="1" value={form.income} onChange={(event) => updateField('income', event.target.value)} placeholder="e.g. 300000" aria-invalid={Boolean(errors.income)} aria-describedby={describedBy} /></div>}
           </FormField>
@@ -770,7 +645,7 @@ function EligibilityPage({ schemes }) {
         </div>}
 
         {step === 3 && <div className="form-step review-step" aria-labelledby="review-title">
-          <div className="form-step-heading"><span>STEP 3</span><h3 id="review-title">Review your details.</h3><p>Check what you entered. You can go back to make changes.</p></div>
+          <div className="form-step-heading"><span>STEP 3</span><h3 id="review-title" tabIndex={-1}>Review your details.</h3><p>Check what you entered. You can go back to make changes.</p></div>
           <dl className="review-list">{Object.entries(fields).map(([key, field]) => <div key={key}><dt>{field.label}</dt><dd>{field.display}<small className={`profile-origin origin-${profileSources[key] || 'missing'}`}>{profileSources[key] === 'document-confirmed' ? 'Reviewed document value · confirmed by you' : profileSources[key] === 'manually-entered' ? 'Entered by you' : field.display === 'Not provided' ? 'Missing · remains unknown' : 'Review this value'}</small></dd></div>)}</dl>
           <p className="review-notice"><Icon name="source" size={18} /> When you request the check, these details are sent to the YojnaSetu backend for a deterministic comparison against encoded rules. No application is submitted, and uncollected criteria will remain undetermined.</p>
         </div>}
@@ -802,7 +677,7 @@ function DocumentAssistantPage({ schemes, navigate, hash }) {
     } catch { return {} }
   })
   return <main className="page-content">
-    <section className="page-intro section-wrap"><p className="eyebrow"><span className="eyebrow-line" /> REVIEW AND PREPARE</p><h1>Document<br /><span>Assistant.</span></h1><p>Review extracted details, compare information across your documents, and ask questions using available scheme documents. You stay in control of every correction.</p></section>
+    <PageIntro eyebrow="THE DOCUMENT DESK" title={<>Prepare with<br /><em>more confidence.</em></>}><p>Read your documents, review the details, and resolve questions with source-backed answers. You decide which extracted values to use.</p></PageIntro>
     <nav className="assistant-tabs section-wrap" aria-label="Document assistant sections">{sections.map(([id, label]) => <a key={id} href={`/documents#${id}`} aria-current={activeSection === id ? 'location' : undefined}>{label}</a>)}</nav>
     <div id="upload-review" tabIndex={-1} hidden={activeSection !== 'upload-review'}><DocumentIntelligence schemes={schemes} navigate={navigate} onDocumentsChange={setDocuments} /></div>
     <section className="consistency-page-section section-wrap" id="consistency-review" tabIndex={-1} hidden={activeSection !== 'consistency-review'}><div className="section-heading"><div><p className="eyebrow">CROSS-DOCUMENT REVIEW</p><h2>Check details<br /><span>before you apply.</span></h2></div><p>Potential differences are surfaced for manual review. They do not change an eligibility outcome or imply document authenticity.</p></div><ConsistencyChecker initialProfile={profile} documents={documents} /></section>
@@ -826,7 +701,7 @@ function ApplicationPage({ schemes, loading, error }) {
   if (loading || error) return <main className="page-content"><section className="page-intro section-wrap"><p className="eyebrow">MY APPLICATION</p><h1>Application preflight</h1><p role="status">{loading ? 'Loading the selected scheme for your report…' : 'Your report needs scheme data. Use Retry connection above to load it.'}</p></section></main>
   if (!scheme) return <main className="page-content"><section className="page-intro section-wrap"><p className="eyebrow">MY APPLICATION</p><h1>Your preflight,<br /><span>when you’re ready.</span></h1><p>Start with an eligibility check to select a scheme and confirm the profile details for your report. Profile and extracted text are stored only for this browser tab’s session; original files are not saved.</p><ButtonLink href="/eligibility">Check Eligibility <Icon name="arrow" size={16} /></ButtonLink></section></main>
   const initialProfile = { applicant_name: '', date_of_birth: '', age: '', address: '', state: '', occupation: '', category: '', certificate_type: '', issuing_authority: '', certificate_date: '', certificate_valid_until: '', certificate_number: '', ...context.profile, annual_family_income_inr: context.profile.annual_family_income_inr ?? context.profile.income ?? '', education_level: context.profile.education_level ?? context.profile.education ?? '' }
-  return <main className="page-content"><section className="page-intro section-wrap"><p className="eyebrow"><span className="eyebrow-line" /> MY APPLICATION</p><h1>Application<br /><span>preflight.</span></h1><p>Bring together your current eligibility check, reviewed document information, consistency findings, and available source evidence. Regenerate after making corrections.</p></section><div className="section-wrap report-page"><PreflightReport scheme={scheme} initialProfile={initialProfile} profileSources={context.profileSources} documents={context.documents} documentReadiness={context.documentReadiness} /></div></main>
+  return <main className="page-content"><PageIntro eyebrow="MY APPLICATION" title={<>Your application,<br /><em>in perspective.</em></>}><p>One working report for eligibility, document readiness, unresolved details, and the sources behind them. Review it before taking your next step.</p></PageIntro><div className="section-wrap report-page"><PreflightReport scheme={scheme} initialProfile={initialProfile} profileSources={context.profileSources} documents={context.documents} documentReadiness={context.documentReadiness} /></div></main>
 }
 
 export default function App() {
@@ -875,10 +750,10 @@ export default function App() {
     <a className="skip-link" href="#main-content">Skip to content</a>
     <Header health={health} currentPath={pathname} />
     <div id="main-content" tabIndex={-1}>
-    {pathname !== '/' && <p className="session-notice section-wrap">This tab only: profile and extracted text can survive refresh. Original uploads are not saved. Closing the session may clear your work; save your report as PDF.</p>}
+    {pathname !== '/' && <p className="session-notice section-wrap">Your working session · Reviewed details stay in this tab. Original files are not saved. Save a PDF before closing your session.</p>}
     {schemeState.error && pathname !== '/explore' && pathname !== '/' && <div className="section-wrap api-error" role="alert">Scheme data unavailable. <button type="button" onClick={() => setSchemeReload((value) => value + 1)}>Retry connection</button></div>}
     {schemeState.loading && pathname !== '/' && <p className="section-wrap" role="status">Loading scheme records…</p>}
-    {(pathname === '/explore' || /^\/explore\/[^/]+$/.test(pathname)) ? <ExplorePage schemeId={pathname.startsWith('/explore/') ? decodeSegment(pathname.slice(9)) : ''} schemeState={{ ...schemeState, reload: () => setSchemeReload((value) => value + 1) }} /> : pathname === '/eligibility' ? <EligibilityPage key={pathname + search} schemes={schemeState.schemes} /> : pathname === '/documents' ? <DocumentAssistantPage hash={hash} schemes={schemeState.schemes} navigate={navigate} /> : pathname === '/application' ? <ApplicationPage loading={schemeState.loading} error={schemeState.error} schemes={schemeState.schemes} /> : pathname === '/' ? <main><Hero /><HowItWorks /><Features /><section className="trust-section section-wrap"><p className="eyebrow">TRUST AND TRANSPARENCY</p><h2>Clear sources. Clear limits.</h2><p>YojnaSetu is independent of government. Checks use a limited set of encoded rules, document extraction can contain errors, and answers cite available source documents. Confirm current requirements with the official scheme provider.</p><ButtonLink href="/explore" variant="secondary">Browse official scheme references</ButtonLink></section><EligibilityPrompt /></main> : <main className="page-intro section-wrap"><h1>Page not found</h1><p>This address does not match a YojnaSetu page.</p><ButtonLink href="/">Return home</ButtonLink></main>}
+    {(pathname === '/explore' || /^\/explore\/[^/]+$/.test(pathname)) ? <ExplorePage schemeId={pathname.startsWith('/explore/') ? decodeSegment(pathname.slice(9)) : ''} schemeState={{ ...schemeState, reload: () => setSchemeReload((value) => value + 1) }} /> : pathname === '/eligibility' ? <EligibilityPage key={pathname + search} schemes={schemeState.schemes} /> : pathname === '/documents' ? <DocumentAssistantPage hash={hash} schemes={schemeState.schemes} navigate={navigate} /> : pathname === '/application' ? <ApplicationPage loading={schemeState.loading} error={schemeState.error} schemes={schemeState.schemes} /> : pathname === '/' ? <HomePage schemeState={schemeState} /> : <main className="page-intro section-wrap"><h1>Page not found</h1><p>This address does not match a YojnaSetu page.</p><ButtonLink href="/">Return home</ButtonLink></main>}
     </div>
     <Footer health={health} />
   </div>

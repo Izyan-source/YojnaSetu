@@ -1,0 +1,36 @@
+:root {
+  /* Local typefaces: immediate rendering, no external font request. */
+  --font-body: 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --ink: #203c32;
+  --ink-strong: #172e26;
+  --muted: #5e6a61;
+  --forest: #254f3d;
+  --forest-hover: #173b2b;
+  --paper: #f7f5ee;
+  --surface: #fffef9;
+  --sage: #e7ecdf;
+  --sage-deep: #bccab2;
+  --saffron: #985b23;
+  --saffron-soft: #f1e5cc;
+  --line: #d8ddcf;
+  --line-strong: #bbc5b7;
+  --success: #28583e;
+  --success-bg: #eaf1e6;
+  --warning: #79551d;
+  --warning-bg: #f7edda;
+  --danger: #943c31;
+  --danger-bg: #f8eae5;
+  --radius: 6px;
+  --shadow-paper: 0 12px 32px #203c320a;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+  --content: 1200px;
+  --ease: 160ms ease;
+}

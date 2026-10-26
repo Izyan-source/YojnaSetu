@@ -96,3 +96,9 @@ Applicant drafts and extracted document data use this tab's `sessionStorage`. Th
 Existing limits: the form collects general applicant fields only, so uncollected scheme-specific rules stay unknown. Readiness tracks one explicitly mapped document requirement at a time, while consistency review supports up to ten uploads. RAG requires the local index described above; image/scanned-document OCR requires Tesseract.
 
 Build the frontend with `cd frontend && npm run build`.
+
+## Frontend design system
+
+The interface uses warm paper, forest ink, sage surfaces, and a restrained saffron accent. Shared palette, typography, spacing, radius, and shadow tokens live in `frontend/src/tokens.css`; component and responsive styles live in `frontend/src/style.css`. Display type uses locally available Iowan/Palatino/Georgia, paired with the existing system sans-serif stack, with no external font or image dependency.
+
+`frontend/src/ui.jsx` contains shared brand, icon, button-link, page-introduction, and source-status components. `frontend/src/HomePage.jsx` renders the editorial landing page and a real scheme preview from the existing scheme API. Working pages retain the existing feature components and endpoints. Print styles remove the application chrome and include source URLs in the report.
